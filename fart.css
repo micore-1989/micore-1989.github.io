@@ -1,0 +1,137 @@
+
+h1{
+    background-color: #981A31;
+    text-align: center;
+    color:#f8f9fa;
+ }
+
+ /* maroon color:  #74001C */
+
+ li{
+    color: black;
+ }
+ ol.button li:hover{
+    background-color: #981A31;
+    color: gold;
+    margin-right: 90%;
+ }
+ h1:hover {
+    background-color: black;
+    margin-left: 30%;
+    margin-right: 30%;
+ }
+
+ a {
+    text-decoration: none;
+ }
+
+ body {
+  background-color: white;
+ }
+
+ .cmclogo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+ }
+
+ .slogan {
+  text-align: center;
+  font-style: italic;
+ }
+
+ .cmcdescription {
+  text-align: center;
+ }
+
+  a .toplink {
+  text-decoration: none;
+ }
+
+ .cmclink {
+  text-align: center;
+ }
+
+ footer {
+  text-align: center;
+  color: white;
+ }
+
+ div.topcont {
+  background-color: #981A31;
+  height: 75px;
+  width: 100%;
+ }
+
+#botlink {
+  color: gold;
+ }
+
+ .therweb {
+  color: #981A31;
+ }
+
+ @media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+div.centralcont {
+  background-color: black;
+  height: 75px;
+  width: 100%;
+  margin-bottom: 1%;
+}
+
+.proftable {
+  margin: auto;
+}
+
+.blackboxtext {
+  color: white;
+  text-align: center;
+  ;
+}
+  
+.bolded {
+  font-weight: bold; 
+}
+
+.ffinseth {
+  height: 25%;
+  width: 25%;
+}
+
+.nsdiv {
+  background-color: #FFF8DE;
+}
+
+.h3main {
+  text-align: center;
+  
+}
+
+div.botcont {
+  background-color: #981A31;
+  height: 100px;
+  width: 100%;
+}
+
+#backref {
+  text-align: center;
+  list-style-position: inside;
+}
+
+ol#backref li:hover {
+  background-color: #981A31;
+  color: gold;
+  margin-right: 45%;
+  margin-left: 45%;
+}
+
+.jpitney {
+  display: block;
+}
+/*https://gabrieljlea.github.io */
+/*https://m1keh0uk.github.io  */
