@@ -63,9 +63,10 @@ h1{
   width: 100%;
  }
 
-#botlink {
+ 
+ #botlinkm {
   color: gold;
- }
+ } 
 
  .therweb {
   color: #981A31;
@@ -136,7 +137,8 @@ ol#backref li:hover {
 /*https://gabrieljlea.github.io */
 /*https://m1keh0uk.github.io  */
 
-/* #botlink1 {
+
+ #botlink1 {
     color: gold;
    }
 
@@ -179,4 +181,4 @@ ol#backref li:hover {
 #botlink11 {
     color: gold;
    } 
-    */
+    
