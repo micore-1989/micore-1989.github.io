@@ -5,202 +5,186 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A stylish birthday celebration page made with only HTML and CSS."
+      content="A clean, professional birthday letter website for Elli Steinbach."
     />
-    <title>Happy Birthday!</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Manrope:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <title>Happy Birthday, Elli Steinbach</title>
     <link rel="stylesheet" href="birthday.css" />
   </head>
   <body>
     <div class="page-shell">
-      <header class="hero">
-        <div class="floating floating-a"></div>
-        <div class="floating floating-b"></div>
-        <div class="floating floating-c"></div>
-        <div class="heart-field" aria-hidden="true">
-          <span class="heart heart-1"></span>
-          <span class="heart heart-2"></span>
-          <span class="heart heart-3"></span>
-          <span class="heart heart-4"></span>
-          <span class="heart heart-5"></span>
-          <span class="heart heart-6"></span>
-          <span class="heart heart-7"></span>
-          <span class="heart heart-8"></span>
-          <span class="heart heart-9"></span>
-          <span class="heart heart-10"></span>
-          <span class="heart heart-11"></span>
-          <span class="heart heart-12"></span>
-        </div>
-
-        <p class="eyebrow">A Slightly Casual Love Letter</p>
-        <h1>
-          Happy Birthday,
-          <span>Elli Steinbach</span>
-        </h1>
+      <header class="hero" id="top">
+        <p class="eyebrow">For Elli Steinbach</p>
+        <h1>Happy Birthday, Elli.</h1>
         <p class="hero-copy">
-          This is me being very normal about how lovely you are, Elli. Just a
-          small birthday page full of hearts, soft words, and the fact that you
-          make life look way better than it has any right to.
+          A small website for your birthday, written like a letter: thoughtful,
+          a little romantic, and still very calm about how great you are.
         </p>
 
-        <div class="hero-cards">
-          <article class="mini-card">
-            <p class="label">Date</p>
-            <p class="value">[Month Day, Year]</p>
-          </article>
-          <article class="mini-card">
-            <p class="label">Time</p>
-            <p class="value">[e.g. 7:00 PM]</p>
-          </article>
-          <article class="mini-card">
-            <p class="label">Place</p>
-            <p class="value">[Party Location]</p>
-          </article>
+        <div class="hero-meta" aria-label="Letter details">
+          <p><span>Occasion</span> Birthday</p>
+          <p><span>Style</span> Love letter energy, low-key delivery</p>
+          <p><span>For</span> Elli Steinbach</p>
         </div>
 
-        <p class="hero-aside">
-          Consider this a love letter, but like... still chill.
-        </p>
-        <a class="cta" href="#message">Open Elli's Birthday Letter</a>
+        <nav class="hero-actions" aria-label="Page sections">
+          <a class="action-btn action-btn-primary" href="#letter">Read Letter</a>
+          <a class="action-btn" href="#reasons">Why You Matter</a>
+          <a class="action-btn" href="#moments">Memory Wall</a>
+          <a class="action-btn" href="#closing">Final Note</a>
+          <a class="action-btn" href="#buttons">Press Everything</a>
+        </nav>
       </header>
 
       <main>
-        <section class="section spotlight">
-          <div class="section-title-wrap">
-            <p class="section-kicker">For Elli, Obviously</p>
-            <h2>Things about you that make hearts appear out of nowhere.</h2>
+        <section class="section letter-section" id="letter">
+          <div class="section-head">
+            <p class="section-kicker">Letter</p>
+            <h2>A birthday note for Elli Steinbach.</h2>
+          </div>
+
+          <div class="letter-card">
+            <p class="drop-intro">
+              Elli, happy birthday. This is your official reminder that you are
+              deeply appreciated, very easy to admire, and genuinely special in
+              a way that feels rare.
+            </p>
+            <p>
+              You bring style, warmth, and a kind of calm confidence that makes
+              people feel better just by being around you. You make ordinary
+              moments feel sharper and more memorable.
+            </p>
+            <p>
+              I hope today feels like a reflection of that: thoughtful, joyful,
+              and full of people who are happy they get to know you.
+            </p>
+            <p>
+              This page is simple on purpose. Clean lines, good words, and a lot
+              of intention. Very you.
+            </p>
+          </div>
+        </section>
+
+        <section class="section reasons-section" id="reasons">
+          <div class="section-head">
+            <p class="section-kicker">Why You Matter</p>
+            <h2>A few things that stand out about you.</h2>
           </div>
 
           <div class="reasons-grid">
-            <article class="reason-card">
-              <h3>1. You make the room feel warmer</h3>
+            <article class="reason-card" id="reason-1">
+              <h3>You make people feel comfortable</h3>
               <p>
-                You walk in, and suddenly everyone relaxes a little. The mood
-                gets better, the jokes get better, the whole day upgrades.
+                There is a real ease to the way you carry yourself, and people
+                trust it.
               </p>
+              <a class="mini-link" href="#closing">Still true</a>
             </article>
-            <article class="reason-card">
-              <h3>2. You are kind in a real way</h3>
+            <article class="reason-card" id="reason-2">
+              <h3>You have excellent taste</h3>
               <p>
-                Not performative, not forced. Just genuinely thoughtful, and it
-                is one of the best things about you.
+                Your style feels intentional, clean, and unmistakably your own.
               </p>
+              <a class="mini-link" href="#moments">Evidence</a>
             </article>
-            <article class="reason-card">
-              <h3>3. Your vibe is effortlessly iconic</h3>
+            <article class="reason-card" id="reason-3">
+              <h3>You are kind without trying to perform it</h3>
               <p>
-                Somehow you manage to be elegant, funny, and slightly chaotic in
-                the best possible ratio.
+                The best kind of kindness is quiet and consistent, and you have
+                that.
               </p>
+              <a class="mini-link" href="#letter">Read again</a>
             </article>
-            <article class="reason-card">
-              <h3>4. You are very easy to adore</h3>
+            <article class="reason-card" id="reason-4">
+              <h3>You are easy to celebrate</h3>
               <p>
-                This page is proof. Also the excessive number of hearts. We had
-                to commit to the theme.
+                This whole site exists because making something for you felt like
+                the obvious move.
               </p>
+              <a class="mini-link" href="#buttons">Approved</a>
             </article>
           </div>
         </section>
 
-        <section class="section timeline">
-          <div class="section-title-wrap">
-            <p class="section-kicker">Birthday Agenda</p>
-            <h2>A romantic-ish plan for Elli's best night.</h2>
+        <section class="section button-section" id="buttons">
+          <div class="section-head">
+            <p class="section-kicker">Reactive Buttons</p>
+            <h2>Because you specifically asked for exciting ones.</h2>
           </div>
 
-          <div class="timeline-list">
-            <article class="timeline-item">
-              <p class="timeline-time">7:00 PM</p>
-              <div>
-                <h3>Golden-hour arrival</h3>
-                <p>Walk in, look amazing, pretend you're not the moment.</p>
-              </div>
-            </article>
-            <article class="timeline-item">
-              <p class="timeline-time">8:00 PM</p>
-              <div>
-                <h3>Dinner + low-stakes flirting with life</h3>
-                <p>Good food, better stories, and everyone's attention on you.</p>
-              </div>
-            </article>
-            <article class="timeline-item">
-              <p class="timeline-time">9:30 PM</p>
-              <div>
-                <h3>Cake + dramatic candle glow</h3>
-                <p>Soft lighting, loud singing, and unreasonably cute photos.</p>
-              </div>
-            </article>
-            <article class="timeline-item">
-              <p class="timeline-time">10:00 PM+</p>
-              <div>
-                <h3>Music + staying a little too long</h3>
-                <p>Exactly how a good birthday night should end.</p>
-              </div>
-            </article>
+          <p class="button-note">
+            Hover, focus, and click around. They are all CSS-only and built to
+            feel crisp.
+          </p>
+
+          <div class="button-grid" aria-label="Decorative interactive buttons">
+            <a class="reactive-btn" href="#letter">Open Letter</a>
+            <a class="reactive-btn" href="#reasons">Read Reasons</a>
+            <a class="reactive-btn" href="#moments">See Moments</a>
+            <a class="reactive-btn" href="#closing">Final Note</a>
+            <a class="reactive-btn" href="#top">Top of Page</a>
+            <a class="reactive-btn" href="#reason-1">Warmth</a>
+            <a class="reactive-btn" href="#reason-2">Style</a>
+            <a class="reactive-btn" href="#reason-3">Kindness</a>
+            <a class="reactive-btn" href="#reason-4">Easy to Celebrate</a>
+            <a class="reactive-btn" href="#letter">Birthday Energy</a>
+            <a class="reactive-btn" href="#moments">Photo Frame</a>
+            <a class="reactive-btn" href="#closing">For Elli</a>
           </div>
         </section>
 
-        <section class="section gallery">
-          <div class="section-title-wrap">
+        <section class="section gallery-section" id="moments">
+          <div class="section-head">
             <p class="section-kicker">Memory Wall</p>
-            <h2>Proof that Elli Steinbach has always been the favorite.</h2>
+            <h2>Favorite moments, framed cleanly.</h2>
           </div>
 
           <div class="photo-grid" aria-label="Photo placeholders">
-            <figure class="photo-card tall">
-              <div class="photo-fill">Add Photo</div>
-              <figcaption>That photo where Elli looks unreal</figcaption>
+            <figure class="photo-card large">
+              <div class="photo-fill">Add a favorite photo of Elli</div>
+              <figcaption>A photo that feels exactly like her</figcaption>
             </figure>
             <figure class="photo-card">
-              <div class="photo-fill">Add Photo</div>
-              <figcaption>Inside joke evidence</figcaption>
+              <div class="photo-fill">Add photo</div>
+              <figcaption>Group memory</figcaption>
             </figure>
             <figure class="photo-card">
-              <div class="photo-fill">Add Photo</div>
-              <figcaption>Favorite group photo</figcaption>
+              <div class="photo-fill">Add photo</div>
+              <figcaption>Inside joke archive</figcaption>
             </figure>
             <figure class="photo-card wide">
-              <div class="photo-fill">Add Photo</div>
-              <figcaption>Birthday chaos archive (romantic edition)</figcaption>
+              <div class="photo-fill">Add photo</div>
+              <figcaption>Birthday photo from today</figcaption>
             </figure>
           </div>
         </section>
 
-        <section class="section note" id="message">
-          <div class="note-card">
-            <p class="section-kicker">Birthday Note</p>
-            <p class="note-tagline">
-              Not to be dramatic, but this whole page is basically a heart in
-              website form.
-            </p>
-            <h2>To Elli Steinbach,</h2>
+        <section class="section closing-section" id="closing">
+          <div class="section-head">
+            <p class="section-kicker">Final Note</p>
+            <h2>For today, and for this year ahead.</h2>
+          </div>
+
+          <div class="letter-card closing-card">
             <p>
-              Happy Birthday to one of the prettiest souls and easiest people to
-              care about. You have this way of making everything feel brighter,
-              softer, and somehow more fun without even trying.
+              Elli Steinbach, I hope your birthday feels beautiful from start to
+              finish.
             </p>
             <p>
-              I hope this year gives you the kind of happiness that lingers:
-              good surprises, deep laughs, calm mornings, and a lot of moments
-              where you feel as loved as you actually are.
+              I hope this next year brings you the kind of happiness that is not
+              rushed: real peace, good people, exciting opportunities, and a lot
+              of moments that remind you how loved you are.
             </p>
             <p>
-              Anyway, no big deal, just wanted to say you are wonderful and this
-              world is noticeably better with you in it.
+              You deserve a day that feels as good as your presence feels to
+              other people.
             </p>
-            <p class="signature">With love (but casually), [Your Name / Friend Group]</p>
+            <p class="signature">With love (and excellent design restraint), [Your Name / Friend Group]</p>
           </div>
         </section>
       </main>
 
       <footer class="footer">
-        <p>Made with HTML, CSS, and an unreasonable number of hearts for Elli.</p>
+        <p>Black, pink, red, and white. Clean lines. Happy Birthday, Elli.</p>
       </footer>
     </div>
   </body>
