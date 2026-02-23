@@ -4,6 +4,7 @@
     const noBtn = document.getElementById("no-btn");
     const yesBtn = document.getElementById("yes-btn");
     const message = document.getElementById("response-message");
+    const yesDestination = "date-invite.html";
 
     if (!stage || !noBtn || !yesBtn || !message) return;
 
@@ -81,6 +82,11 @@
 
     yesBtn.addEventListener("click", function () {
       message.textContent = "Excellent answer. Very elegant choice.";
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+      setTimeout(function () {
+        window.location.href = yesDestination;
+      }, 450);
     });
 
     noBtn.addEventListener("mouseenter", function () {
