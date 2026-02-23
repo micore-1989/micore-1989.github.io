@@ -111,12 +111,11 @@ a {
 .hero-actions {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.65rem;
 }
 
 .action-btn,
-.reactive-btn,
 .reason-btn {
   position: relative;
   isolation: isolate;
@@ -139,7 +138,6 @@ a {
 }
 
 .action-btn::before,
-.reactive-btn::before,
 .reason-btn::before {
   content: "";
   position: absolute;
@@ -151,7 +149,6 @@ a {
 }
 
 .action-btn::after,
-.reactive-btn::after,
 .reason-btn::after {
   content: "";
   position: absolute;
@@ -165,8 +162,6 @@ a {
 
 .action-btn:hover,
 .action-btn:focus-visible,
-.reactive-btn:hover,
-.reactive-btn:focus-visible,
 .reason-btn:hover,
 .reason-btn:focus-visible {
   color: var(--black);
@@ -178,8 +173,6 @@ a {
 
 .action-btn:hover::after,
 .action-btn:focus-visible::after,
-.reactive-btn:hover::after,
-.reactive-btn:focus-visible::after,
 .reason-btn:hover::after,
 .reason-btn:focus-visible::after {
   transform: scaleX(1);
@@ -187,15 +180,12 @@ a {
 
 .action-btn:hover::before,
 .action-btn:focus-visible::before,
-.reactive-btn:hover::before,
-.reactive-btn:focus-visible::before,
 .reason-btn:hover::before,
 .reason-btn:focus-visible::before {
   transform: translateY(0);
 }
 
 .action-btn:active,
-.reactive-btn:active,
 .reason-btn:active {
   transform: translateY(0);
   box-shadow: 2px 2px 0 rgba(15, 15, 16, 0.95);
@@ -330,40 +320,6 @@ a {
   color: var(--black);
 }
 
-.button-note {
-  margin: 0 auto 0.95rem;
-  max-width: 62ch;
-  color: var(--muted);
-}
-
-.button-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.7rem;
-}
-
-.reactive-btn {
-  min-height: 56px;
-  padding: 0.75rem;
-  background: var(--black);
-  color: var(--gold-soft);
-  border-color: var(--black);
-  box-shadow: inset 0 0 0 1px rgba(201, 164, 74, 0.2);
-}
-
-.reactive-btn::before {
-  background: var(--panel);
-}
-
-.reactive-btn::after {
-  background: var(--gold);
-}
-
-.reactive-btn:hover,
-.reactive-btn:focus-visible {
-  color: var(--black);
-}
-
 .photo-grid {
   display: grid;
   grid-template-columns: 1.35fr 1fr 1fr;
@@ -440,10 +396,6 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .button-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -479,25 +431,18 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .button-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hero-copy,
-  .button-note {
+  .hero-copy {
     font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .hero-actions,
-  .button-grid,
   .photo-grid {
     grid-template-columns: 1fr;
   }
 
-  .action-btn,
-  .reactive-btn {
+  .action-btn {
     min-height: 50px;
   }
 
@@ -512,15 +457,12 @@ a {
   }
 
   .action-btn,
-  .reactive-btn,
   .reason-btn {
     transition: none;
   }
 
   .action-btn::before,
   .action-btn::after,
-  .reactive-btn::before,
-  .reactive-btn::after,
   .reason-btn::before,
   .reason-btn::after {
     transition: none;

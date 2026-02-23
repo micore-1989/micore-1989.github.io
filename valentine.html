@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A Valentine note for Elli Steinbach with a playful question."
+    />
+    <title>Valentine Note for Elli</title>
+    <link rel="stylesheet" href="valentine.css" />
+  </head>
+  <body>
+    <main class="val-shell">
+      <section class="val-card" aria-labelledby="val-title">
+        <p class="eyebrow">Private Note For Elli Steinbach</p>
+        <h1 id="val-title">Will you be my Valentine?</h1>
+        <p class="lead">
+          This page is intentionally dramatic in the most respectful way. It is
+          a proper Valentine note, dressed up to match the birthday site.
+        </p>
+
+        <div class="letter-panel">
+          <p>
+            Elli, you already know this, but you are easy to admire and even
+            easier to care about. You bring a rare kind of warmth and confidence
+            that makes everything around you feel better.
+          </p>
+          <p>
+            So this is the elegant version of asking a very simple question:
+            would you be my Valentine?
+          </p>
+        </div>
+
+        <section class="choice-panel" aria-labelledby="choice-heading">
+          <p class="choice-kicker" id="choice-heading">Selection</p>
+          <p class="choice-copy">
+            Please choose an option below. One of them is much more cooperative
+            than the other.
+          </p>
+
+          <div class="choice-stage" id="choice-stage">
+            <button class="choice-btn yes-btn" id="yes-btn" type="button">
+              Yes
+            </button>
+            <button class="choice-btn no-btn" id="no-btn" type="button">
+              No
+            </button>
+          </div>
+
+          <p class="response-message" id="response-message" aria-live="polite">
+            Hover carefully.
+          </p>
+        </section>
+
+        <div class="footer-actions">
+          <a class="lux-btn" href="index.html">Back to Birthday Letter</a>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const stage = document.getElementById("choice-stage");
+        const noBtn = document.getElementById("no-btn");
+        const yesBtn = document.getElementById("yes-btn");
+        const message = document.getElementById("response-message");
+
+        if (!stage || !noBtn || !yesBtn || !message) return;
+
+        const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+        function placeNoButton(x, y) {
+          const stageRect = stage.getBoundingClientRect();
+          const btnRect = noBtn.getBoundingClientRect();
+          const padding = 10;
+          const maxX = Math.max(padding, stageRect.width - btnRect.width - padding);
+          const maxY = Math.max(padding, stageRect.height - btnRect.height - padding);
+          const clampedX = Math.min(maxX, Math.max(padding, x));
+          const clampedY = Math.min(maxY, Math.max(padding, y));
+          noBtn.style.left = clampedX + "px";
+          noBtn.style.top = clampedY + "px";
+        }
+
+        function randomizeNoButton() {
+          const stageRect = stage.getBoundingClientRect();
+          const btnRect = noBtn.getBoundingClientRect();
+          const padding = 10;
+          const maxX = Math.max(padding, stageRect.width - btnRect.width - padding);
+          const maxY = Math.max(padding, stageRect.height - btnRect.height - padding);
+          const x = padding + Math.random() * Math.max(1, maxX - padding);
+          const y = padding + Math.random() * Math.max(1, maxY - padding);
+          placeNoButton(x, y);
+        }
+
+        function setInitialNoPosition() {
+          const stageRect = stage.getBoundingClientRect();
+          const btnRect = noBtn.getBoundingClientRect();
+          const x = stageRect.width * 0.65 - btnRect.width / 2;
+          const y = stageRect.height * 0.5 - btnRect.height / 2;
+          placeNoButton(x, y);
+        }
+
+        function dodgeFromCursor(event) {
+          if (!finePointer) return;
+          const btnRect = noBtn.getBoundingClientRect();
+          const centerX = btnRect.left + btnRect.width / 2;
+          const centerY = btnRect.top + btnRect.height / 2;
+          const dx = event.clientX - centerX;
+          const dy = event.clientY - centerY;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < 110) {
+            randomizeNoButton();
+            message.textContent = "Interesting choice. Please try again.";
+          }
+        }
+
+        yesBtn.addEventListener("click", function () {
+          message.textContent = "Excellent answer. Very elegant choice.";
+        });
+
+        noBtn.addEventListener("mouseenter", function () {
+          if (!finePointer) return;
+          randomizeNoButton();
+          message.textContent = "No is currently unavailable.";
+        });
+
+        stage.addEventListener("mousemove", dodgeFromCursor);
+        window.addEventListener("resize", setInitialNoPosition);
+
+        setInitialNoPosition();
+      })();
+    </script>
+  </body>
+</html>
