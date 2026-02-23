@@ -35,10 +35,30 @@
 
   let pileBins = [];
 
+  function getViewportMetrics() {
+    const vv = window.visualViewport;
+    return {
+      width: Math.max(1, Math.floor(vv ? vv.width : window.innerWidth)),
+      height: Math.max(1, Math.floor(vv ? vv.height : window.innerHeight)),
+      top: Math.round(window.scrollY + (vv ? vv.offsetTop : 0)),
+      left: Math.round(window.scrollX + (vv ? vv.offsetLeft : 0)),
+    };
+  }
+
+  function syncCanvasToViewport() {
+    const metrics = getViewportMetrics();
+    canvas.style.top = metrics.top + "px";
+    canvas.style.left = metrics.left + "px";
+    canvas.style.width = metrics.width + "px";
+    canvas.style.height = metrics.height + "px";
+  }
+
   function resize() {
+    const metrics = getViewportMetrics();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = Math.max(1, Math.floor(window.innerWidth));
-    height = Math.max(1, Math.floor(window.innerHeight));
+    width = metrics.width;
+    height = metrics.height;
+    syncCanvasToViewport();
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -355,6 +375,7 @@
   }
 
   function onScroll() {
+    syncCanvasToViewport();
     const next = window.scrollY;
     const delta = next - lastScrollY;
     lastScrollY = next;
@@ -364,5 +385,9 @@
   resize();
   window.addEventListener("resize", resize);
   window.addEventListener("scroll", onScroll, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", resize);
+    window.visualViewport.addEventListener("scroll", syncCanvasToViewport, { passive: true });
+  }
   requestAnimationFrame(animate);
 })();

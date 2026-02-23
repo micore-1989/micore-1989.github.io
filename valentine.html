@@ -58,79 +58,11 @@
         </div>
       </section>
     </main>
-
-    <script>
-      (function () {
-        const stage = document.getElementById("choice-stage");
-        const noBtn = document.getElementById("no-btn");
-        const yesBtn = document.getElementById("yes-btn");
-        const message = document.getElementById("response-message");
-
-        if (!stage || !noBtn || !yesBtn || !message) return;
-
-        const finePointer = window.matchMedia("(pointer: fine)").matches;
-
-        function placeNoButton(x, y) {
-          const stageRect = stage.getBoundingClientRect();
-          const btnRect = noBtn.getBoundingClientRect();
-          const padding = 10;
-          const maxX = Math.max(padding, stageRect.width - btnRect.width - padding);
-          const maxY = Math.max(padding, stageRect.height - btnRect.height - padding);
-          const clampedX = Math.min(maxX, Math.max(padding, x));
-          const clampedY = Math.min(maxY, Math.max(padding, y));
-          noBtn.style.left = clampedX + "px";
-          noBtn.style.top = clampedY + "px";
-        }
-
-        function randomizeNoButton() {
-          const stageRect = stage.getBoundingClientRect();
-          const btnRect = noBtn.getBoundingClientRect();
-          const padding = 10;
-          const maxX = Math.max(padding, stageRect.width - btnRect.width - padding);
-          const maxY = Math.max(padding, stageRect.height - btnRect.height - padding);
-          const x = padding + Math.random() * Math.max(1, maxX - padding);
-          const y = padding + Math.random() * Math.max(1, maxY - padding);
-          placeNoButton(x, y);
-        }
-
-        function setInitialNoPosition() {
-          const stageRect = stage.getBoundingClientRect();
-          const btnRect = noBtn.getBoundingClientRect();
-          const x = stageRect.width * 0.65 - btnRect.width / 2;
-          const y = stageRect.height * 0.5 - btnRect.height / 2;
-          placeNoButton(x, y);
-        }
-
-        function dodgeFromCursor(event) {
-          if (!finePointer) return;
-          const btnRect = noBtn.getBoundingClientRect();
-          const centerX = btnRect.left + btnRect.width / 2;
-          const centerY = btnRect.top + btnRect.height / 2;
-          const dx = event.clientX - centerX;
-          const dy = event.clientY - centerY;
-          const distance = Math.hypot(dx, dy);
-
-          if (distance < 110) {
-            randomizeNoButton();
-            message.textContent = "Interesting choice. Please try again.";
-          }
-        }
-
-        yesBtn.addEventListener("click", function () {
-          message.textContent = "Excellent answer. Very elegant choice.";
-        });
-
-        noBtn.addEventListener("mouseenter", function () {
-          if (!finePointer) return;
-          randomizeNoButton();
-          message.textContent = "No is currently unavailable.";
-        });
-
-        stage.addEventListener("mousemove", dodgeFromCursor);
-        window.addEventListener("resize", setInitialNoPosition);
-
-        setInitialNoPosition();
-      })();
-    </script>
+    <noscript>
+      <p style="text-align:center;color:#f1dfad;font-family:'Times New Roman',serif;">
+        JavaScript is required for the playful moving "No" button.
+      </p>
+    </noscript>
+    <script src="valentine.js" defer></script>
   </body>
 </html>

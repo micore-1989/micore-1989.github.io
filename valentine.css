@@ -119,6 +119,7 @@ body {
   box-shadow: inset 0 0 0 1px rgba(201, 164, 74, 0.12);
   position: relative;
   padding: 0.9rem;
+  overflow: hidden;
 }
 
 .choice-btn,
@@ -187,6 +188,7 @@ body {
   min-width: 120px;
   min-height: 52px;
   padding: 0.7rem 1rem;
+  z-index: 2;
 }
 
 .yes-btn:hover,
@@ -200,9 +202,13 @@ body {
 
 .no-btn {
   position: absolute;
+  left: 65%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   min-width: 120px;
   min-height: 52px;
   padding: 0.7rem 1rem;
+  z-index: 1;
 }
 
 .response-message {
