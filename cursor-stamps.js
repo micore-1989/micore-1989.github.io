@@ -1,16 +1,25 @@
 (function () {
-  var SOURCE_IMAGE = "poop.png";
+  var CURSOR_SOURCE_IMAGE = "cursor.png";
+  var STAMP_SOURCE_IMAGE = "poop.png";
   var MAX_STAMPS_PER_PAGE = 180;
   var STORAGE_KEY = "poop_stamps::" + window.location.pathname;
   var cursorDataUrl = "";
   var stampDataUrl = "";
   var cutoutReady = false;
+  var cursorReady = false;
+  var cursorEl = null;
+  var lastPointerX = 0;
+  var lastPointerY = 0;
   var pendingStampQueue = [];
   var stampRecords = loadStampRecords();
+  var supportsFinePointer =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(pointer: fine)").matches;
 
   injectStyles();
   initClickStamping();
-  prepareCutout();
+  prepareAnimatedCursor();
+  prepareStampCutout();
 
   function injectStyles() {
     if (document.getElementById("poop-cursor-styles")) return;
@@ -18,11 +27,102 @@
     var style = document.createElement("style");
     style.id = "poop-cursor-styles";
     style.textContent =
-      "html.poop-cursor-ready, html.poop-cursor-ready * { cursor: var(--poop-cursor) !important; }" +
+      "html.poop-cursor-ready, html.poop-cursor-ready * { cursor: none !important; }" +
+      ".poop-cursor-overlay { position: fixed; left: 0; top: 0; z-index: 2147483646; pointer-events: none; " +
+      "transform: translate3d(-9999px,-9999px,0); opacity: 0; will-change: transform, filter; " +
+      "filter: hue-rotate(0deg) saturate(1.2) drop-shadow(0 0 6px rgba(255,255,255,0.18)); " +
+      "animation: poop-cursor-rainbow 2.4s linear infinite; }" +
+      ".poop-cursor-overlay.ready { opacity: 0.9; }" +
       ".poop-stamp { position: absolute; pointer-events: none; z-index: 44; opacity: 0.22; " +
       "transform: translate(-50%, -50%); user-select: none; -webkit-user-drag: none; " +
-      "filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08)); }";
+      "filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08)); }" +
+      "@keyframes poop-cursor-rainbow {" +
+      "0%{filter:hue-rotate(0deg) saturate(1.2) drop-shadow(0 0 6px rgba(255,70,70,0.22));}" +
+      "25%{filter:hue-rotate(90deg) saturate(1.25) drop-shadow(0 0 6px rgba(120,255,70,0.2));}" +
+      "50%{filter:hue-rotate(180deg) saturate(1.25) drop-shadow(0 0 6px rgba(70,220,255,0.2));}" +
+      "75%{filter:hue-rotate(270deg) saturate(1.25) drop-shadow(0 0 6px rgba(190,120,255,0.2));}" +
+      "100%{filter:hue-rotate(360deg) saturate(1.2) drop-shadow(0 0 6px rgba(255,70,70,0.22));}" +
+      "}";
     document.head.appendChild(style);
+  }
+
+  function prepareAnimatedCursor() {
+    if (!supportsFinePointer) return;
+
+    var img = new Image();
+    img.decoding = "async";
+    img.onload = function () {
+      try {
+        cursorDataUrl = buildRawCursorAsset(img).toDataURL("image/png");
+        mountCursorOverlay();
+      } catch (err) {
+        console.error("animated cursor prep failed:", err);
+      }
+    };
+    img.onerror = function () {
+      console.error("cursor image failed to load");
+    };
+    img.src = CURSOR_SOURCE_IMAGE;
+  }
+
+  function mountCursorOverlay() {
+    if (!cursorDataUrl || cursorEl || !supportsFinePointer) return;
+
+    cursorEl = new Image();
+    cursorEl.className = "poop-cursor-overlay";
+    cursorEl.src = cursorDataUrl;
+    cursorEl.alt = "";
+    cursorEl.setAttribute("aria-hidden", "true");
+    cursorEl.decoding = "async";
+    cursorEl.draggable = false;
+
+    document.body.appendChild(cursorEl);
+    document.documentElement.classList.add("poop-cursor-ready");
+    cursorReady = true;
+
+    function moveCursor(clientX, clientY) {
+      if (!cursorEl) return;
+      lastPointerX = clientX;
+      lastPointerY = clientY;
+      cursorEl.style.transform =
+        "translate3d(" + Math.round(clientX + 2) + "px," + Math.round(clientY + 2) + "px,0)";
+      cursorEl.classList.add("ready");
+    }
+
+    document.addEventListener(
+      "pointermove",
+      function (event) {
+        if (event.pointerType && event.pointerType !== "mouse" && event.pointerType !== "pen") return;
+        moveCursor(event.clientX, event.clientY);
+      },
+      { passive: true }
+    );
+
+    document.addEventListener(
+      "mousemove",
+      function (event) {
+        moveCursor(event.clientX, event.clientY);
+      },
+      { passive: true }
+    );
+
+    document.addEventListener(
+      "mouseleave",
+      function () {
+        if (!cursorEl) return;
+        cursorEl.classList.remove("ready");
+      },
+      true
+    );
+
+    window.addEventListener(
+      "blur",
+      function () {
+        if (!cursorEl) return;
+        cursorEl.classList.remove("ready");
+      },
+      { passive: true }
+    );
   }
 
   function initClickStamping() {
@@ -57,17 +157,10 @@
     );
   }
 
-  function prepareCutout() {
+  function prepareStampCutout() {
     var img = new Image();
     img.decoding = "async";
     img.onload = function () {
-      try {
-        cursorDataUrl = buildRawCursorAsset(img).toDataURL("image/png");
-        applyCursor();
-      } catch (err) {
-        console.error("poop cursor image prep failed:", err);
-      }
-
       try {
         var result = buildCutoutAssets(img);
         stampDataUrl = result.stampUrl;
@@ -89,14 +182,7 @@
     img.onerror = function () {
       console.error("poop cursor image failed to load");
     };
-    img.src = SOURCE_IMAGE;
-  }
-
-  function applyCursor() {
-    if (!cursorDataUrl) return;
-    var root = document.documentElement;
-    root.style.setProperty("--poop-cursor", "url(\"" + cursorDataUrl + "\") 8 8, auto");
-    root.classList.add("poop-cursor-ready");
+    img.src = STAMP_SOURCE_IMAGE;
   }
 
   function restoreStamps() {
