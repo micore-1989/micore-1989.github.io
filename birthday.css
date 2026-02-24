@@ -333,6 +333,24 @@ a {
   color: var(--black);
 }
 
+.reason-btn-accent-red {
+  color: #ffe4ea;
+  box-shadow:
+    inset 0 0 0 1px rgba(228, 75, 103, 0.24),
+    inset 0 0 0 2px rgba(255, 120, 144, 0.05);
+}
+
+.reason-btn-accent-red::after {
+  background: #d94b67;
+}
+
+.reason-btn-accent-red:hover,
+.reason-btn-accent-red:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(217, 75, 103, 0.24),
+    5px 5px 0 rgba(15, 15, 16, 0.95);
+}
+
 .photo-grid {
   display: grid;
   grid-template-columns: 1.35fr 1fr 1fr;
@@ -447,11 +465,38 @@ a {
   justify-items: center;
 }
 
-.support-qr-frame {
+.support-qr-link {
+  display: block;
   width: min(100%, 360px);
+  border: 1px solid transparent;
+  transition:
+    transform 130ms ease,
+    box-shadow 170ms ease,
+    border-color 170ms ease;
+}
+
+.support-qr-link:hover,
+.support-qr-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--black);
+  box-shadow:
+    0 0 0 2px rgba(201, 164, 74, 0.24),
+    5px 5px 0 rgba(15, 15, 16, 0.95);
+  outline: none;
+}
+
+.support-qr-link:active {
+  transform: translateY(0);
+  box-shadow: 2px 2px 0 rgba(15, 15, 16, 0.95);
+}
+
+.support-qr-frame {
+  width: 100%;
   border: 1px solid var(--black);
   background: #fff;
   padding: 0.5rem;
+  display: grid;
+  place-items: center;
   box-shadow:
     0 0 0 1px rgba(201, 164, 74, 0.18),
     inset 0 0 0 1px rgba(15, 15, 16, 0.04);
@@ -461,7 +506,7 @@ a {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
+  max-height: min(58vh, 520px);
   object-fit: contain;
   object-position: center;
 }
@@ -612,6 +657,14 @@ a {
   }
 
   .support-qr-frame {
+    width: 100%;
+  }
+
+  .support-qr-frame img {
+    max-height: min(50vh, 430px);
+  }
+
+  .support-qr-link {
     width: min(100%, 320px);
   }
 
@@ -654,8 +707,16 @@ a {
   }
 
   .support-qr-frame {
-    width: min(100%, 290px);
+    width: 100%;
     padding: 0.4rem;
+  }
+
+  .support-qr-frame img {
+    max-height: min(46vh, 360px);
+  }
+
+  .support-qr-link {
+    width: min(100%, 290px);
   }
 
   .support-copy {
