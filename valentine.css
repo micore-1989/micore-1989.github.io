@@ -120,19 +120,19 @@ body::after {
   position: fixed;
   top: 0;
   left: 0;
-  padding: 0.35rem 0.55rem;
-  border: 1px solid currentColor;
+  padding: 0.55rem 0.95rem;
+  border: 2px solid currentColor;
   background: rgba(16, 16, 18, 0.88);
   color: #f1dfad;
   font-family: "Courier New", "Lucida Console", monospace;
   font-weight: 700;
-  font-size: clamp(14px, 2vw, 22px);
+  font-size: clamp(24px, 4vw, 48px);
   line-height: 1;
   text-transform: lowercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   box-shadow:
     0 0 0 1px rgba(16, 16, 18, 0.95),
-    4px 4px 0 rgba(16, 16, 18, 0.45);
+    6px 6px 0 rgba(16, 16, 18, 0.45);
   text-shadow:
     1px 0 0 currentColor,
     -1px 0 0 currentColor;
@@ -377,9 +377,10 @@ body::after {
   }
 
   #please-dvd {
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    padding: 0.3rem 0.45rem;
+    font-size: clamp(18px, 5vw, 28px);
+    letter-spacing: 0.1em;
+    padding: 0.42rem 0.65rem;
+    border-width: 1.5px;
   }
 
   .yes-btn {
