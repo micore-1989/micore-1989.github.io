@@ -25,8 +25,79 @@ body {
   min-height: 100vh;
   background: var(--bg-red);
   color: var(--ink);
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Courier New", "Lucida Console", monospace;
   text-align: center;
+  position: relative;
+  overflow-x: hidden;
+  image-rendering: pixelated;
+  letter-spacing: 0.01em;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      rgba(0, 0, 0, 0.03) 1px 3px
+    );
+  opacity: 0.55;
+}
+
+body::after {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.015) 0 1px,
+      transparent 1px 6px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.012) 0 1px,
+      transparent 1px 6px
+    );
+  opacity: 0.35;
+}
+
+#please-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+#please-dvd {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid currentColor;
+  background: rgba(16, 16, 18, 0.88);
+  color: #f1dfad;
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 700;
+  font-size: clamp(14px, 2vw, 22px);
+  line-height: 1;
+  text-transform: lowercase;
+  letter-spacing: 0.1em;
+  box-shadow:
+    0 0 0 1px rgba(16, 16, 18, 0.95),
+    4px 4px 0 rgba(16, 16, 18, 0.45);
+  text-shadow:
+    1px 0 0 currentColor,
+    -1px 0 0 currentColor;
+  opacity: 0.92;
+  will-change: transform, color;
+  transform: translate3d(0, 0, 0);
 }
 
 .val-shell {
@@ -34,6 +105,8 @@ body {
   display: grid;
   place-items: center;
   padding: 1.1rem;
+  position: relative;
+  z-index: 2;
 }
 
 .val-card {
@@ -44,6 +117,9 @@ body {
     0 18px 32px var(--shadow),
     inset 0 0 0 2px rgba(201, 164, 74, 0.2);
   padding: 1.3rem;
+  position: relative;
+  z-index: 2;
+  border-radius: 0;
 }
 
 .eyebrow {
@@ -53,6 +129,7 @@ body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 700;
+  text-shadow: 1px 0 0 rgba(0, 0, 0, 0.14);
 }
 
 .val-card h1 {
@@ -60,6 +137,8 @@ body {
   color: var(--black);
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 1.02;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 1px 0 rgba(16, 16, 18, 0.08);
 }
 
 .lead {
@@ -67,6 +146,7 @@ body {
   max-width: 56ch;
   color: var(--muted);
   font-size: 1.05rem;
+  line-height: 1.5;
 }
 
 .letter-panel {
@@ -75,6 +155,7 @@ body {
   background: var(--panel-pink-soft);
   box-shadow: inset 0 0 0 1px rgba(201, 164, 74, 0.12);
   padding: 1rem;
+  border-radius: 0;
 }
 
 .letter-panel p {
@@ -94,6 +175,7 @@ body {
   background: var(--panel-pink-soft);
   box-shadow: inset 0 0 0 1px rgba(201, 164, 74, 0.12);
   padding: 1rem;
+  border-radius: 0;
 }
 
 .choice-kicker {
@@ -120,6 +202,7 @@ body {
   position: relative;
   padding: 0.9rem;
   overflow: hidden;
+  border-radius: 0;
 }
 
 .choice-btn,
@@ -139,6 +222,7 @@ body {
   font-weight: 700;
   text-align: center;
   cursor: pointer;
+  border-radius: 0;
   transition:
     color 170ms ease,
     transform 130ms ease,
@@ -216,6 +300,7 @@ body {
   min-height: 1.6rem;
   color: var(--gold-deep);
   font-weight: 700;
+  text-shadow: 1px 0 0 rgba(0, 0, 0, 0.08);
 }
 
 .footer-actions {
@@ -241,6 +326,12 @@ body {
 
   .choice-stage {
     min-height: 220px;
+  }
+
+  #please-dvd {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.45rem;
   }
 
   .yes-btn {
@@ -273,5 +364,9 @@ body {
   .choice-btn::before,
   .lux-btn::before {
     transition: none;
+  }
+
+  #please-layer {
+    display: none;
   }
 }

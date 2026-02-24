@@ -123,9 +123,114 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initValentinePage, { once: true });
-  } else {
+  function initPleaseBounce() {
+    const layer = document.getElementById("please-layer");
+    const el = document.getElementById("please-dvd");
+    if (!layer || !el) return;
+
+    const supportsMatchMedia = typeof window.matchMedia === "function";
+    if (supportsMatchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      layer.style.display = "none";
+      return;
+    }
+
+    let vw = 0;
+    let vh = 0;
+    let x = 24;
+    let y = 24;
+    let vx = 72;
+    let vy = 58;
+    let hue = 42;
+    let lastTs = 0;
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function applyColor() {
+      const color = "hsl(" + hue.toFixed(0) + " 88% 66%)";
+      el.style.color = color;
+      el.style.boxShadow =
+        "0 0 0 1px rgba(16,16,18,0.95), 4px 4px 0 rgba(16,16,18,0.45), 0 0 14px " + color;
+    }
+
+    function resize() {
+      vw = Math.max(1, window.innerWidth);
+      vh = Math.max(1, window.innerHeight);
+      const rect = el.getBoundingClientRect();
+      x = clamp(x, 0, Math.max(0, vw - rect.width));
+      y = clamp(y, 0, Math.max(0, vh - rect.height));
+    }
+
+    function nudgeColor(onBounce) {
+      hue = (hue + (onBounce ? 63 : 18)) % 360;
+      applyColor();
+    }
+
+    function tick(ts) {
+      if (!lastTs) {
+        lastTs = ts;
+        resize();
+        applyColor();
+      }
+
+      const dt = Math.min(0.04, (ts - lastTs) / 1000);
+      lastTs = ts;
+
+      hue = (hue + dt * 24) % 360;
+
+      x += vx * dt;
+      y += vy * dt;
+
+      const rect = el.getBoundingClientRect();
+      let bouncedX = false;
+      let bouncedY = false;
+
+      if (x <= 0) {
+        x = 0;
+        vx = Math.abs(vx);
+        bouncedX = true;
+      } else if (x + rect.width >= vw) {
+        x = Math.max(0, vw - rect.width);
+        vx = -Math.abs(vx);
+        bouncedX = true;
+      }
+
+      if (y <= 0) {
+        y = 0;
+        vy = Math.abs(vy);
+        bouncedY = true;
+      } else if (y + rect.height >= vh) {
+        y = Math.max(0, vh - rect.height);
+        vy = -Math.abs(vy);
+        bouncedY = true;
+      }
+
+      if (bouncedX || bouncedY) {
+        nudgeColor(true);
+      } else {
+        applyColor();
+      }
+
+      // Snap to whole pixels for a more retro look.
+      el.style.transform =
+        "translate3d(" + Math.round(x) + "px," + Math.round(y) + "px,0)";
+
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("resize", resize);
+    requestAnimationFrame(tick);
+  }
+
+  function boot() {
     initValentinePage();
+    initPleaseBounce();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  } else {
+    boot();
   }
 })();
