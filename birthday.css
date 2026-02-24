@@ -126,6 +126,45 @@ body.intro-reveal .page-shell {
   padding: 1rem;
 }
 
+.intro-skip-btn {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 5;
+  min-height: 42px;
+  padding: 0.55rem 0.9rem;
+  border: 2px solid #111;
+  border-radius: 999px;
+  background: rgba(255, 248, 248, 0.92);
+  color: #111;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  transition:
+    transform 140ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.intro-skip-btn:hover,
+.intro-skip-btn:focus-visible {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 2px rgba(255, 228, 165, 0.35),
+    0 12px 26px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.intro-skip-btn:active {
+  transform: translateY(0);
+}
+
 .intro-bubbles {
   position: absolute;
   top: max(20px, env(safe-area-inset-top));
@@ -1166,6 +1205,15 @@ a {
     border-width: 1.5px;
   }
 
+  .intro-skip-btn {
+    top: 0.55rem;
+    right: 0.55rem;
+    min-height: 38px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.88rem;
+    border-width: 1.5px;
+  }
+
   .intro-bubble::after {
     width: 18px;
     height: 18px;
@@ -1250,6 +1298,10 @@ a {
   .action-btn::after,
   .reason-btn::before,
   .reason-btn::after {
+    transition: none;
+  }
+
+  .intro-skip-btn {
     transition: none;
   }
 

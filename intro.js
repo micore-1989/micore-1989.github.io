@@ -3,7 +3,9 @@
   const bubble = document.getElementById("intro-bubble");
   const character = document.getElementById("intro-character");
   const burst = document.getElementById("intro-sneeze-burst");
+  const skipBtn = document.getElementById("intro-skip-btn");
   const body = document.body;
+  const introTarget = body ? body.getAttribute("data-intro-target") : "";
 
   if (!body) return;
 
@@ -56,6 +58,16 @@
   function finishIntro() {
     if (finished) return;
     finished = true;
+
+    if (introTarget) {
+      if (overlay) {
+        overlay.classList.add("is-exiting");
+      }
+      cleanupTimer = window.setTimeout(function () {
+        window.location.replace(introTarget);
+      }, 520);
+      return;
+    }
 
     body.classList.remove("intro-active");
     body.classList.add("intro-reveal");
@@ -126,6 +138,14 @@
       },
       { once: true }
     );
+  }
+
+  if (skipBtn) {
+    skipBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      finishIntro();
+    });
   }
 
   // Safety fallback so the page can't get stuck behind the overlay.
