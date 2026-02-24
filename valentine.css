@@ -50,6 +50,7 @@ body::before {
       rgba(0, 0, 0, 0.03) 1px 3px
     );
   opacity: 0.55;
+  animation: crt-flicker-a 0.12s steps(2, end) infinite;
 }
 
 body::after {
@@ -65,6 +66,7 @@ body::after {
       transparent 1px 6px
     );
   opacity: 0.35;
+  animation: crt-flicker-b 0.18s steps(3, end) infinite;
 }
 
 #please-layer {
@@ -72,7 +74,17 @@ body::after {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 1;
+  z-index: 30;
+}
+
+#please-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 35%, rgba(0, 0, 0, 0.14) 100%);
+  opacity: 0.75;
+  animation: crt-flicker-vignette 0.24s steps(2, end) infinite;
 }
 
 #please-dvd {
@@ -98,6 +110,7 @@ body::after {
   opacity: 0.92;
   will-change: transform, color;
   transform: translate3d(0, 0, 0);
+  animation: crt-word-flicker 0.22s steps(2, end) infinite;
 }
 
 .val-shell {
@@ -366,7 +379,34 @@ body::after {
     transition: none;
   }
 
-  #please-layer {
-    display: none;
+  body::before,
+  body::after,
+  #please-layer::before,
+  #please-dvd {
+    animation: none;
   }
+}
+
+@keyframes crt-flicker-a {
+  0% { opacity: 0.52; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.54; }
+}
+
+@keyframes crt-flicker-b {
+  0% { opacity: 0.32; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.34; }
+}
+
+@keyframes crt-flicker-vignette {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.82; }
+  100% { opacity: 0.74; }
+}
+
+@keyframes crt-word-flicker {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.98; }
+  100% { opacity: 0.92; }
 }

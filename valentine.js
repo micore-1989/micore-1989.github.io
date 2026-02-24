@@ -128,18 +128,24 @@
     const el = document.getElementById("please-dvd");
     if (!layer || !el) return;
 
-    const supportsMatchMedia = typeof window.matchMedia === "function";
-    if (supportsMatchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      layer.style.display = "none";
-      return;
-    }
+    const raf =
+      window.requestAnimationFrame ||
+      function (cb) {
+        return window.setTimeout(function () {
+          cb(performance.now ? performance.now() : Date.now());
+        }, 16);
+      };
+
+    const prefersReduced =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let vw = 0;
     let vh = 0;
     let x = 24;
     let y = 24;
-    let vx = 72;
-    let vy = 58;
+    let vx = prefersReduced ? 36 : 72;
+    let vy = prefersReduced ? 28 : 58;
     let hue = 42;
     let lastTs = 0;
 
@@ -151,7 +157,7 @@
       const color = "hsl(" + hue.toFixed(0) + " 88% 66%)";
       el.style.color = color;
       el.style.boxShadow =
-        "0 0 0 1px rgba(16,16,18,0.95), 4px 4px 0 rgba(16,16,18,0.45), 0 0 14px " + color;
+        "0 0 0 1px rgba(16,16,18,0.95), 4px 4px 0 rgba(16,16,18,0.45), 0 0 18px " + color + ", 0 0 30px rgba(255,255,255,0.08)";
     }
 
     function resize() {
@@ -216,16 +222,30 @@
       el.style.transform =
         "translate3d(" + Math.round(x) + "px," + Math.round(y) + "px,0)";
 
-      requestAnimationFrame(tick);
+      raf(tick);
     }
 
     window.addEventListener("resize", resize);
-    requestAnimationFrame(tick);
+    raf(function (ts) {
+      // Force a visible starting position and color before first movement.
+      applyColor();
+      el.style.transform = "translate3d(" + Math.round(x) + "px," + Math.round(y) + "px,0)";
+      tick(ts);
+    });
   }
 
   function boot() {
-    initValentinePage();
-    initPleaseBounce();
+    try {
+      initValentinePage();
+    } catch (err) {
+      console.error("Valentine interaction init failed:", err);
+    }
+
+    try {
+      initPleaseBounce();
+    } catch (err) {
+      console.error("Please bounce init failed:", err);
+    }
   }
 
   if (document.readyState === "loading") {
