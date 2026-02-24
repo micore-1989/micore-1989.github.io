@@ -101,15 +101,15 @@
     }
 
     bubble.classList.add("show");
-    pulseBubble("Hi Elli!", false);
+    pulseBubble("I heard theres a very special birthday", false);
     talkBeat(320);
 
     if (prefersReducedMotion) {
       await sleep(450);
-      pulseBubble("I hope you're having a great day", false);
+      pulseBubble("for a very special girl", false);
       talkBeat(360);
       await sleep(650);
-      pulseBubble("Happy birthday!", true);
+      pulseBubble("Happy birthday Elli!", true);
       talkBeat(360);
       await sleep(700);
       startHandHeart();
@@ -121,11 +121,11 @@
     }
 
     await sleep(900);
-    pulseBubble("I hope you're having a great day", false);
+    pulseBubble("for a very special girl", false);
     talkBeat(420);
 
     await sleep(1300);
-    pulseBubble("Happy birthday!", true);
+    pulseBubble("Happy birthday Elli!", true);
     talkBeat(420);
 
     await sleep(1000);
