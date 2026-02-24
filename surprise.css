@@ -70,8 +70,7 @@ body {
 .surprise-shell {
   position: relative;
   z-index: 3;
-  min-height: 100vh;
-  min-height: 100svh;
+  min-height: 100%;
   display: grid;
   place-items: start;
   padding: 0.9rem;

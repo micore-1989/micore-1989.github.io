@@ -117,9 +117,6 @@
     });
 
     window.addEventListener("resize", setInitialNoButtonPosition);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", setInitialNoButtonPosition);
-    }
 
     requestAnimationFrame(function () {
       requestAnimationFrame(setInitialNoButtonPosition);
