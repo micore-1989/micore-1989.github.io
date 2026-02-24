@@ -9,16 +9,22 @@
   if (!ctx) return;
 
   const colors = ["#c9a44a", "#ead7a1", "#ffffff", "#f6d36b", "#d8b458"];
-  const ribbonColors = [
-    "#ff4b57",
-    "#63ff7b",
-    "#ffd95f",
-    "#53cfff",
-    "#ff7bce",
-    "#ffffff",
-  ];
   const pieces = [];
-  const ribbons = [];
+  const cursorDrops = [];
+  const rainbowTrailColors = [
+    "#ff4b57",
+    "#ff9b45",
+    "#ffe25c",
+    "#63ff7b",
+    "#53cfff",
+    "#a97bff",
+  ];
+  const cursorSprite = {
+    img: null,
+    ready: false,
+    w: 40,
+    h: 44,
+  };
 
   let width = 0;
   let height = 0;
@@ -95,6 +101,14 @@
         clearDeposit(p);
       }
     }
+    for (const d of cursorDrops) {
+      d.x = Math.min(width - 4, Math.max(4, d.x));
+      d.y = Math.min(height + 200, d.y);
+      if (d.resting) {
+        d.resting = false;
+        clearCursorDeposit(d);
+      }
+    }
   }
 
   function random(min, max) {
@@ -140,29 +154,42 @@
   }
 
   function spawnRibbon() {
-    if (ribbons.length >= config.ribbonMax) return;
+    if (cursorDrops.length >= config.ribbonMax) return;
 
-    ribbons.push({
+    cursorDrops.push({
       x: random(width * 0.04, width * 0.96),
       y: random(-160, -20),
       vx: random(-28, 28),
       vy: random(25, 95),
-      len: random(72, 160),
-      width: random(2.2, 4.8),
       amp: random(10, 26),
       freq: random(1.4, 2.8),
       phase: random(0, Math.PI * 2),
       phaseSpeed: random(1.4, 3.2),
-      color: ribbonColors[(Math.random() * ribbonColors.length) | 0],
-      alpha: random(0.7, 0.92),
+      alpha: random(0.78, 0.95),
       life: 0,
       maxLife: random(5.8, 8.5),
       layer: Math.random(),
+      w: cursorSprite.w,
+      h: cursorSprite.h,
+      r: random(0, Math.PI * 2),
+      vr: random(-0.9, 0.9),
+      hue: random(0, 360),
+      hueSpeed: random(40, 86),
+      resting: false,
+      asleepFrames: 0,
+      depositStart: -1,
+      depositEnd: -1,
+      depositAmount: 0,
+      trail: [],
     });
   }
 
   function pieceRadius(p) {
     return Math.max(3, Math.max(p.w, p.h) * 0.5);
+  }
+
+  function cursorDropRadius(d) {
+    return Math.max(8, Math.max(d.w, d.h) * 0.38);
   }
 
   function terrainYAt(x) {
@@ -247,18 +274,85 @@
     p.asleepFrames = 0;
   }
 
+  function clearCursorDeposit(d) {
+    if (d.depositStart < 0 || d.depositEnd < d.depositStart || d.depositAmount <= 0) {
+      d.depositStart = -1;
+      d.depositEnd = -1;
+      d.depositAmount = 0;
+      return;
+    }
+
+    const count = d.depositEnd - d.depositStart + 1;
+    const perBin = d.depositAmount / count;
+    for (let i = d.depositStart; i <= d.depositEnd; i += 1) {
+      pileBins[i] = Math.max(0, pileBins[i] - perBin);
+    }
+
+    d.depositStart = -1;
+    d.depositEnd = -1;
+    d.depositAmount = 0;
+  }
+
+  function settleCursorDrop(d) {
+    if (d.resting) return;
+
+    const radius = cursorDropRadius(d);
+    const start = clamp(Math.floor((d.x - radius) / config.binSize), 0, pileBins.length - 1);
+    const end = clamp(Math.floor((d.x + radius) / config.binSize), 0, pileBins.length - 1);
+    let maxPile = 0;
+    for (let i = start; i <= end; i += 1) {
+      if (pileBins[i] > maxPile) maxPile = pileBins[i];
+    }
+
+    d.x = clamp(d.x, radius, width - radius);
+    d.y = height - config.floorPadding - maxPile - radius;
+    d.vx = 0;
+    d.vy = 0;
+    d.vr *= 0.25;
+    d.resting = true;
+    d.asleepFrames = 0;
+    d.trail.length = 0;
+
+    const deposit = Math.max(1.6, radius * 0.58);
+    const count = end - start + 1;
+    const perBin = deposit / count;
+    for (let i = start; i <= end; i += 1) {
+      pileBins[i] += perBin;
+    }
+    smoothLocalPile(start, end);
+
+    d.depositStart = start;
+    d.depositEnd = end;
+    d.depositAmount = deposit;
+  }
+
+  function wakeCursorDrop(d, impulseX, impulseY) {
+    if (!d.resting) return;
+    clearCursorDeposit(d);
+    d.resting = false;
+    d.vx = random(-10, 10) + impulseX;
+    d.vy = -Math.abs(impulseY) - random(18, 70);
+    d.vr = random(-1.4, 1.4);
+    d.y -= random(1, 3);
+    d.asleepFrames = 0;
+  }
+
   function disturbRibbonsFromScroll(scrollDelta) {
-    if (!scrollDelta || !ribbons.length) return;
+    if (!scrollDelta || !cursorDrops.length) return;
     const magnitude = clamp(Math.abs(scrollDelta), 1, 140);
     const direction = Math.sign(scrollDelta) || 1;
-    const count = Math.min(ribbons.length, Math.max(4, Math.round(magnitude * 0.08)));
+    const count = Math.min(cursorDrops.length, Math.max(4, Math.round(magnitude * 0.08)));
 
     for (let i = 0; i < count; i += 1) {
-      const r = ribbons[(Math.random() * ribbons.length) | 0];
-      if (!r) continue;
-      r.vx += direction * random(10, 46);
-      r.vy -= random(4, 22);
-      r.phaseSpeed += random(-0.12, 0.12);
+      const d = cursorDrops[(Math.random() * cursorDrops.length) | 0];
+      if (!d) continue;
+      if (d.resting) {
+        wakeCursorDrop(d, direction * random(12, 40), random(10, 45));
+        continue;
+      }
+      d.vx += direction * random(10, 46);
+      d.vy -= random(4, 22);
+      d.phaseSpeed += random(-0.12, 0.12);
     }
   }
 
@@ -272,7 +366,7 @@
     gustY += Math.min(22, magnitude * 0.12);
 
     const resting = pieces.filter((p) => p.resting);
-    if (!resting.length) return;
+    const restingCursorDrops = cursorDrops.filter((d) => d.resting);
 
     const toWake = Math.min(
       resting.length,
@@ -284,6 +378,16 @@
       const p = resting[(Math.random() * resting.length) | 0];
       if (!p || !p.resting) continue;
       wakePiece(p, direction * random(18, 85), random(25, 120));
+    }
+
+    const toWakeCursorDrops = Math.min(
+      restingCursorDrops.length,
+      Math.max(2, Math.round(magnitude * 0.1))
+    );
+    for (let i = 0; i < toWakeCursorDrops; i += 1) {
+      const d = restingCursorDrops[(Math.random() * restingCursorDrops.length) | 0];
+      if (!d || !d.resting) continue;
+      wakeCursorDrop(d, direction * random(8, 42), random(16, 64));
     }
 
     disturbRibbonsFromScroll(scrollDelta);
@@ -345,18 +449,32 @@
   }
 
   function updateRibbon(r, dt) {
+    if (r.resting) {
+      r.asleepFrames += 1;
+      r.hue = (r.hue + r.hueSpeed * dt * 0.7) % 360;
+      r.r += r.vr * dt;
+      r.vr *= 0.97;
+      return;
+    }
+
     const drag = Math.pow(1 - config.ribbonAirDrag, dt * 60);
     r.life += dt;
     r.phase += r.phaseSpeed * dt;
+    r.hue = (r.hue + r.hueSpeed * dt) % 360;
     r.vx += gustX * 0.012 * dt;
     r.vy += (config.ribbonGravity + gustY * 5) * dt;
     r.vx *= drag;
     r.vy *= Math.pow(0.995, dt * 60);
+    r.vr *= 0.998;
 
     r.x += r.vx * dt + Math.sin(r.phase * 1.2) * 10 * dt;
     r.y += r.vy * dt;
+    r.r += r.vr * dt;
 
-    const lateralPad = Math.max(6, r.amp * 0.6);
+    r.trail.push({ x: r.x, y: r.y });
+    if (r.trail.length > 10) r.trail.shift();
+
+    const lateralPad = Math.max(8, Math.max(r.w, r.h) * 0.4);
     if (r.x < lateralPad) {
       r.x = lateralPad;
       r.vx = Math.abs(r.vx) * 0.72;
@@ -365,13 +483,21 @@
       r.vx = -Math.abs(r.vx) * 0.72;
     }
 
-    // Soft floor collision so a few ribbons drift and curl near the bottom.
-    const tailY = r.y + r.len;
-    if (tailY > height - 2) {
-      r.y -= tailY - (height - 2);
-      r.vy = -Math.abs(r.vy) * 0.18;
-      r.vx *= 0.86;
-      r.phaseSpeed *= 0.98;
+    const radius = cursorDropRadius(r);
+    const groundY = terrainYAt(r.x) - radius;
+    if (r.y >= groundY) {
+      r.y = groundY;
+      const impact = Math.abs(r.vy);
+      if (impact > 90 && Math.random() < 0.5) {
+        r.vy = -impact * 0.18;
+        r.vx *= 0.78;
+        r.vr *= 0.9;
+        if (Math.abs(r.vy) < 28 && Math.abs(r.vx) < 16) {
+          settleCursorDrop(r);
+        }
+      } else {
+        settleCursorDrop(r);
+      }
     }
   }
 
@@ -404,39 +530,45 @@
   }
 
   function drawRibbon(r) {
-    const segments = 14;
     ctx.save();
     ctx.globalAlpha = r.alpha;
 
-    // Main ribbon stroke
-    ctx.strokeStyle = r.color;
-    ctx.lineWidth = r.width;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    for (let i = 0; i <= segments; i += 1) {
-      const t = i / segments;
-      const taper = 1 - t * 0.4;
-      const px = r.x + Math.sin(r.phase + t * r.freq * Math.PI * 2) * r.amp * taper;
-      const py = r.y + t * r.len;
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+    if (!r.resting && r.trail && r.trail.length > 1) {
+      const stripeGap = 2.3;
+      const baseWidth = 2.8;
+      for (let c = 0; c < rainbowTrailColors.length; c += 1) {
+        const offset = (c - (rainbowTrailColors.length - 1) / 2) * stripeGap;
+        ctx.strokeStyle = rainbowTrailColors[c];
+        ctx.lineWidth = baseWidth;
+        ctx.lineCap = "round";
+        ctx.globalAlpha = r.alpha * 0.22;
+        ctx.beginPath();
+        for (let i = 0; i < r.trail.length; i += 1) {
+          const t = i / Math.max(1, r.trail.length - 1);
+          const point = r.trail[i];
+          const px = point.x + Math.sin(r.phase + t * 2.4) * Math.max(2, r.amp * 0.22);
+          const py = point.y + offset;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+      ctx.globalAlpha = r.alpha;
     }
-    ctx.stroke();
 
-    // Bright highlight to make them read like glossy gift ribbons.
-    ctx.globalAlpha = r.alpha * 0.4;
-    ctx.strokeStyle = "rgba(255,255,255,0.9)";
-    ctx.lineWidth = Math.max(1, r.width * 0.35);
-    ctx.beginPath();
-    for (let i = 0; i <= segments; i += 1) {
-      const t = i / segments;
-      const taper = 1 - t * 0.48;
-      const px = r.x + Math.sin(r.phase + 0.45 + t * r.freq * Math.PI * 2) * (r.amp * 0.72) * taper;
-      const py = r.y + t * r.len;
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+    if (cursorSprite.ready && cursorSprite.img) {
+      ctx.translate(r.x, r.y);
+      ctx.rotate(r.r);
+      ctx.filter = "hue-rotate(" + r.hue.toFixed(1) + "deg) saturate(1.28)";
+      ctx.drawImage(cursorSprite.img, -r.w / 2, -r.h / 2, r.w, r.h);
+      ctx.filter = "none";
+    } else {
+      ctx.translate(r.x, r.y);
+      ctx.rotate(r.r);
+      ctx.fillStyle = "hsla(" + r.hue.toFixed(0) + " 85% 62% / " + r.alpha + ")";
+      ctx.fillRect(-r.w / 2, -r.h / 2, r.w, r.h);
     }
-    ctx.stroke();
+
     ctx.restore();
   }
 
@@ -496,17 +628,21 @@
     for (const p of pieces) {
       updatePiece(p, dt);
     }
-    for (let i = ribbons.length - 1; i >= 0; i -= 1) {
-      const r = ribbons[i];
+    for (let i = cursorDrops.length - 1; i >= 0; i -= 1) {
+      const r = cursorDrops[i];
       updateRibbon(r, dt);
-      if (r.life > r.maxLife || r.y > height + r.len + 40) {
-        ribbons.splice(i, 1);
+      if ((!r.resting && r.life > r.maxLife) || (!r.resting && r.y > height + Math.max(r.h, r.w) + 60)) {
+        if (r.resting) clearCursorDeposit(r);
+        cursorDrops.splice(i, 1);
       }
     }
 
     ctx.clearRect(0, 0, width, height);
-    ribbons.sort((a, b) => a.y - b.y || a.layer - b.layer);
-    for (const r of ribbons) {
+    cursorDrops.sort((a, b) => {
+      if (a.resting !== b.resting) return a.resting ? -1 : 1;
+      return a.y - b.y || a.layer - b.layer;
+    });
+    for (const r of cursorDrops) {
       drawRibbon(r);
     }
     drawPileShadow();
@@ -540,6 +676,32 @@
   }
 
   resize();
+  (function loadCursorSprite() {
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = function () {
+      let w = img.naturalWidth || img.width;
+      let h = img.naturalHeight || img.height;
+      const targetHeight = 44;
+      const ratio = targetHeight / h;
+      w = Math.round(w * ratio);
+      h = Math.round(h * ratio);
+      if (w > 64) {
+        const shrink = 64 / w;
+        w = 64;
+        h = Math.max(1, Math.round(h * shrink));
+      }
+      cursorSprite.img = img;
+      cursorSprite.w = w;
+      cursorSprite.h = h;
+      for (const d of cursorDrops) {
+        d.w = cursorSprite.w;
+        d.h = cursorSprite.h;
+      }
+      cursorSprite.ready = true;
+    };
+    img.src = "cursor.png";
+  })();
   window.addEventListener("resize", resize);
   window.addEventListener("scroll", onScroll, { passive: true });
   if (window.visualViewport) {
