@@ -386,6 +386,23 @@ a {
   filter: saturate(1.02) contrast(1.01);
 }
 
+/* Default per-photo framing for larger screens */
+.moment-closeup {
+  --photo-pos: center 70%;
+}
+
+.moment-ski {
+  --photo-pos: center 44%;
+}
+
+.moment-night {
+  --photo-pos: center 38%;
+}
+
+.moment-peace {
+  --photo-pos: center 32%;
+}
+
 .photo-card.large .photo-fill {
   min-height: 0;
   aspect-ratio: 3 / 4;
@@ -449,6 +466,22 @@ a {
   .photo-card.wide .photo-fill {
     aspect-ratio: 4 / 3;
   }
+
+  .moment-closeup {
+    --photo-pos: center 66%;
+  }
+
+  .moment-ski {
+    --photo-pos: center 48%;
+  }
+
+  .moment-night {
+    --photo-pos: center 40%;
+  }
+
+  .moment-peace {
+    --photo-pos: center 34%;
+  }
 }
 
 @media (max-width: 700px) {
@@ -478,6 +511,18 @@ a {
   .photo-fill.photo-has-image {
     aspect-ratio: 4 / 5;
   }
+
+  .moment-ski {
+    --photo-pos: center 50%;
+  }
+
+  .moment-closeup {
+    --photo-pos: center 63%;
+  }
+
+  .moment-peace {
+    --photo-pos: center 30%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -499,8 +544,40 @@ a {
     min-height: 220px;
   }
 
+  .photo-card.large .photo-fill {
+    aspect-ratio: 3 / 4;
+  }
+
   .photo-card.wide .photo-fill {
     aspect-ratio: 4 / 5;
+  }
+
+  .moment-closeup {
+    --photo-pos: center 72%;
+  }
+
+  .moment-ski {
+    --photo-pos: center 52%;
+  }
+
+  .moment-night {
+    --photo-pos: center 36%;
+  }
+
+  .moment-peace {
+    --photo-pos: center 28%;
+  }
+}
+
+@media (max-width: 480px) and (orientation: landscape) {
+  .photo-fill.photo-has-image {
+    aspect-ratio: 16 / 10;
+    min-height: 170px;
+  }
+
+  .photo-card.large .photo-fill,
+  .photo-card.wide .photo-fill {
+    aspect-ratio: 16 / 10;
   }
 }
 
