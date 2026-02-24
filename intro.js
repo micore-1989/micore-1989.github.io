@@ -2,7 +2,8 @@
   const overlay = document.getElementById("birthday-intro");
   const bubble = document.getElementById("intro-bubble");
   const character = document.getElementById("intro-character");
-  const burst = document.getElementById("intro-sneeze-burst");
+  const handHeart = document.getElementById("intro-hand-heart-wrap");
+  const heartBloom = document.getElementById("intro-heart-bloom");
   const skipBtn = document.getElementById("intro-skip-btn");
   const body = document.body;
   const introTarget = body ? body.getAttribute("data-intro-target") : "";
@@ -27,7 +28,6 @@
     bubble.textContent = text;
     bubble.classList.toggle("happy", !!isHappy);
     bubble.classList.remove("switching");
-    // Restart the pulse animation when text changes.
     void bubble.offsetWidth;
     bubble.classList.add("show", "switching");
     window.setTimeout(function () {
@@ -35,23 +35,33 @@
     }, 240);
   }
 
-  function playSneeze() {
-    if (character) {
-      character.classList.remove("is-sneezing");
-      void character.offsetWidth;
-      character.classList.add("is-sneezing");
-      window.setTimeout(function () {
-        character.classList.remove("is-sneezing");
-      }, 380);
-    }
+  function talkBeat(duration) {
+    if (!character) return;
+    character.classList.remove("is-speaking");
+    void character.offsetWidth;
+    character.classList.add("is-speaking");
+    window.setTimeout(function () {
+      character.classList.remove("is-speaking");
+    }, duration || 320);
+  }
 
-    if (burst) {
-      burst.classList.remove("active");
-      void burst.offsetWidth;
-      burst.classList.add("active");
+  function startHandHeart() {
+    if (character) character.classList.add("is-hearting");
+    if (handHeart) handHeart.classList.add("active");
+  }
+
+  function startHeartBloom() {
+    if (heartBloom) {
+      heartBloom.classList.remove("grow");
+      void heartBloom.offsetWidth;
+      heartBloom.classList.add("grow");
+    }
+    if (bubble) {
+      bubble.classList.add("happy");
+      bubble.classList.add("switching");
       window.setTimeout(function () {
-        burst.classList.remove("active");
-      }, 320);
+        bubble.classList.remove("switching");
+      }, 220);
     }
   }
 
@@ -60,12 +70,10 @@
     finished = true;
 
     if (introTarget) {
-      if (overlay) {
-        overlay.classList.add("is-exiting");
-      }
+      if (overlay) overlay.classList.add("is-exiting");
       cleanupTimer = window.setTimeout(function () {
         window.location.replace(introTarget);
-      }, 520);
+      }, 640);
       return;
     }
 
@@ -87,49 +95,49 @@
   }
 
   async function runIntro() {
-    if (!overlay || !bubble || !character || !burst) {
+    if (!overlay || !bubble || !character || !handHeart || !heartBloom) {
       finishIntro();
       return;
     }
 
     bubble.classList.add("show");
-    pulseBubble("sneeze", false);
+    pulseBubble("Hi Elli!", false);
+    talkBeat(320);
 
     if (prefersReducedMotion) {
-      await sleep(380);
-      pulseBubble("Happy Birthday Elli!", true);
+      await sleep(450);
+      pulseBubble("I hope you're having a great day", false);
+      talkBeat(360);
+      await sleep(650);
+      pulseBubble("Happy birthday!", true);
+      talkBeat(360);
       await sleep(700);
-      pulseBubble("sneeze", false);
-      await sleep(260);
-      playSneeze();
-      await sleep(260);
+      startHandHeart();
+      await sleep(420);
+      startHeartBloom();
+      await sleep(520);
       finishIntro();
       return;
     }
 
-    await sleep(540);
-    playSneeze();
+    await sleep(900);
+    pulseBubble("I hope you're having a great day", false);
+    talkBeat(420);
 
-    await sleep(760);
-    pulseBubble("sneeze", false);
+    await sleep(1300);
+    pulseBubble("Happy birthday!", true);
+    talkBeat(420);
 
-    await sleep(520);
-    playSneeze();
+    await sleep(1000);
+    startHandHeart();
 
-    await sleep(860);
-    pulseBubble("Happy Birthday Elli!", true);
+    await sleep(900);
+    startHeartBloom();
 
-    await sleep(1200);
-    pulseBubble("sneeze", false);
-
-    await sleep(430);
-    playSneeze();
-
-    await sleep(340);
+    await sleep(980);
     finishIntro();
   }
 
-  // Allow emergency skip if the user clicks/taps the intro.
   if (overlay) {
     overlay.addEventListener(
       "click",
@@ -148,9 +156,7 @@
     });
   }
 
-  // Safety fallback so the page can't get stuck behind the overlay.
-  window.setTimeout(finishIntro, 12000);
-
+  window.setTimeout(finishIntro, 15000);
   runIntro().catch(finishIntro);
 
   window.addEventListener("pagehide", function () {
