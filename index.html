@@ -10,8 +10,40 @@
     <title>Happy Birthday, Elli Steinbach</title>
     <link rel="stylesheet" href="birthday.css" />
   </head>
-  <body>
+  <body class="intro-active">
     <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+    <div class="intro-overlay" id="birthday-intro" aria-hidden="true">
+      <div class="intro-stage">
+        <div class="intro-bubbles">
+          <div class="intro-bubble" id="intro-bubble">sneeze</div>
+        </div>
+
+        <div class="intro-character-wrap">
+          <div class="intro-sneeze-burst" id="intro-sneeze-burst" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <div class="intro-character" id="intro-character">
+            <div class="intro-head">
+              <div class="intro-hair"></div>
+              <div class="intro-brow intro-brow-left"></div>
+              <div class="intro-brow intro-brow-right"></div>
+              <div class="intro-eye intro-eye-left"><span></span></div>
+              <div class="intro-eye intro-eye-right"><span></span></div>
+              <div class="intro-nose"></div>
+              <div class="intro-mouth"></div>
+            </div>
+            <div class="intro-neck"></div>
+            <div class="intro-crewneck">
+              <div class="intro-collar"></div>
+              <div class="intro-sleeve intro-sleeve-left"></div>
+              <div class="intro-sleeve intro-sleeve-right"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="page-shell">
       <header class="hero" id="top">
         <p class="eyebrow">For Elli Steinbach</p>
@@ -227,5 +259,6 @@
       </footer>
     </div> 
     <script src="confetti.js" defer></script>
+    <script src="intro.js" defer></script>
   </body>
 </html>

@@ -24,10 +24,11 @@
   let height = 0;
   let dpr = 1;
   let lastTime = 0;
-  let startedAt = performance.now();
+  let startedAt = 0;
   let lastScrollY = window.scrollY;
   let gustX = 0;
   let gustY = 0;
+  let animationStarted = false;
 
   const config = {
     spawnDurationMs: 3000,
@@ -522,6 +523,14 @@
     requestAnimationFrame(animate);
   }
 
+  function startAnimation() {
+    if (animationStarted) return;
+    animationStarted = true;
+    startedAt = performance.now();
+    lastTime = 0;
+    requestAnimationFrame(animate);
+  }
+
   function onScroll() {
     syncCanvasToViewport();
     const next = window.scrollY;
@@ -537,5 +546,12 @@
     window.visualViewport.addEventListener("resize", resize);
     window.visualViewport.addEventListener("scroll", syncCanvasToViewport, { passive: true });
   }
-  requestAnimationFrame(animate);
+
+  if (document.body && document.body.classList.contains("intro-active")) {
+    window.addEventListener("birthdayIntroComplete", startAnimation, { once: true });
+    // Fallback in case the intro script fails.
+    window.setTimeout(startAnimation, 13000);
+  } else {
+    startAnimation();
+  }
 })();
