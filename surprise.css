@@ -1,14 +1,13 @@
 :root {
-  --bg: #030404;
-  --panel: rgba(4, 8, 6, 0.84);
-  --panel-line: rgba(117, 255, 141, 0.28);
+  --bg: #020303;
+  --panel: rgba(4, 8, 5, 0.84);
+  --line: rgba(99, 255, 123, 0.2);
   --green: #63ff7b;
-  --green-dim: #2bcf4d;
+  --green-soft: #bfffc9;
   --red: #ff4b57;
-  --red-dim: #c92d38;
-  --text: #d6ffd8;
-  --muted: #8fbc95;
-  --shadow: rgba(0, 0, 0, 0.48);
+  --text: #d3ffd7;
+  --muted: #90bf98;
+  --shadow: rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -46,18 +45,17 @@ body {
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(255, 255, 255, 0.03) 0 1px,
+      rgba(255, 255, 255, 0.025) 0 1px,
       transparent 1px 3px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 0, 0, 0.012) 0 1px,
-      rgba(0, 255, 0, 0.012) 1px 2px,
-      rgba(0, 0, 255, 0.012) 2px 3px,
-      transparent 3px 6px
+      rgba(255, 0, 0, 0.01) 0 1px,
+      rgba(0, 255, 0, 0.01) 1px 2px,
+      transparent 2px 4px
     );
-  opacity: 0.55;
-  animation: flicker 0.18s steps(2, end) infinite;
+  opacity: 0.5;
+  animation: flicker 0.2s steps(2, end) infinite;
 }
 
 .surprise-shell {
@@ -69,87 +67,69 @@ body {
   padding: 1rem;
 }
 
-.terminal-panel {
-  width: min(880px, 100%);
-  border: 1px solid rgba(99, 255, 123, 0.42);
-  background:
-    linear-gradient(rgba(4, 8, 6, 0.9), rgba(4, 8, 6, 0.82));
+.doc-panel {
+  width: min(900px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
   box-shadow:
-    0 18px 42px var(--shadow),
-    inset 0 0 0 1px rgba(99, 255, 123, 0.12),
-    0 0 26px rgba(43, 207, 77, 0.12);
-  position: relative;
-  overflow: hidden;
+    0 18px 40px var(--shadow),
+    inset 0 0 0 1px rgba(99, 255, 123, 0.08),
+    0 0 20px rgba(99, 255, 123, 0.08);
 }
 
-.terminal-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 15%, rgba(99, 255, 123, 0.07), transparent 35%),
-    radial-gradient(circle at 85% 20%, rgba(255, 75, 87, 0.06), transparent 38%);
-}
-
-.vim-topbar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+.doc-header {
+  display: flex;
+  justify-content: space-between;
   gap: 0.75rem;
-  align-items: center;
-  padding: 0.55rem 0.7rem;
-  border-bottom: 1px solid rgba(99, 255, 123, 0.22);
-  color: var(--green);
-  background: rgba(0, 0, 0, 0.35);
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
   font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.terminal-content {
-  padding: 1rem 1rem 0.6rem;
+.doc-body {
+  padding: 0.95rem 0.95rem 0.7rem;
+  min-height: 180px;
+}
+
+.doc-line {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  line-height: 1.5;
   text-align: left;
 }
 
-.prompt-line {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
+.line-no {
+  color: rgba(99, 255, 123, 0.45);
+  user-select: none;
 }
 
-.sigil {
-  color: var(--green);
-  margin-right: 0.5rem;
-  font-weight: 700;
+.note-text-inline {
+  color: var(--green-soft);
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 8px rgba(99, 255, 123, 0.08);
 }
 
-.terminal-content h1 {
-  margin: 0.75rem 0 0;
-  color: var(--green);
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
-  line-height: 1.05;
-  text-shadow: 0 0 10px rgba(99, 255, 123, 0.22);
+.vim-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.15em;
+  vertical-align: text-bottom;
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(99, 255, 123, 0.25);
+  animation: blink-cursor 1s steps(1, end) infinite;
 }
 
-.lede {
-  margin: 0.8rem 0 0;
-  color: var(--text);
-  max-width: 60ch;
-  line-height: 1.55;
-}
-
-.lede.accent {
-  color: var(--red);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.actions {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
+.doc-actions {
+  padding: 0.8rem 0.95rem 0.95rem;
+  border-top: 1px solid rgba(99, 255, 123, 0.14);
 }
 
 .terminal-btn {
@@ -159,18 +139,20 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: min(100%, 360px);
   min-height: 48px;
-  padding: 0.75rem 0.85rem;
-  border: 1px solid rgba(99, 255, 123, 0.36);
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(99, 255, 123, 0.35);
   background: rgba(0, 0, 0, 0.55);
   color: var(--green);
   text-decoration: none;
-  text-align: center;
   font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
   transition:
     color 150ms ease,
-    box-shadow 150ms ease,
-    transform 120ms ease;
+    transform 120ms ease,
+    box-shadow 150ms ease;
 }
 
 .terminal-btn::before {
@@ -179,8 +161,8 @@ body {
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(99, 255, 123, 0.16),
-    rgba(255, 75, 87, 0.12)
+    rgba(255, 75, 87, 0.14),
+    rgba(99, 255, 123, 0.2)
   );
   transform: translateX(-102%);
   transition: transform 180ms ease;
@@ -189,11 +171,11 @@ body {
 
 .terminal-btn:hover,
 .terminal-btn:focus-visible {
-  color: #ffffff;
-  box-shadow:
-    0 0 0 1px rgba(99, 255, 123, 0.22),
-    0 0 16px rgba(99, 255, 123, 0.15);
+  color: #fff;
   transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(99, 255, 123, 0.2),
+    0 0 14px rgba(99, 255, 123, 0.12);
   outline: none;
 }
 
@@ -204,38 +186,6 @@ body {
 
 .terminal-btn:active {
   transform: translateY(0);
-}
-
-.vim-note {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 0.65rem;
-  align-items: center;
-  margin-top: 0.75rem;
-  padding: 0.65rem 0.9rem 0.85rem;
-  border-top: 1px solid rgba(99, 255, 123, 0.16);
-  background: rgba(0, 0, 0, 0.28);
-  color: var(--green);
-  font-size: clamp(0.78rem, 1.8vw, 1rem);
-  text-align: left;
-}
-
-.line-no {
-  color: rgba(99, 255, 123, 0.55);
-  user-select: none;
-}
-
-.note-text {
-  color: var(--green);
-  overflow-wrap: anywhere;
-}
-
-.vim-cursor {
-  width: 0.55em;
-  height: 1.05em;
-  background: var(--green);
-  box-shadow: 0 0 8px rgba(99, 255, 123, 0.28);
-  animation: blink-cursor 1s steps(1, end) infinite;
 }
 
 @keyframes blink-cursor {
@@ -251,40 +201,30 @@ body {
 
 @keyframes flicker {
   0% {
-    opacity: 0.5;
+    opacity: 0.48;
   }
   50% {
-    opacity: 0.6;
+    opacity: 0.58;
   }
   100% {
-    opacity: 0.52;
+    opacity: 0.5;
   }
 }
 
 @media (max-width: 700px) {
-  .terminal-content {
-    padding: 0.85rem 0.85rem 0.45rem;
+  .doc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
   }
 
-  .actions {
-    grid-template-columns: 1fr;
+  .doc-body {
+    min-height: 150px;
+    padding: 0.85rem 0.85rem 0.65rem;
   }
 
-  .vim-topbar {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 0.35rem;
-    text-align: center;
-  }
-
-  .vim-note {
-    grid-template-columns: auto 1fr;
-    row-gap: 0.45rem;
-  }
-
-  .vim-cursor {
-    grid-column: 2;
-    justify-self: start;
+  .doc-actions {
+    padding: 0.75rem 0.85rem 0.85rem;
   }
 }
 

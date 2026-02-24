@@ -451,12 +451,14 @@ a {
   padding: 0.8rem 1rem;
   border: 1px solid var(--black);
   background: var(--black);
-  color: var(--gold-soft);
+  color: #b9ffb7;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: none;
   text-align: center;
-  box-shadow: inset 0 0 0 1px rgba(201, 164, 74, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(99, 255, 123, 0.18),
+    inset 0 0 0 2px rgba(255, 75, 87, 0.06);
   transition:
     color 170ms ease,
     transform 130ms ease,
@@ -467,9 +469,12 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 75, 87, 0.95),
+    rgba(99, 255, 123, 0.9)
+  );
+  transform: translateX(-102%);
   transition: transform 220ms ease;
   z-index: -1;
 }
@@ -478,13 +483,16 @@ a {
 .footer-surprise-btn:focus-visible {
   color: var(--black);
   transform: translateY(-2px);
-  box-shadow: 0 0 0 2px rgba(201, 164, 74, 0.28), 5px 5px 0 rgba(15, 15, 16, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(99, 255, 123, 0.4),
+    0 0 0 3px rgba(255, 75, 87, 0.18),
+    5px 5px 0 rgba(15, 15, 16, 0.95);
   outline: none;
 }
 
 .footer-surprise-btn:hover::before,
 .footer-surprise-btn:focus-visible::before {
-  transform: scaleX(1);
+  transform: translateX(0);
 }
 
 .footer-surprise-btn:active {
