@@ -11,7 +11,7 @@
   let clearErrorTimer = 0;
 
   const steps = [
-    'Step 1 of 2: click on my left nipple',
+    'Step 1 of 2: click the left golf club head',
     'Step 2 of 2: now click the right golf club head',
     'Correct. Opening the birthday website...'
   ];
