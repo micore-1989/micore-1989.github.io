@@ -55,7 +55,7 @@ body {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center 56%;
+  object-position: center 34%;
   filter: saturate(0.95) contrast(0.98);
   transform: translateZ(0);
 }
@@ -360,7 +360,7 @@ body::after {
 
 @media (max-width: 640px) {
   #val-bg img {
-    object-position: center 52%;
+    object-position: center 30%;
   }
 
   .val-card {
@@ -401,13 +401,13 @@ body::after {
 
 @media (max-width: 480px) {
   #val-bg img {
-    object-position: center 48%;
+    object-position: center 26%;
   }
 }
 
 @media (min-width: 1024px) {
   #val-bg img {
-    object-position: center 60%;
+    object-position: center 38%;
   }
 }
 
