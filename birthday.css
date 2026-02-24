@@ -369,6 +369,21 @@ a {
   box-shadow: inset 0 0 0 1px rgba(201, 164, 74, 0.14);
 }
 
+.photo-fill.photo-has-image {
+  padding: 0;
+  overflow: hidden;
+  display: block;
+}
+
+.photo-fill.photo-has-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.02) contrast(1.01);
+}
+
 .photo-card.large .photo-fill {
   min-height: 310px;
 }
