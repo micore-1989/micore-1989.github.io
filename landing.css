@@ -23,7 +23,8 @@ body {
   margin: 0;
   font-family: "Comic Sans MS", "Trebuchet MS", "Marker Felt", cursive, sans-serif;
   color: #111;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #f7f0a4;
 }
 
@@ -112,13 +113,55 @@ body {
 .star3 { top: 58%; left: 84%; animation: drift-c 5.1s ease-in-out infinite alternate; }
 .star4 { top: 72%; left: 38%; animation: drift-d 4.4s ease-in-out infinite alternate; }
 
+.birthday-banner {
+  position: fixed;
+  top: 0.35rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  z-index: 9;
+  width: min(96vw, 760px);
+  pointer-events: none;
+}
+
+.birthday-banner span {
+  display: block;
+  padding: 0.45rem 0.8rem;
+  text-align: center;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(0.95rem, 2.6vw, 1.4rem);
+  color: #fff;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #ff2db6 0 10px,
+      #ff2db6 10px 20px,
+      #00d5ff 20px 30px,
+      #00d5ff 30px 40px,
+      #b0ff36 40px 50px,
+      #b0ff36 50px 60px
+    );
+  border: 4px solid #000;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 3px #fff,
+    8px 8px 0 #000,
+    0 0 18px rgba(255, 255, 255, 0.35);
+  text-shadow:
+    2px 2px 0 #000,
+    -1px -1px 0 rgba(0, 0, 0, 0.75);
+  animation: banner-wobble 1.8s ease-in-out infinite alternate;
+}
+
 .landing-shell {
   position: relative;
   z-index: 3;
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: 0.65rem;
+  padding: 4.35rem 0.65rem 0.65rem;
 }
 
 .cheese-panel {
@@ -202,7 +245,8 @@ body {
 
 .challenge-image-wrap {
   position: relative;
-  width: min(100%, 520px);
+  width: min(100%, 520px, 40vh);
+  width: min(100%, 520px, 40svh);
   margin: 0 auto;
   aspect-ratio: 1076 / 1898;
   border: 3px solid #000;
@@ -271,17 +315,17 @@ body {
 }
 
 .hotspot-left {
-  left: 56.4%;
-  top: 48.0%;
-  width: 9.8%;
-  height: 4.9%;
+  left: 56.0%;
+  top: 48.2%;
+  width: 17.5%;
+  height: 10.4%;
 }
 
 .hotspot-right {
   left: 87.0%;
   top: 51.3%;
-  width: 10.2%;
-  height: 5.1%;
+  width: 15.4%;
+  height: 9.4%;
 }
 
 .success-flash {
@@ -335,6 +379,17 @@ body {
   100% { transform: scale(1.03); }
 }
 
+@keyframes banner-wobble {
+  0% {
+    transform: rotate(-0.8deg) scale(1);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    transform: rotate(0.8deg) scale(1.01);
+    filter: hue-rotate(10deg);
+  }
+}
+
 @keyframes bounce-a {
   0% { transform: translate(0,0) rotate(-10deg); }
   25% { transform: translate(26vw, 8vh) rotate(4deg); }
@@ -379,8 +434,22 @@ body {
 @keyframes drift-d { from { transform: translate(0,0) rotate(0deg);} to { transform: translate(20px, 18px) rotate(-18deg);} }
 
 @media (max-width: 700px) {
+  .birthday-banner {
+    top: 0.2rem;
+    width: calc(100vw - 0.45rem);
+  }
+
+  .birthday-banner span {
+    padding: 0.35rem 0.45rem;
+    border-width: 3px;
+    box-shadow:
+      0 0 0 2px #fff,
+      4px 4px 0 #000;
+    letter-spacing: 0.04em;
+  }
+
   .landing-shell {
-    padding: 0.35rem;
+    padding: 3.25rem 0.35rem 0.35rem;
   }
 
   .cheese-panel {
@@ -415,11 +484,85 @@ body {
   }
 }
 
+@media (max-height: 900px) and (min-width: 701px) {
+  .birthday-banner {
+    top: 0.2rem;
+  }
+
+  .birthday-banner span {
+    padding: 0.35rem 0.7rem;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    box-shadow:
+      0 0 0 2px #fff,
+      5px 5px 0 #000;
+  }
+
+  .landing-shell {
+    align-items: start;
+    padding-top: 2.9rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .cheese-panel {
+    transform: rotate(-0.2deg);
+    padding: 0.55rem;
+  }
+
+  .blink-title {
+    font-size: clamp(0.95rem, 2vw, 1.25rem);
+  }
+
+  .instructions {
+    margin-top: 0.4rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .sub-instructions {
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  .status-line {
+    margin-top: 0.4rem;
+    min-height: 1.7rem;
+    padding: 0.3rem 0.45rem;
+    font-size: 0.78rem;
+  }
+
+  .image-frame {
+    margin-top: 0.4rem;
+    padding: 0.3rem;
+  }
+
+  .challenge-image-wrap {
+    width: min(100%, 340px, 35vh);
+    width: min(100%, 340px, 35svh);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hotspot {
+    opacity: 0.24;
+  }
+
+  .hotspot::before {
+    border-style: dotted;
+    border-color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .hotspot::after {
+    border-color: rgba(0, 0, 0, 0.65);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blink-title,
   .chaos-sticker,
   .chaos-star,
-  .success-flash.show {
+  .success-flash.show,
+  .birthday-banner span {
     animation: none !important;
   }
 
