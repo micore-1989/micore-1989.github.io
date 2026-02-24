@@ -62,15 +62,28 @@
     img.decoding = "async";
     img.onload = function () {
       try {
-        var result = buildCutoutAssets(img);
-        cursorDataUrl = result.cursorUrl;
-        stampDataUrl = result.stampUrl;
+        cursorDataUrl = buildRawCursorAsset(img).toDataURL("image/png");
         applyCursor();
+      } catch (err) {
+        console.error("poop cursor image prep failed:", err);
+      }
+
+      try {
+        var result = buildCutoutAssets(img);
+        stampDataUrl = result.stampUrl;
         cutoutReady = true;
         restoreStamps();
         flushPendingStamps();
       } catch (err) {
-        console.error("poop cursor cutout failed:", err);
+        console.error("poop stamp cutout failed, using full image fallback:", err);
+        try {
+          stampDataUrl = buildRawStampAsset(img).toDataURL("image/png");
+          cutoutReady = true;
+          restoreStamps();
+          flushPendingStamps();
+        } catch (fallbackErr) {
+          console.error("poop stamp fallback failed:", fallbackErr);
+        }
       }
     };
     img.onerror = function () {
@@ -147,6 +160,34 @@
       stampUrl: stampCanvas.toDataURL("image/png"),
       cursorUrl: cursorCanvas.toDataURL("image/png")
     };
+  }
+
+  function buildRawCursorAsset(img) {
+    var targetHeight = 44;
+    var ratio = targetHeight / (img.naturalHeight || img.height);
+    var out = document.createElement("canvas");
+    out.height = Math.max(1, Math.round(targetHeight));
+    out.width = Math.max(1, Math.round((img.naturalWidth || img.width) * ratio));
+
+    // Browser cursor support is limited for large images.
+    if (out.width > 64) {
+      var shrink = 64 / out.width;
+      out.width = 64;
+      out.height = Math.max(1, Math.round(out.height * shrink));
+    }
+
+    out.getContext("2d").drawImage(img, 0, 0, out.width, out.height);
+    return out;
+  }
+
+  function buildRawStampAsset(img) {
+    var targetWidth = 120;
+    var ratio = targetWidth / (img.naturalWidth || img.width);
+    var out = document.createElement("canvas");
+    out.width = Math.max(1, Math.round(targetWidth));
+    out.height = Math.max(1, Math.round((img.naturalHeight || img.height) * ratio));
+    out.getContext("2d").drawImage(img, 0, 0, out.width, out.height);
+    return out;
   }
 
   function removeEdgeConnectedBackground(imageData) {
