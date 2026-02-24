@@ -37,10 +37,19 @@ body {
   pointer-events: none;
 }
 
+#balloon-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .screen-noise {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   background:
     repeating-linear-gradient(
@@ -60,7 +69,7 @@ body {
 
 .surprise-shell {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   min-height: 100%;
   display: grid;
   place-items: start;

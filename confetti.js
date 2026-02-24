@@ -9,7 +9,16 @@
   if (!ctx) return;
 
   const colors = ["#c9a44a", "#ead7a1", "#ffffff", "#f6d36b", "#d8b458"];
+  const ribbonColors = [
+    "#ff4b57",
+    "#63ff7b",
+    "#ffd95f",
+    "#53cfff",
+    "#ff7bce",
+    "#ffffff",
+  ];
   const pieces = [];
+  const ribbons = [];
 
   let width = 0;
   let height = 0;
@@ -31,6 +40,12 @@
     binSize: 8,
     baseWindDecay: 0.94,
     maxDisturbPerScroll: 24,
+    ribbonStartDelayMs: 380,
+    ribbonDurationMs: 5000,
+    ribbonMax: 44,
+    ribbonSpawnPerSecond: 12,
+    ribbonGravity: 240,
+    ribbonAirDrag: 0.0012,
   };
 
   let pileBins = [];
@@ -123,6 +138,28 @@
     });
   }
 
+  function spawnRibbon() {
+    if (ribbons.length >= config.ribbonMax) return;
+
+    ribbons.push({
+      x: random(width * 0.04, width * 0.96),
+      y: random(-160, -20),
+      vx: random(-28, 28),
+      vy: random(25, 95),
+      len: random(72, 160),
+      width: random(2.2, 4.8),
+      amp: random(10, 26),
+      freq: random(1.4, 2.8),
+      phase: random(0, Math.PI * 2),
+      phaseSpeed: random(1.4, 3.2),
+      color: ribbonColors[(Math.random() * ribbonColors.length) | 0],
+      alpha: random(0.7, 0.92),
+      life: 0,
+      maxLife: random(5.8, 8.5),
+      layer: Math.random(),
+    });
+  }
+
   function pieceRadius(p) {
     return Math.max(3, Math.max(p.w, p.h) * 0.5);
   }
@@ -209,6 +246,21 @@
     p.asleepFrames = 0;
   }
 
+  function disturbRibbonsFromScroll(scrollDelta) {
+    if (!scrollDelta || !ribbons.length) return;
+    const magnitude = clamp(Math.abs(scrollDelta), 1, 140);
+    const direction = Math.sign(scrollDelta) || 1;
+    const count = Math.min(ribbons.length, Math.max(4, Math.round(magnitude * 0.08)));
+
+    for (let i = 0; i < count; i += 1) {
+      const r = ribbons[(Math.random() * ribbons.length) | 0];
+      if (!r) continue;
+      r.vx += direction * random(10, 46);
+      r.vy -= random(4, 22);
+      r.phaseSpeed += random(-0.12, 0.12);
+    }
+  }
+
   function disturbPileFromScroll(scrollDelta) {
     if (!scrollDelta) return;
 
@@ -232,6 +284,8 @@
       if (!p || !p.resting) continue;
       wakePiece(p, direction * random(18, 85), random(25, 120));
     }
+
+    disturbRibbonsFromScroll(scrollDelta);
   }
 
   function updatePiece(p, dt) {
@@ -289,6 +343,37 @@
     }
   }
 
+  function updateRibbon(r, dt) {
+    const drag = Math.pow(1 - config.ribbonAirDrag, dt * 60);
+    r.life += dt;
+    r.phase += r.phaseSpeed * dt;
+    r.vx += gustX * 0.012 * dt;
+    r.vy += (config.ribbonGravity + gustY * 5) * dt;
+    r.vx *= drag;
+    r.vy *= Math.pow(0.995, dt * 60);
+
+    r.x += r.vx * dt + Math.sin(r.phase * 1.2) * 10 * dt;
+    r.y += r.vy * dt;
+
+    const lateralPad = Math.max(6, r.amp * 0.6);
+    if (r.x < lateralPad) {
+      r.x = lateralPad;
+      r.vx = Math.abs(r.vx) * 0.72;
+    } else if (r.x > width - lateralPad) {
+      r.x = width - lateralPad;
+      r.vx = -Math.abs(r.vx) * 0.72;
+    }
+
+    // Soft floor collision so a few ribbons drift and curl near the bottom.
+    const tailY = r.y + r.len;
+    if (tailY > height - 2) {
+      r.y -= tailY - (height - 2);
+      r.vy = -Math.abs(r.vy) * 0.18;
+      r.vx *= 0.86;
+      r.phaseSpeed *= 0.98;
+    }
+  }
+
   function drawPiece(p) {
     ctx.save();
     ctx.translate(p.x, p.y);
@@ -314,6 +399,43 @@
     if (!p.resting) {
       ctx.strokeRect(-p.w / 2, -p.h / 2, p.w, p.h);
     }
+    ctx.restore();
+  }
+
+  function drawRibbon(r) {
+    const segments = 14;
+    ctx.save();
+    ctx.globalAlpha = r.alpha;
+
+    // Main ribbon stroke
+    ctx.strokeStyle = r.color;
+    ctx.lineWidth = r.width;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    for (let i = 0; i <= segments; i += 1) {
+      const t = i / segments;
+      const taper = 1 - t * 0.4;
+      const px = r.x + Math.sin(r.phase + t * r.freq * Math.PI * 2) * r.amp * taper;
+      const py = r.y + t * r.len;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Bright highlight to make them read like glossy gift ribbons.
+    ctx.globalAlpha = r.alpha * 0.4;
+    ctx.strokeStyle = "rgba(255,255,255,0.9)";
+    ctx.lineWidth = Math.max(1, r.width * 0.35);
+    ctx.beginPath();
+    for (let i = 0; i <= segments; i += 1) {
+      const t = i / segments;
+      const taper = 1 - t * 0.48;
+      const px = r.x + Math.sin(r.phase + 0.45 + t * r.freq * Math.PI * 2) * (r.amp * 0.72) * taper;
+      const py = r.y + t * r.len;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -345,12 +467,27 @@
     }
   }
 
+  function maybeSpawnRibbons(now, dt) {
+    const elapsed = now - startedAt;
+    const ribbonStart = config.spawnDurationMs + config.ribbonStartDelayMs;
+    const ribbonEnd = ribbonStart + config.ribbonDurationMs;
+    if (elapsed < ribbonStart || elapsed > ribbonEnd) return;
+
+    const rate = config.ribbonSpawnPerSecond * dt;
+    const count = Math.floor(rate);
+    const extra = Math.random() < rate - count ? 1 : 0;
+    for (let i = 0; i < count + extra; i += 1) {
+      spawnRibbon();
+    }
+  }
+
   function animate(now) {
     if (!lastTime) lastTime = now;
     const dt = Math.min(0.033, (now - lastTime) / 1000);
     lastTime = now;
 
     maybeSpawn(now, dt);
+    maybeSpawnRibbons(now, dt);
 
     gustX *= Math.pow(config.baseWindDecay, dt * 60);
     gustY *= Math.pow(0.9, dt * 60);
@@ -358,8 +495,19 @@
     for (const p of pieces) {
       updatePiece(p, dt);
     }
+    for (let i = ribbons.length - 1; i >= 0; i -= 1) {
+      const r = ribbons[i];
+      updateRibbon(r, dt);
+      if (r.life > r.maxLife || r.y > height + r.len + 40) {
+        ribbons.splice(i, 1);
+      }
+    }
 
     ctx.clearRect(0, 0, width, height);
+    ribbons.sort((a, b) => a.y - b.y || a.layer - b.layer);
+    for (const r of ribbons) {
+      drawRibbon(r);
+    }
     drawPileShadow();
 
     pieces.sort((a, b) => {
