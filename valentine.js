@@ -128,6 +128,14 @@
     const el = document.getElementById("please-dvd");
     if (!layer || !el) return;
 
+    // Keep the overlay at the end of <body> so it paints last in DOM order too.
+    if (layer.parentNode === document.body) {
+      document.body.appendChild(layer);
+    }
+
+    layer.style.zIndex = "2147483647";
+    el.style.zIndex = "2147483647";
+
     const raf =
       window.requestAnimationFrame ||
       function (cb) {

@@ -86,10 +86,11 @@ body::after {
     radial-gradient(circle at 50% 50%, transparent 35%, rgba(0, 0, 0, 0.14) 100%);
   opacity: 0.75;
   animation: crt-flicker-vignette 0.24s steps(2, end) infinite;
+  z-index: 0;
 }
 
 #please-dvd {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   padding: 0.35rem 0.55rem;
@@ -112,7 +113,8 @@ body::after {
   will-change: transform, color;
   transform: translate3d(0, 0, 0);
   animation: crt-word-flicker 0.22s steps(2, end) infinite;
-  z-index: 2;
+  z-index: 2147483647;
+  pointer-events: none;
 }
 
 .val-shell {
