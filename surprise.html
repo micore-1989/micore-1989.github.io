@@ -8,6 +8,17 @@
       content="A retro-hacker style text document surprise page for Elli."
     />
     <title>Special Surprise</title>
+    <script>
+      (function () {
+        try {
+          if (window.sessionStorage.getItem("elli_surprise_auth") !== "ok") {
+            window.location.replace("surprise-gate.html");
+          }
+        } catch (e) {
+          window.location.replace("surprise-gate.html");
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="surprise.css" />
   </head>
   <body>

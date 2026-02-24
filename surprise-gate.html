@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Password gate for Elli's special surprise page."
+    />
+    <title>Special Surprise Access</title>
+    <link rel="stylesheet" href="surprise-gate.css" />
+  </head>
+  <body>
+    <main class="gate-shell">
+      <section class="gate-panel" aria-labelledby="gate-title">
+        <div class="gate-topbar" aria-hidden="true">
+          <span>secure-access.txt</span>
+          <span>auth-required</span>
+        </div>
+
+        <h1 id="gate-title">Special Surprise Access</h1>
+        <p class="gate-copy">
+          This page is password protected. Elli only.
+        </p>
+
+        <form id="gate-form" class="gate-form" novalidate>
+          <label for="gate-password" class="gate-label">Password</label>
+          <div class="input-row">
+            <span class="prompt" aria-hidden="true">&gt;</span>
+            <input
+              id="gate-password"
+              name="password"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              autocapitalize="none"
+              placeholder="enter password"
+              required
+            />
+          </div>
+
+          <p id="gate-message" class="gate-message" aria-live="polite">
+            Enter password to continue.
+          </p>
+
+          <div class="gate-actions">
+            <button type="submit" class="gate-btn">Unlock Surprise</button>
+            <a class="gate-btn gate-btn-secondary" href="index.html">Back</a>
+          </div>
+        </form>
+
+        <noscript>
+          <p class="gate-message noscript-message">
+            JavaScript is required for this password gate.
+          </p>
+        </noscript>
+      </section>
+    </main>
+
+    <script src="surprise-gate.js" defer></script>
+  </body>
+</html>
