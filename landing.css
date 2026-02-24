@@ -300,6 +300,14 @@ body {
   outline: none;
 }
 
+.challenge-image-wrap:hover .hotspot {
+  opacity: 0.08;
+}
+
+.challenge-image-wrap:hover .hotspot.correct {
+  opacity: 1;
+}
+
 .hotspot.correct {
   opacity: 1;
 }
@@ -548,6 +556,10 @@ body {
 
   .hotspot::after {
     border-color: rgba(0, 0, 0, 0.65);
+  }
+
+  .challenge-image-wrap:hover .hotspot {
+    opacity: 0.24;
   }
 }
 
