@@ -5,27 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Animated birthday intro landing page for Elli Steinbach."
+      content="Terminal-style birthday access gate for Elli Steinbach."
     />
-    <title>Opening Surprise for Elli</title>
-    <link rel="stylesheet" href="birthday.css" />
+    <title>Terminal Access</title>
+    <link rel="stylesheet" href="landing.css" />
   </head>
-  <body class="intro-active" data-intro-target="birthday.html">
-    <div class="intro-overlay heart-landing" id="birthday-intro" aria-hidden="true">
-      <div class="intro-stage">
-        <div class="intro-heart-bloom" id="intro-heart-bloom" aria-hidden="true"></div>
-      </div>
+  <body>
+    <canvas id="matrix-bg" aria-hidden="true"></canvas>
+
+    <main class="landing-shell" aria-label="Terminal Access Gate">
+      <section class="ios-terminal" aria-live="polite">
+        <header class="terminal-chrome" aria-hidden="true">
+          <div class="chrome-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="chrome-title">elli-iphone — zsh — 80x24</div>
+          <div class="chrome-spacer"></div>
+        </header>
+
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output"></div>
+
+          <form class="terminal-input-row hidden" id="terminal-form" autocomplete="off">
+            <label class="terminal-prompt" for="terminal-answer">&gt;</label>
+            <input
+              id="terminal-answer"
+              name="answer"
+              type="text"
+              class="terminal-input"
+              spellcheck="false"
+              autocapitalize="none"
+              autocomplete="off"
+              aria-label="Terminal answer input"
+            />
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div class="scan-overlay hidden" id="scan-overlay" aria-hidden="true">
+      <div class="scan-label">Scanning for Birthday Girl</div>
+      <div class="scan-bar"></div>
+      <div class="scan-grid"></div>
     </div>
 
     <noscript>
-      <div style="min-height:100vh;display:grid;place-items:center;background:#b30f19;color:#fff;font-family:'Times New Roman',serif;text-align:center;padding:1rem;">
-        <div>
-          <p>The intro animation needs JavaScript.</p>
-          <p><a href="birthday.html" style="color:#fff;text-decoration:underline;">Open the birthday page</a></p>
-        </div>
+      <div class="noscript-fallback">
+        <p>This terminal intro requires JavaScript.</p>
+        <p><a href="birthday.html">Open the birthday page</a></p>
       </div>
     </noscript>
 
-    <script src="intro.js" defer></script>
+    <script src="landing.js" defer></script>
   </body>
 </html>
