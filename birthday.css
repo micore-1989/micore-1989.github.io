@@ -370,6 +370,8 @@ a {
 }
 
 .photo-fill.photo-has-image {
+  min-height: 0;
+  aspect-ratio: 4 / 5;
   padding: 0;
   overflow: hidden;
   display: block;
@@ -380,12 +382,18 @@ a {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center;
+  object-position: var(--photo-pos, center);
   filter: saturate(1.02) contrast(1.01);
 }
 
 .photo-card.large .photo-fill {
-  min-height: 310px;
+  min-height: 0;
+  aspect-ratio: 3 / 4;
+}
+
+.photo-card.wide .photo-fill {
+  min-height: 0;
+  aspect-ratio: 16 / 9;
 }
 
 .photo-card figcaption {
@@ -435,7 +443,11 @@ a {
   }
 
   .photo-card.large .photo-fill {
-    min-height: 200px;
+    aspect-ratio: 4 / 5;
+  }
+
+  .photo-card.wide .photo-fill {
+    aspect-ratio: 4 / 3;
   }
 }
 
@@ -462,6 +474,10 @@ a {
   .hero-copy {
     font-size: 1rem;
   }
+
+  .photo-fill.photo-has-image {
+    aspect-ratio: 4 / 5;
+  }
 }
 
 @media (max-width: 480px) {
@@ -476,6 +492,15 @@ a {
 
   .letter-card p {
     font-size: 1rem;
+  }
+
+  .photo-fill.photo-has-image {
+    aspect-ratio: 5 / 6;
+    min-height: 220px;
+  }
+
+  .photo-card.wide .photo-fill {
+    aspect-ratio: 4 / 5;
   }
 }
 
