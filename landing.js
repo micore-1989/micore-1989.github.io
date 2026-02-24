@@ -1,76 +1,49 @@
 (function () {
-  const hotspots = Array.from(document.querySelectorAll('.hotspot'));
-  const statusLine = document.getElementById('status-line');
-  const successFlash = document.getElementById('success-flash');
+  var grid = document.getElementById("captcha-grid");
+  var status = document.getElementById("captcha-status");
+  if (!grid || !status) return;
 
-  if (!hotspots.length || !statusLine || !successFlash) return;
+  var tiles = Array.prototype.slice.call(grid.querySelectorAll(".captcha-tile"));
+  if (!tiles.length) return;
 
-  const TARGET = 'birthday.html';
-  let current = 0;
-  let locked = false;
-  let clearErrorTimer = 0;
-
-  const steps = [
-    'Step 1 of 2: click on my left nipple',
-    'Step 2 of 2: now click the right golf club head',
-    'Correct. Opening the birthday website...'
-  ];
+  var TARGET = "birthday.html";
+  var FAIL_TARGET = "wrong.html";
+  var locked = false;
 
   function setStatus(text, type) {
-    statusLine.textContent = text;
-    statusLine.classList.remove('error', 'success');
-    if (type) statusLine.classList.add(type);
+    status.textContent = text;
+    status.classList.remove("success", "error");
+    if (type) status.classList.add(type);
   }
 
-  function resetChallenge(message) {
-    current = 0;
-    hotspots.forEach(function (btn) {
-      btn.classList.remove('correct');
-      btn.disabled = false;
-    });
-    setStatus(message || steps[0], message ? 'error' : '');
-
-    if (clearErrorTimer) window.clearTimeout(clearErrorTimer);
-    if (message) {
-      clearErrorTimer = window.setTimeout(function () {
-        if (locked) return;
-        setStatus(steps[0]);
-      }, 1100);
-    }
-  }
-
-  function winChallenge() {
+  function chooseTile(button) {
+    if (!button || locked) return;
     locked = true;
-    setStatus(steps[2], 'success');
-    successFlash.classList.add('show');
+    grid.classList.add("locked");
+
+    var isCorrect = button.dataset.correct === "true";
+    button.classList.add(isCorrect ? "correct" : "wrong");
+
+    if (isCorrect) {
+      setStatus("Correct. Verifying selection...", "success");
+      window.setTimeout(function () {
+        window.location.replace(TARGET);
+      }, 700);
+      return;
+    }
+
+    setStatus("Wrong selection. Initiating consequences...", "error");
     window.setTimeout(function () {
-      window.location.replace(TARGET);
-    }, 850);
+      window.location.replace(FAIL_TARGET);
+    }, 550);
   }
 
-  hotspots.forEach(function (btn) {
-    btn.addEventListener('click', function (event) {
+  tiles.forEach(function (tile) {
+    tile.addEventListener("click", function (event) {
       event.preventDefault();
-      if (locked) return;
-
-      const order = Number(btn.dataset.order);
-      if (order !== current) {
-        resetChallenge('WRONG ORDER. left to right means LEFT to RIGHT.');
-        return;
-      }
-
-      btn.classList.add('correct');
-      btn.disabled = true;
-      current += 1;
-
-      if (current >= hotspots.length) {
-        winChallenge();
-        return;
-      }
-
-      setStatus(steps[current]);
+      chooseTile(tile);
     });
   });
 
-  setStatus(steps[0]);
+  setStatus("Select exactly one image.");
 })();

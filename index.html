@@ -5,76 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Cheesy golf-club click challenge before the birthday website."
+      content="CAPTCHA-style image gate before Elli's birthday website."
     />
-    <title>Totally Secure Birthday Gate</title>
+    <title>Birthday CAPTCHA</title>
     <link rel="stylesheet" href="landing.css" />
   </head>
   <body>
-    <div class="cheese-bg" aria-hidden="true"></div>
+    <div class="captcha-bg" aria-hidden="true"></div>
 
-    <div class="chaos-layer" aria-hidden="true">
-      <div class="chaos-sticker s1">DVD</div>
-      <div class="chaos-sticker s2">Y2K</div>
-      <div class="chaos-sticker s3">LOL</div>
-      <div class="chaos-sticker s4">WINAMP</div>
-      <div class="chaos-sticker s5">BONK</div>
-      <div class="chaos-sticker s6">BEEP</div>
-      <div class="chaos-star star1">✦</div>
-      <div class="chaos-star star2">✶</div>
-      <div class="chaos-star star3">✷</div>
-      <div class="chaos-star star4">✹</div>
-    </div>
-
-    <div class="birthday-banner" aria-hidden="true">
-      <span>✦ HAPPY BIRTHDAY ELLI! ✦</span>
-    </div>
-
-    <main class="landing-shell">
-      <section class="cheese-panel" aria-label="Golf club challenge gate">
-        <h1 class="blink-title">ULTRA SECURE BIRTHDAY FIREWALL</h1>
-        <p class="instructions">
-          click on my left nipple then the right golf club head
-        </p>
-        <p class="sub-instructions">
-          this is your awesome website, welcome.
-        </p>
-
-        <div class="status-line" id="status-line" aria-live="polite">
-          Step 1 of 2: click on my left nipple
+    <main class="captcha-shell">
+      <section class="captcha-card" aria-labelledby="captcha-title">
+        <div class="captcha-topbar" aria-hidden="true">
+          <span>birthday-security-check</span>
+          <span>image verification</span>
         </div>
 
-        <div class="image-frame">
-          <div class="challenge-image-wrap" id="challenge-wrap">
-            <img src="zesty.png" alt="Photo with two people holding golf clubs" />
-
-            <button
-              type="button"
-              class="hotspot hotspot-left"
-              data-order="0"
-              aria-label="Golf club hotspot one"
-              title="golf club 1"
-            ></button>
-
-            <button
-              type="button"
-              class="hotspot hotspot-right"
-              data-order="1"
-              aria-label="Golf club hotspot two"
-              title="golf club 2"
-            ></button>
-
-            <div class="success-flash" id="success-flash" aria-hidden="true">
-              ACCESSING BIRTHDAY WEBSITE...
-            </div>
-          </div>
+        <div class="captcha-header">
+          <p class="captcha-label">Verify You Are Elli</p>
+          <h1 id="captcha-title">Select your favorite person</h1>
+          <p class="captcha-subtitle">
+            one image is correct. choose carefully.
+          </p>
         </div>
+
+        <div class="captcha-grid" id="captcha-grid" role="grid" aria-label="Image selection grid">
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 1">
+            <img src="jeff.png" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 2">
+            <img src="IMG_9215.JPG" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 3">
+            <img src="kai.png" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="true" aria-label="Candidate image 4">
+            <img src="misha.png" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 5">
+            <img src="IMG_9218.JPG" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 6">
+            <img src="asher.png" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 7">
+            <img src="dylan.png" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 8">
+            <img src="IMG_9216.JPG" alt="" loading="eager" />
+          </button>
+          <button class="captcha-tile" type="button" data-correct="false" aria-label="Candidate image 9">
+            <img src="milo.png" alt="" loading="eager" />
+          </button>
+        </div>
+
+        <p class="captcha-status" id="captcha-status" aria-live="polite">
+          Waiting for selection...
+        </p>
       </section>
     </main>
 
     <noscript>
       <div class="noscript-fallback">
-        <p>This weird gate needs JavaScript.</p>
+        <p>This image check needs JavaScript.</p>
         <p><a href="birthday.html">Open birthday page</a></p>
       </div>
     </noscript>
