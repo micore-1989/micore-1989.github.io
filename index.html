@@ -5,56 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Terminal-style birthday access gate for Elli Steinbach."
+      content="Cheesy golf-club click challenge before the birthday website."
     />
-    <title>Terminal Access</title>
+    <title>Totally Secure Birthday Gate</title>
     <link rel="stylesheet" href="landing.css" />
   </head>
   <body>
-    <canvas id="matrix-bg" aria-hidden="true"></canvas>
+    <div class="cheese-bg" aria-hidden="true"></div>
 
-    <main class="landing-shell" aria-label="Terminal Access Gate">
-      <section class="ios-terminal" aria-live="polite">
-        <header class="terminal-chrome" aria-hidden="true">
-          <div class="chrome-dots">
-            <span class="dot dot-red"></span>
-            <span class="dot dot-yellow"></span>
-            <span class="dot dot-green"></span>
+    <div class="chaos-layer" aria-hidden="true">
+      <div class="chaos-sticker s1">DVD</div>
+      <div class="chaos-sticker s2">Y2K</div>
+      <div class="chaos-sticker s3">LOL</div>
+      <div class="chaos-sticker s4">WINAMP</div>
+      <div class="chaos-sticker s5">BONK</div>
+      <div class="chaos-sticker s6">BEEP</div>
+      <div class="chaos-star star1">✦</div>
+      <div class="chaos-star star2">✶</div>
+      <div class="chaos-star star3">✷</div>
+      <div class="chaos-star star4">✹</div>
+    </div>
+
+    <main class="landing-shell">
+      <section class="cheese-panel" aria-label="Golf club challenge gate">
+        <h1 class="blink-title">ULTRA SECURE BIRTHDAY FIREWALL</h1>
+        <p class="instructions">
+          click on all of the golf clubs in order left to right
+        </p>
+        <p class="sub-instructions">
+          yes this is the real verification system. no i will not explain.
+        </p>
+
+        <div class="status-line" id="status-line" aria-live="polite">
+          Step 1 of 2: click the left golf club head
+        </div>
+
+        <div class="image-frame">
+          <div class="challenge-image-wrap" id="challenge-wrap">
+            <img src="zesty.png" alt="Photo with two people holding golf clubs" />
+
+            <button
+              type="button"
+              class="hotspot hotspot-left"
+              data-order="0"
+              aria-label="Golf club hotspot one"
+              title="golf club 1"
+            ></button>
+
+            <button
+              type="button"
+              class="hotspot hotspot-right"
+              data-order="1"
+              aria-label="Golf club hotspot two"
+              title="golf club 2"
+            ></button>
+
+            <div class="success-flash" id="success-flash" aria-hidden="true">
+              ACCESSING BIRTHDAY WEBSITE...
+            </div>
           </div>
-          <div class="chrome-title">elli-iphone — zsh — 80x24</div>
-          <div class="chrome-spacer"></div>
-        </header>
-
-        <div class="terminal-body" id="terminal-body">
-          <div class="terminal-output" id="terminal-output"></div>
-
-          <form class="terminal-input-row hidden" id="terminal-form" autocomplete="off">
-            <label class="terminal-prompt" for="terminal-answer">&gt;</label>
-            <input
-              id="terminal-answer"
-              name="answer"
-              type="text"
-              class="terminal-input"
-              spellcheck="false"
-              autocapitalize="none"
-              autocomplete="off"
-              aria-label="Terminal answer input"
-            />
-          </form>
         </div>
       </section>
     </main>
 
-    <div class="scan-overlay hidden" id="scan-overlay" aria-hidden="true">
-      <div class="scan-label">Scanning for Birthday Girl</div>
-      <div class="scan-bar"></div>
-      <div class="scan-grid"></div>
-    </div>
-
     <noscript>
       <div class="noscript-fallback">
-        <p>This terminal intro requires JavaScript.</p>
-        <p><a href="birthday.html">Open the birthday page</a></p>
+        <p>This weird gate needs JavaScript.</p>
+        <p><a href="birthday.html">Open birthday page</a></p>
       </div>
     </noscript>
 
