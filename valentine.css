@@ -74,7 +74,8 @@ body::after {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 30;
+  z-index: 2147483647;
+  isolation: isolate;
 }
 
 #please-layer::before {
@@ -111,6 +112,7 @@ body::after {
   will-change: transform, color;
   transform: translate3d(0, 0, 0);
   animation: crt-word-flicker 0.22s steps(2, end) infinite;
+  z-index: 2;
 }
 
 .val-shell {
