@@ -1,0 +1,301 @@
+:root {
+  --bg: #030404;
+  --panel: rgba(4, 8, 6, 0.84);
+  --panel-line: rgba(117, 255, 141, 0.28);
+  --green: #63ff7b;
+  --green-dim: #2bcf4d;
+  --red: #ff4b57;
+  --red-dim: #c92d38;
+  --text: #d6ffd8;
+  --muted: #8fbc95;
+  --shadow: rgba(0, 0, 0, 0.48);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Courier New", "Lucida Console", monospace;
+  overflow: hidden;
+  position: relative;
+}
+
+#ascii-rain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.screen-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      transparent 1px 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.012) 0 1px,
+      rgba(0, 255, 0, 0.012) 1px 2px,
+      rgba(0, 0, 255, 0.012) 2px 3px,
+      transparent 3px 6px
+    );
+  opacity: 0.55;
+  animation: flicker 0.18s steps(2, end) infinite;
+}
+
+.surprise-shell {
+  position: relative;
+  z-index: 2;
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.terminal-panel {
+  width: min(880px, 100%);
+  border: 1px solid rgba(99, 255, 123, 0.42);
+  background:
+    linear-gradient(rgba(4, 8, 6, 0.9), rgba(4, 8, 6, 0.82));
+  box-shadow:
+    0 18px 42px var(--shadow),
+    inset 0 0 0 1px rgba(99, 255, 123, 0.12),
+    0 0 26px rgba(43, 207, 77, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(99, 255, 123, 0.07), transparent 35%),
+    radial-gradient(circle at 85% 20%, rgba(255, 75, 87, 0.06), transparent 38%);
+}
+
+.vim-topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid rgba(99, 255, 123, 0.22);
+  color: var(--green);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.terminal-content {
+  padding: 1rem 1rem 0.6rem;
+  text-align: left;
+}
+
+.prompt-line {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.sigil {
+  color: var(--green);
+  margin-right: 0.5rem;
+  font-weight: 700;
+}
+
+.terminal-content h1 {
+  margin: 0.75rem 0 0;
+  color: var(--green);
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  line-height: 1.05;
+  text-shadow: 0 0 10px rgba(99, 255, 123, 0.22);
+}
+
+.lede {
+  margin: 0.8rem 0 0;
+  color: var(--text);
+  max-width: 60ch;
+  line-height: 1.55;
+}
+
+.lede.accent {
+  color: var(--red);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.actions {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.terminal-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(99, 255, 123, 0.36);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--green);
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  transition:
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 120ms ease;
+}
+
+.terminal-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(99, 255, 123, 0.16),
+    rgba(255, 75, 87, 0.12)
+  );
+  transform: translateX(-102%);
+  transition: transform 180ms ease;
+  z-index: -1;
+}
+
+.terminal-btn:hover,
+.terminal-btn:focus-visible {
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(99, 255, 123, 0.22),
+    0 0 16px rgba(99, 255, 123, 0.15);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.terminal-btn:hover::before,
+.terminal-btn:focus-visible::before {
+  transform: translateX(0);
+}
+
+.terminal-btn:active {
+  transform: translateY(0);
+}
+
+.vim-note {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.9rem 0.85rem;
+  border-top: 1px solid rgba(99, 255, 123, 0.16);
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--green);
+  font-size: clamp(0.78rem, 1.8vw, 1rem);
+  text-align: left;
+}
+
+.line-no {
+  color: rgba(99, 255, 123, 0.55);
+  user-select: none;
+}
+
+.note-text {
+  color: var(--green);
+  overflow-wrap: anywhere;
+}
+
+.vim-cursor {
+  width: 0.55em;
+  height: 1.05em;
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(99, 255, 123, 0.28);
+  animation: blink-cursor 1s steps(1, end) infinite;
+}
+
+@keyframes blink-cursor {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.52;
+  }
+}
+
+@media (max-width: 700px) {
+  .terminal-content {
+    padding: 0.85rem 0.85rem 0.45rem;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .vim-topbar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+
+  .vim-note {
+    grid-template-columns: auto 1fr;
+    row-gap: 0.45rem;
+  }
+
+  .vim-cursor {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-noise,
+  .vim-cursor {
+    animation: none;
+  }
+
+  .terminal-btn,
+  .terminal-btn::before {
+    transition: none;
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A retro-hacker special surprise page for Elli."
+    />
+    <title>Special Surprise</title>
+    <link rel="stylesheet" href="surprise.css" />
+  </head>
+  <body>
+    <canvas id="ascii-rain" aria-hidden="true"></canvas>
+
+    <div class="screen-noise" aria-hidden="true"></div>
+
+    <main class="surprise-shell">
+      <section class="terminal-panel" aria-labelledby="surprise-title">
+        <div class="vim-topbar" aria-hidden="true">
+          <span>NORMAL</span>
+          <span>surprise.txt</span>
+          <span>utf-8</span>
+        </div>
+
+        <div class="terminal-content">
+          <p class="prompt-line">
+            <span class="sigil">$</span>
+            <span>opening_special_surprise --elli-only</span>
+          </p>
+          <h1 id="surprise-title">Special Surprise</h1>
+          <p class="lede">
+            This page is intentionally overdramatic and mildly unhinged.
+            Please read it in a hacker voice.
+          </p>
+          <p class="lede accent">
+            ACCESS LEVEL: ELLI ONLY
+          </p>
+
+          <div class="actions">
+            <a class="terminal-btn" href="index.html">Return to Birthday Page</a>
+            <a class="terminal-btn" href="valentine.html">Back to Valentine Question</a>
+          </div>
+        </div>
+
+        <div class="vim-note" aria-label="VIM note">
+          <span class="line-no">1</span>
+          <span class="note-text">We forgive you for saying the n-word in high school.</span>
+          <span class="vim-cursor" aria-hidden="true"></span>
+        </div>
+      </section>
+    </main>
+
+    <script src="surprise.js" defer></script>
+  </body>
+</html>
