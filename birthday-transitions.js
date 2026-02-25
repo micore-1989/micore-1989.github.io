@@ -254,7 +254,7 @@
     overlay.appendChild(canvas);
 
     var title = document.createElement("div");
-    title.textContent = "WHY I WOULD BE A BAD BOYFRIEND (RECEIPTS)";
+    title.textContent = "EXTREME COMPLIMENT OVERLOAD (ELLI EDITION)";
     title.style.cssText =
       "position:absolute;left:50%;top:10px;transform:translateX(-50%);" +
       "padding:8px 14px;border:2px solid rgba(255,255,255,0.55);" +
@@ -263,13 +263,13 @@
     overlay.appendChild(title);
 
     var stickerTexts = [
-      "POV: evidence drop",
-      "bro is cooked",
-      "L + ratio + receipts",
-      "this is so unserious",
-      "subway surfers footage missing",
-      "chat, look at this",
-      "sending to the groupchat",
+      "POV: compliment dump incoming",
+      "love bomb (respectfully)",
+      "this is disgustingly sweet",
+      "chat she is gorgeous",
+      "main character detected",
+      "sending this to the groupchat",
+      "everybody act surprised",
     ];
     var stickers = [];
     for (var s = 0; s < (coarsePointer ? 5 : 8); s += 1) {
@@ -315,15 +315,15 @@
     var cols = [];
     var phrases = [
       "POV",
-      "L+RATIO",
-      "BAD BF",
-      "RECEIPTS",
-      "AURA -100",
-      "CHAT???",
-      "ITS OVER",
-      "CLIP IT",
-      "COOKED",
-      "UNSERIOUS",
+      "BEAUTIFUL",
+      "LOVED",
+      "ANGELIC",
+      "AURA +1000",
+      "MAIN CHAR",
+      "ICONIC",
+      "CUTIE ALERT",
+      "GORGEOUS",
+      "UNREAL",
     ];
 
     if (sourceEl && sourceEl.getBoundingClientRect) {
@@ -396,7 +396,7 @@
 
       ctx.clearRect(0, 0, width, height);
 
-      // Darkening background to transition out of the elegant page into chaos.
+      // Darkening background to transition out of the elegant page into cheesy chaos.
       var bgGrad = ctx.createLinearGradient(0, 0, 0, height);
       bgGrad.addColorStop(0, "rgba(0,0,0," + (0.08 + t * 0.55).toFixed(3) + ")");
       bgGrad.addColorStop(0.65, "rgba(12,12,12," + (0.12 + t * 0.65).toFixed(3) + ")");
@@ -452,12 +452,12 @@
       ctx.fillRect(frameX + 10, frameY + 10, frameW - 20, 34);
       ctx.fillStyle = "rgba(255,255,255,0.96)";
       ctx.font = "700 " + (width < 560 ? 12 : 13) + "px 'Courier New', monospace";
-      ctx.fillText("why i would be a bad boyfriend (funny edition)", frameX + 18, frameY + 20);
+      ctx.fillText("why elli is outrageously easy to adore", frameX + 18, frameY + 20);
 
       ctx.fillStyle = "rgba(0,0,0,0.64)";
       ctx.fillRect(frameX + 10, frameY + frameH - 52, frameW - 20, 38);
       ctx.fillStyle = "rgba(255,255,255,0.98)";
-      ctx.fillText("scrolling to evidence... do not panic", frameX + 18, frameY + frameH - 40);
+      ctx.fillText("loading affirmations... please remain cute", frameX + 18, frameY + frameH - 40);
 
       // Floating stickers
       for (var z = 0; z < stickers.length; z += 1) {
