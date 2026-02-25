@@ -54,6 +54,7 @@
     var duration = 5000;
     var rafId = 0;
     var removed = false;
+    var redirecting = false;
     var frameGate = 0;
 
     function resize() {
@@ -72,7 +73,7 @@
           y: Math.random() * -height,
           speed: (coarsePointer ? 120 : 150) + Math.random() * (coarsePointer ? 150 : 220),
           phase: Math.random() * Math.PI * 2 + i * 0.2,
-          hue: Math.random() < 0.7 ? 122 : 0,
+          hue: Math.random() < 0.5 ? 122 : 0,
           xJitter: (Math.random() - 0.5) * fontSize * 0.3,
         };
       });
@@ -151,9 +152,31 @@
         ctx.fillRect(0, Math.max(0, consumeY - 56), width, 92);
       }
 
+      // Redraw a brighter neon layer on top of the consume veil so the "hacker" rain
+      // remains visible while the black gradient is taking over the page.
+      for (var j = 0; j < drops.length; j += (coarsePointer ? 3 : 2)) {
+        var f = drops[j];
+        var fx = j * fontSize + f.xJitter + Math.sin(f.phase * 1.05) * fontSize * 0.14;
+        var fTrail = coarsePointer ? 5 : 7;
+        for (var n = 0; n < fTrail; n += 1) {
+          var fy = f.y - n * fontSize;
+          if (fy < -fontSize || fy > height + fontSize) continue;
+          var fHue = j % 2 === 0 ? (112 + Math.sin(f.phase + n * 0.8) * 14) : (n === 0 ? 0 : 8);
+          var fAlpha = n === 0 ? 0.92 : 0.12 + (1 - n / fTrail) * 0.28;
+          ctx.fillStyle =
+            "hsla(" +
+            fHue.toFixed(0) +
+            " 95% " +
+            (n === 0 ? 72 : 56).toFixed(0) +
+            "% / " +
+            fAlpha.toFixed(3) +
+            ")";
+          ctx.fillText(randomChar(), fx, fy);
+        }
+      }
+
       if (elapsed >= duration) {
-        cleanup();
-        window.location.href = targetHref;
+        redirectToGate();
         return;
       }
 
@@ -169,6 +192,26 @@
       }
       if (rafId) cancelAnimationFrame(rafId);
       if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    }
+
+    function redirectToGate() {
+      if (redirecting) return;
+      redirecting = true;
+
+      // Freeze the final state as fully covered so there is no flash of the source page
+      // while navigation is beginning.
+      try {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, width, height);
+      } catch (e) {
+        // Ignore canvas failures and continue to navigate.
+      }
+      overlay.style.background = "#000";
+
+      // Leave the overlay attached until pagehide so there is no brief visual gap.
+      window.location.replace(targetHref);
     }
 
     resize();
