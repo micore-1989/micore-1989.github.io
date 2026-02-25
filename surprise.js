@@ -104,6 +104,58 @@
 })();
 
 (function () {
+  const target = document.getElementById("surprise-typed-text");
+  if (!target) return;
+
+  const text = target.getAttribute("data-full-text") || "";
+  const prefersReducedMotion =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  target.textContent = "";
+
+  if (!text) return;
+  if (prefersReducedMotion) {
+    target.textContent = text;
+    return;
+  }
+
+  let index = 0;
+  let timeoutId = 0;
+
+  function scheduleNext(delay) {
+    timeoutId = window.setTimeout(typeNext, delay);
+  }
+
+  function typeNext() {
+    if (index >= text.length) return;
+
+    // Type a couple chars at once occasionally to feel less robotic.
+    const burst = Math.random() < 0.22 ? 2 : 1;
+    const nextIndex = Math.min(text.length, index + burst);
+    target.textContent = text.slice(0, nextIndex);
+    index = nextIndex;
+
+    if (index >= text.length) return;
+
+    const currentChar = text.charAt(index - 1);
+    let delay = 18 + Math.random() * 42;
+    if (currentChar === " " && Math.random() < 0.35) delay += 70;
+    if (/[.,]/.test(currentChar)) delay += 120 + Math.random() * 110;
+    if (Math.random() < 0.08) delay += 90 + Math.random() * 140;
+
+    scheduleNext(delay);
+  }
+
+  // Small startup pause so it looks like the terminal just became active.
+  scheduleNext(280);
+
+  window.addEventListener("beforeunload", function () {
+    if (timeoutId) window.clearTimeout(timeoutId);
+  });
+})();
+
+(function () {
   const canvas = document.getElementById("balloon-layer");
   if (!canvas) return;
 
