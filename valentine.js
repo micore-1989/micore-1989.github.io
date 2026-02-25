@@ -4,6 +4,7 @@
     const noBtn = document.getElementById("no-btn");
     const yesBtn = document.getElementById("yes-btn");
     const message = document.getElementById("response-message");
+    const heartTransition = document.getElementById("yes-heart-transition");
     const yesDestination = "date-invite.html";
 
     if (!stage || !noBtn || !yesBtn || !message) return;
@@ -80,14 +81,67 @@
       });
     }
 
-    yesBtn.addEventListener("click", function () {
+    let yesTransitionStarted = false;
+
+    function runYesHeartTransition() {
+      if (yesTransitionStarted) return;
+      yesTransitionStarted = true;
+
       message.textContent = "Excellent answer. Very elegant choice.";
       yesBtn.disabled = true;
       noBtn.disabled = true;
-      setTimeout(function () {
+
+      if (!heartTransition) {
+        window.setTimeout(function () {
+          window.location.href = yesDestination;
+        }, 450);
+        return;
+      }
+
+      const rect = yesBtn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const farthestCorner = Math.max(
+        Math.hypot(centerX, centerY),
+        Math.hypot(window.innerWidth - centerX, centerY),
+        Math.hypot(centerX, window.innerHeight - centerY),
+        Math.hypot(window.innerWidth - centerX, window.innerHeight - centerY)
+      );
+
+      // Base heart box is 22px; add margin so it fully clears corners.
+      const scaleEnd = Math.max(40, Math.ceil((farthestCorner * 2.35) / 22));
+
+      document.body.classList.add("yes-heart-transitioning");
+      heartTransition.style.setProperty("--heart-x", Math.round(centerX) + "px");
+      heartTransition.style.setProperty("--heart-y", Math.round(centerY) + "px");
+      heartTransition.style.setProperty("--heart-scale-end", String(scaleEnd));
+      heartTransition.classList.remove("active");
+
+      // Restart animation deterministically.
+      void heartTransition.offsetWidth;
+      heartTransition.classList.add("active");
+
+      let redirected = false;
+      function finish() {
+        if (redirected) return;
+        redirected = true;
         window.location.href = yesDestination;
-      }, 450);
-    });
+      }
+
+      heartTransition.addEventListener(
+        "animationend",
+        function onEnd(event) {
+          if (event.target !== heartTransition) return;
+          heartTransition.removeEventListener("animationend", onEnd);
+          finish();
+        }
+      );
+
+      // Fallback in case animationend doesn't fire.
+      window.setTimeout(finish, 1200);
+    }
+
+    yesBtn.addEventListener("click", runYesHeartTransition);
 
     noBtn.addEventListener("mouseenter", function () {
       if (!finePointer) return;

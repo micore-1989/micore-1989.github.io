@@ -144,6 +144,58 @@ body::after {
   pointer-events: none;
 }
 
+#yes-heart-transition {
+  position: fixed;
+  left: var(--heart-x, 50vw);
+  top: var(--heart-y, 50vh);
+  width: 22px;
+  height: 22px;
+  background: #c9102f;
+  border-radius: 14%;
+  transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+  transform-origin: center;
+  opacity: 0;
+  z-index: 2147483645;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 24px rgba(201, 16, 47, 0.35);
+}
+
+#yes-heart-transition::before,
+#yes-heart-transition::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
+}
+
+#yes-heart-transition::before {
+  top: -50%;
+  left: 0;
+}
+
+#yes-heart-transition::after {
+  top: 0;
+  left: 50%;
+}
+
+#yes-heart-transition.active {
+  opacity: 1;
+  animation: yes-heart-screen-bloom 960ms cubic-bezier(0.14, 0.86, 0.16, 1) forwards;
+}
+
+body.yes-heart-transitioning #please-layer {
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+body.yes-heart-transitioning .val-card {
+  pointer-events: none;
+}
+
 .val-shell {
   min-height: 100vh;
   display: grid;
@@ -457,4 +509,22 @@ body::after {
   0% { opacity: 0.9; }
   50% { opacity: 0.98; }
   100% { opacity: 0.92; }
+}
+
+@keyframes yes-heart-screen-bloom {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-45deg) scale(0.8);
+    filter: saturate(1) brightness(1);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-45deg) scale(8);
+    filter: saturate(1.08) brightness(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-45deg) scale(var(--heart-scale-end, 80));
+    filter: saturate(1.12) brightness(1.02);
+  }
 }
