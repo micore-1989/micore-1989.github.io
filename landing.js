@@ -11,15 +11,15 @@
   let locked = false;
   let clearErrorTimer = 0;
   const targetRegions = [
-    // "left nipple" target (right-side person in the photo)
-    { x: 56.0, y: 48.2, w: 19.5, h: 12.5 },
-    // right golf club head
-    { x: 87.0, y: 51.3, w: 17.0, h: 11.5 },
+    // left nostril (viewer-left nostril)
+    { x: 48.4, y: 53.7, w: 10.2, h: 8.6 },
+    // right nostril (viewer-right nostril)
+    { x: 53.6, y: 53.8, w: 10.2, h: 8.6 },
   ];
 
   const steps = [
-    "Step 1 of 2: click on my left nipple",
-    "Step 2 of 2: now click the right golf club head",
+    "Step 1 of 2: click the left nostril",
+    "Step 2 of 2: now click the right nostril",
     "Correct. Opening the birthday website...",
   ];
 
@@ -59,7 +59,7 @@
     if (locked) return;
 
     if (order !== current) {
-      resetChallenge("WRONG ORDER. left to right means LEFT to RIGHT.");
+      resetChallenge("WRONG ORDER. Nostrils are still left to right.");
       return;
     }
 

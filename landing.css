@@ -245,10 +245,10 @@ body {
 
 .challenge-image-wrap {
   position: relative;
-  width: min(100%, 520px, 40vh);
-  width: min(100%, 520px, 40svh);
+  width: min(100%, 540px, 62vh);
+  width: min(100%, 540px, 62svh);
   margin: 0 auto;
-  aspect-ratio: 1076 / 1898;
+  aspect-ratio: 582 / 630;
   border: 3px solid #000;
   background: #fff;
   overflow: hidden;
@@ -259,6 +259,9 @@ body {
   height: 100%;
   display: block;
   object-fit: cover;
+  object-position: center center;
+  filter: saturate(1.1) contrast(1.02);
+  animation: rainbow-face 2.8s linear infinite;
 }
 
 .hotspot {
@@ -323,17 +326,17 @@ body {
 }
 
 .hotspot-left {
-  left: 56%;
-  top: 48.2%;
-  width: 17.5%;
-  height: 10.4%;
+  left: 48.4%;
+  top: 53.7%;
+  width: 12%;
+  height: 10.5%;
 }
 
 .hotspot-right {
-  left: 87%;
-  top: 51.3%;
-  width: 15.4%;
-  height: 9.4%;
+  left: 53.6%;
+  top: 53.8%;
+  width: 12%;
+  height: 10.5%;
 }
 
 .success-flash {
@@ -390,6 +393,11 @@ body {
 @keyframes banner-wobble {
   0% { transform: rotate(-0.8deg) scale(1); filter: hue-rotate(0deg); }
   100% { transform: rotate(0.8deg) scale(1.01); filter: hue-rotate(10deg); }
+}
+
+@keyframes rainbow-face {
+  0% { filter: hue-rotate(0deg) saturate(1.1) contrast(1.02); }
+  100% { filter: hue-rotate(360deg) saturate(1.14) contrast(1.03); }
 }
 
 @keyframes bounce-a {
@@ -476,7 +484,13 @@ body {
   }
 
   .challenge-image-wrap {
-    width: min(100%, 420px);
+    width: min(100%, 430px, 56svh);
+  }
+
+  .hotspot-left,
+  .hotspot-right {
+    width: 14.5%;
+    height: 12.5%;
   }
 
   .chaos-sticker {
@@ -538,8 +552,8 @@ body {
   }
 
   .challenge-image-wrap {
-    width: min(100%, 340px, 35vh);
-    width: min(100%, 340px, 35svh);
+    width: min(100%, 360px, 48vh);
+    width: min(100%, 360px, 48svh);
   }
 }
 
@@ -561,6 +575,12 @@ body {
   .challenge-image-wrap:hover .hotspot {
     opacity: 0.24;
   }
+
+  .hotspot-left,
+  .hotspot-right {
+    width: 16.5%;
+    height: 14%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -569,6 +589,10 @@ body {
   .chaos-star,
   .success-flash.show,
   .birthday-banner span {
+    animation: none !important;
+  }
+
+  .challenge-image-wrap img {
     animation: none !important;
   }
 
