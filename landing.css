@@ -271,7 +271,7 @@ body {
   background: transparent;
   color: transparent;
   cursor: crosshair;
-  opacity: 0;
+  opacity: 0.26;
   transition: opacity 100ms ease, transform 100ms ease, box-shadow 100ms ease;
   z-index: 8;
 }
@@ -285,15 +285,17 @@ body {
 }
 
 .hotspot::before {
-  border: 2px dashed rgba(255, 0, 221, 0.95);
+  inset: 22%;
+  border: 2px dashed rgba(255, 255, 255, 0.95);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .hotspot::after {
-  inset: -8px;
-  border: 2px solid rgba(46, 232, 255, 0.95);
+  inset: 10%;
+  border: 2px solid rgba(46, 232, 255, 0.92);
   border-radius: 999px;
+  box-shadow: 0 0 10px rgba(46, 232, 255, 0.28);
 }
 
 .hotspot:hover,
@@ -304,7 +306,7 @@ body {
 }
 
 .challenge-image-wrap:hover .hotspot {
-  opacity: 0.08;
+  opacity: 0.34;
 }
 
 .challenge-image-wrap:hover .hotspot.correct {
@@ -328,15 +330,15 @@ body {
 .hotspot-left {
   left: 48.4%;
   top: 53.7%;
-  width: 12%;
-  height: 10.5%;
+  width: 17%;
+  height: 15%;
 }
 
 .hotspot-right {
   left: 53.6%;
   top: 53.8%;
-  width: 12%;
-  height: 10.5%;
+  width: 17%;
+  height: 15%;
 }
 
 .success-flash {
@@ -489,8 +491,8 @@ body {
 
   .hotspot-left,
   .hotspot-right {
-    width: 14.5%;
-    height: 12.5%;
+    width: 19%;
+    height: 17%;
   }
 
   .chaos-sticker {
@@ -559,7 +561,7 @@ body {
 
 @media (hover: none), (pointer: coarse) {
   .hotspot {
-    opacity: 0.24;
+    opacity: 0.36;
   }
 
   .hotspot::before {
@@ -578,8 +580,8 @@ body {
 
   .hotspot-left,
   .hotspot-right {
-    width: 16.5%;
-    height: 14%;
+    width: 21%;
+    height: 18.5%;
   }
 }
 
