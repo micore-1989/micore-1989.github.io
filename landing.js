@@ -11,15 +11,15 @@
   let locked = false;
   let clearErrorTimer = 0;
   const targetRegions = [
-    // left nostril (viewer-left nostril)
-    { x: 48.4, y: 53.7, w: 10.2, h: 8.6 },
-    // right nostril (viewer-right nostril)
-    { x: 53.6, y: 53.8, w: 10.2, h: 8.6 },
+    // left eye (viewer-left eye)
+    { x: 31.5, y: 41.0, w: 21.5, h: 15.5 },
+    // right eye (viewer-right eye)
+    { x: 68.0, y: 41.2, w: 21.5, h: 15.5 },
   ];
 
   const steps = [
-    "Step 1 of 2: click the left nostril",
-    "Step 2 of 2: now click the right nostril",
+    "Step 1 of 2: click the left eye",
+    "Step 2 of 2: now click the right eye",
     "Correct. Opening the birthday website...",
   ];
 
@@ -59,7 +59,7 @@
     if (locked) return;
 
     if (order !== current) {
-      resetChallenge("WRONG ORDER. Nostrils are still left to right.");
+      resetChallenge("WRONG ORDER. Eyes are still left to right.");
       return;
     }
 

@@ -328,17 +328,17 @@ body {
 }
 
 .hotspot-left {
-  left: 48.4%;
-  top: 53.7%;
-  width: 17%;
-  height: 15%;
+  left: 31.5%;
+  top: 41%;
+  width: 24%;
+  height: 18%;
 }
 
 .hotspot-right {
-  left: 53.6%;
-  top: 53.8%;
-  width: 17%;
-  height: 15%;
+  left: 68%;
+  top: 41.2%;
+  width: 24%;
+  height: 18%;
 }
 
 .success-flash {
@@ -491,8 +491,8 @@ body {
 
   .hotspot-left,
   .hotspot-right {
-    width: 19%;
-    height: 17%;
+    width: 27%;
+    height: 21%;
   }
 
   .chaos-sticker {
@@ -580,8 +580,8 @@ body {
 
   .hotspot-left,
   .hotspot-right {
-    width: 21%;
-    height: 18.5%;
+    width: 30%;
+    height: 24%;
   }
 }
 
