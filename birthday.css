@@ -1295,74 +1295,6 @@ a {
   line-height: 1.45;
 }
 
-.footer {
-  margin-top: 1rem;
-  padding: 0.95rem 1rem;
-  display: grid;
-  place-items: center;
-}
-
-.footer-surprise-btn {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: min(100%, 560px);
-  min-height: 52px;
-  padding: 0.8rem 1rem;
-  border: 1px solid var(--black);
-  background: var(--black);
-  color: #b9ffb7;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  text-align: center;
-  box-shadow:
-    inset 0 0 0 1px rgba(99, 255, 123, 0.18),
-    inset 0 0 0 2px rgba(255, 75, 87, 0.06);
-  transition:
-    color 170ms ease,
-    transform 130ms ease,
-    box-shadow 170ms ease;
-}
-
-.footer-surprise-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 75, 87, 0.95),
-    rgba(99, 255, 123, 0.9)
-  );
-  transform: translateX(-102%);
-  transition: transform 220ms ease;
-  z-index: -1;
-}
-
-.footer-surprise-btn:hover,
-.footer-surprise-btn:focus-visible {
-  color: var(--black);
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 0 1px rgba(99, 255, 123, 0.4),
-    0 0 0 3px rgba(255, 75, 87, 0.18),
-    5px 5px 0 rgba(15, 15, 16, 0.95);
-  outline: none;
-}
-
-.footer-surprise-btn:hover::before,
-.footer-surprise-btn:focus-visible::before {
-  transform: translateX(0);
-}
-
-.footer-surprise-btn:active {
-  transform: translateY(0);
-  box-shadow: 2px 2px 0 rgba(15, 15, 16, 0.95);
-}
-
 @media (max-width: 920px) {
   .hero-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1497,13 +1429,6 @@ a {
 
   .action-btn {
     min-height: 50px;
-  }
-
-  .footer-surprise-btn {
-    min-height: 50px;
-    padding: 0.75rem 0.85rem;
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
   }
 
   .support-card {
