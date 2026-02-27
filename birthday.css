@@ -1295,6 +1295,52 @@ a {
   line-height: 1.45;
 }
 
+.blog-link-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+.blog-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  width: min(100%, 420px);
+  padding: 0.82rem 1rem;
+  border: 1px solid var(--black);
+  background: var(--black);
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    transform 130ms ease,
+    box-shadow 170ms ease,
+    color 170ms ease;
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 164, 74, 0.26),
+    0 0 0 1px rgba(15, 15, 16, 0.9);
+}
+
+.blog-link-btn:hover,
+.blog-link-btn:focus-visible {
+  transform: translateY(-2px);
+  color: #fff0c4;
+  box-shadow:
+    inset 0 0 0 1px rgba(201, 164, 74, 0.55),
+    0 0 0 3px rgba(201, 164, 74, 0.18),
+    5px 5px 0 rgba(15, 15, 16, 0.95);
+  outline: none;
+}
+
+.blog-link-btn:active {
+  transform: translateY(0);
+  box-shadow: 2px 2px 0 rgba(15, 15, 16, 0.95);
+}
+
 @media (max-width: 920px) {
   .hero-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1450,6 +1496,12 @@ a {
 
   .support-copy {
     font-size: 0.97rem;
+  }
+
+  .blog-link-btn {
+    min-height: 50px;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
   }
 
   .intro-stage {

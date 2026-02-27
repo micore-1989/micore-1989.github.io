@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Misha's personal blog with updates and headlines."
+    />
+    <title>Misha Blog</title>
+    <link rel="stylesheet" href="blog.css" />
+  </head>
+  <body>
+    <div class="blog-shell">
+      <header class="blog-header">
+        <p class="blog-kicker">Misha Updates</p>
+        <h1>Misha's Blog</h1>
+        <p class="blog-subtitle">
+          Casual updates, big life headlines, and occasional music links.
+        </p>
+
+        <div class="blog-header-actions">
+          <a class="header-btn" href="birthday.html">Back To Birthday Site</a>
+          <button class="header-btn header-btn-accent" id="unlock-editor" type="button">
+            Unlock Edit Mode
+          </button>
+        </div>
+      </header>
+
+      <section class="auth-panel" id="auth-panel" aria-label="Editor access">
+        <form id="password-form" class="password-form" autocomplete="off" hidden>
+          <label for="edit-password">Editor Password</label>
+          <input
+            id="edit-password"
+            name="password"
+            type="password"
+            placeholder="Enter password"
+            required
+          />
+          <button type="submit">Unlock</button>
+        </form>
+        <p id="auth-message" class="auth-message" aria-live="polite"></p>
+      </section>
+
+      <main class="blog-main">
+        <section class="blog-column">
+          <div class="column-head">
+            <h2>Big Updates</h2>
+            <p>Quick headline-style updates that stand out.</p>
+          </div>
+          <div id="big-updates-list" class="big-updates-list" aria-live="polite"></div>
+        </section>
+
+        <section class="blog-column">
+          <div class="column-head">
+            <h2>Entries</h2>
+            <p>Longer posts and day-to-day updates.</p>
+          </div>
+          <div id="entries-list" class="entries-list" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <section id="editor-panel" class="editor-panel" hidden>
+        <div class="editor-head">
+          <h2>Editor Mode</h2>
+          <button id="lock-editor" type="button">Lock</button>
+        </div>
+
+        <div class="editor-grid">
+          <form id="big-update-form" class="editor-card">
+            <h3>Write Big Update</h3>
+            <input type="hidden" id="big-edit-id" />
+            <label for="big-headline">Headline</label>
+            <input
+              id="big-headline"
+              name="headline"
+              maxlength="120"
+              required
+              placeholder="Big headline update"
+            />
+            <label for="big-detail">Detail (optional)</label>
+            <textarea
+              id="big-detail"
+              name="detail"
+              rows="4"
+              placeholder="Extra context for this headline"
+            ></textarea>
+            <div class="editor-actions">
+              <button type="submit">Save Big Update</button>
+              <button type="button" class="ghost-btn" id="big-cancel-edit">Cancel Edit</button>
+            </div>
+          </form>
+
+          <form id="entry-form" class="editor-card">
+            <h3>Write Entry</h3>
+            <input type="hidden" id="entry-edit-id" />
+            <label for="entry-title">Title</label>
+            <input
+              id="entry-title"
+              name="title"
+              maxlength="140"
+              required
+              placeholder="Entry title"
+            />
+            <label for="entry-body">Entry Text</label>
+            <textarea
+              id="entry-body"
+              name="body"
+              rows="6"
+              required
+              placeholder="Write your update here..."
+            ></textarea>
+            <label for="entry-spotify">Spotify Link (optional)</label>
+            <input
+              id="entry-spotify"
+              name="spotify"
+              type="url"
+              placeholder="https://open.spotify.com/..."
+            />
+            <div class="editor-actions">
+              <button type="submit">Save Entry</button>
+              <button type="button" class="ghost-btn" id="entry-cancel-edit">Cancel Edit</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <script src="blog.js" defer></script>
+    <script src="cursor-stamps.js" defer></script>
+  </body>
+</html>
