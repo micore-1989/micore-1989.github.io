@@ -1,18 +1,13 @@
 :root {
   --bg: #282a36;
-  --bg-soft: #21222c;
-  --panel: #313342;
-  --panel-soft: #2b2d3a;
-  --ink: #f8f8f2;
-  --muted: #b7bdd1;
+  --panel: #21222c;
+  --panel-2: #1f2029;
+  --text: #f8f8f2;
+  --muted: #aeb7c9;
   --line: #44475a;
-  --line-strong: #5b6077;
-  --pink: #ff79c6;
-  --purple: #bd93f9;
-  --cyan: #8be9fd;
-  --green: #50fa7b;
-  --yellow: #f1fa8c;
-  --red: #ff5555;
+  --accent: #8be9fd;
+  --ok: #50fa7b;
+  --warn: #ff5555;
 }
 
 * {
@@ -26,188 +21,79 @@ body {
 }
 
 body {
-  color: var(--ink);
-  font-family: "Courier New", "Lucida Console", monospace;
-  line-height: 1.4;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.015) 0 2px,
-      transparent 2px 4px
-    ),
-    radial-gradient(circle at 12% 8%, rgba(189, 147, 249, 0.18), transparent 28%),
-    radial-gradient(circle at 84% 16%, rgba(139, 233, 253, 0.12), transparent 30%),
-    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Consolas", "Menlo", "Monaco", "Courier New", monospace;
+  line-height: 1.45;
 }
 
 .blog-shell {
-  width: min(1100px, calc(100% - 0.8rem));
+  width: min(1024px, 100%);
   margin: 0;
-  padding: 0.72rem 0.35rem 1.35rem;
+  padding: 0.75rem;
 }
 
 .blog-header,
 .auth-panel,
 .blog-column,
 .editor-panel {
-  border: 2px solid var(--line);
+  border: 1px solid var(--line);
   background: var(--panel);
-  box-shadow:
-    inset 1px 1px 0 rgba(248, 248, 242, 0.08),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.35),
-    4px 4px 0 rgba(0, 0, 0, 0.32);
+  padding: 0.75rem;
 }
 
 .blog-header {
-  position: relative;
-  padding: 1.55rem 0.85rem 0.82rem;
-  background:
-    linear-gradient(180deg, rgba(255, 121, 198, 0.15), rgba(139, 233, 253, 0.05) 24%, rgba(0, 0, 0, 0) 25%),
-    linear-gradient(180deg, #323545 0%, #2f3140 100%);
-}
-
-.blog-header::before {
-  content: "C:\\users\\misha\\website\\blog.html  --  dracula theme";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: 26px;
-  padding: 0.28rem 0.55rem;
-  border-bottom: 2px solid var(--line);
-  background: #232530;
-  color: var(--cyan);
-  font-size: 0.74rem;
-  letter-spacing: 0.03em;
-  text-transform: lowercase;
+  margin-bottom: 0.6rem;
 }
 
 .blog-kicker {
   margin: 0;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-size: 0.82rem;
   text-transform: uppercase;
-  color: var(--yellow);
 }
 
 .blog-header h1 {
-  margin: 0.22rem 0 0;
-  font-size: clamp(1.5rem, 3.8vw, 2.45rem);
-  line-height: 1.02;
-  color: var(--pink);
-  text-shadow:
-    0 0 8px rgba(255, 121, 198, 0.35),
-    2px 2px 0 rgba(0, 0, 0, 0.45);
+  margin: 0.25rem 0 0;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .blog-subtitle {
-  margin: 0.45rem 0 0;
+  margin: 0.35rem 0 0;
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 .blog-header-actions {
-  margin-top: 0.75rem;
+  margin-top: 0.65rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.44rem;
+  gap: 0.45rem;
 }
 
 .header-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0.5rem 0.76rem;
-  border: 2px solid var(--line);
-  background: #272935;
-  color: var(--ink);
+  min-height: 36px;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--text);
   text-decoration: none;
+  font: 700 0.78rem/1 "Consolas", "Menlo", "Monaco", monospace;
   text-transform: uppercase;
-  font: 700 0.74rem/1 "Courier New", monospace;
-  letter-spacing: 0.05em;
   cursor: pointer;
-  box-shadow:
-    inset 1px 1px 0 rgba(248, 248, 242, 0.07),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.34);
-  transition: transform 120ms ease, filter 120ms ease;
-}
-
-.header-btn:hover,
-.header-btn:focus-visible {
-  transform: translateY(-1px);
-  filter: brightness(1.05);
-  outline: none;
 }
 
 .header-btn-accent {
-  border-color: #ff79c6;
-  background: linear-gradient(180deg, rgba(255, 121, 198, 0.35), rgba(189, 147, 249, 0.3));
-  color: #fff;
-}
-
-.retro-marquee-wrap {
-  margin-top: 0.62rem;
-  border: 2px solid var(--line);
-  background: linear-gradient(90deg, rgba(80, 250, 123, 0.26), rgba(139, 233, 253, 0.23), rgba(255, 121, 198, 0.3));
-  box-shadow:
-    inset 1px 1px 0 rgba(248, 248, 242, 0.09),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.36);
-}
-
-.retro-marquee-wrap marquee {
-  padding: 0.36rem 0;
-  font: 700 0.78rem/1 "Courier New", monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #f8f8f2;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
-}
-
-.retro-photo-strip {
-  margin-top: 0.66rem;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.5rem;
-}
-
-.retro-photo-strip-bottom {
-  margin-top: 0.8rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.retro-photo-card {
-  margin: 0;
-  border: 2px solid var(--line);
-  background: #262833;
-  padding: 0.24rem;
-  box-shadow:
-    inset 1px 1px 0 rgba(248, 248, 242, 0.08),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.36);
-}
-
-.retro-photo-card img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  display: block;
-  border: 2px solid #181a22;
-  filter: saturate(1.08) contrast(1.02);
-  background: #1f2028;
-}
-
-.retro-photo-card figcaption {
-  margin-top: 0.26rem;
-  text-align: center;
-  font: 700 0.66rem/1 "Courier New", monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .auth-panel {
-  margin-top: 0.68rem;
-  padding: 0.66rem;
+  margin-bottom: 0.6rem;
 }
 
 .password-form {
@@ -219,245 +105,191 @@ body {
 
 .password-form label {
   grid-column: 1 / -1;
-  color: var(--yellow);
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  color: var(--muted);
 }
 
 .password-form input,
-.password-form button {
-  min-height: 38px;
-  border: 2px solid var(--line);
-  font: 700 0.74rem/1 "Courier New", monospace;
+.password-form button,
+.editor-card input,
+.editor-card textarea,
+.editor-head button,
+.editor-actions button,
+.small-btn {
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--text);
+  font-family: inherit;
 }
 
-.password-form input {
-  padding: 0.46rem 0.54rem;
-  background: #1f212a;
-  color: var(--ink);
+.password-form input,
+.editor-card input,
+.editor-card textarea {
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.88rem;
 }
 
 .password-form button {
-  color: #fff;
-  background: linear-gradient(180deg, #bd93f9 0%, #8d6bc8 100%);
-  padding: 0.46rem 0.65rem;
+  min-height: 35px;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
 .auth-message {
-  margin: 0.5rem 0 0;
-  min-height: 1.05rem;
-  font: 700 0.74rem/1.2 "Courier New", monospace;
-  color: var(--red);
+  margin: 0.45rem 0 0;
+  min-height: 1.1rem;
+  font-size: 0.78rem;
+  color: var(--warn);
 }
 
 .auth-message.success {
-  color: var(--green);
+  color: var(--ok);
 }
 
 .blog-main {
-  margin-top: 0.74rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.6rem;
 }
 
-.blog-column {
-  min-width: 0;
-}
-
 .column-head {
-  padding: 0.66rem 0.68rem;
-  border-bottom: 2px solid var(--line);
-  background: linear-gradient(90deg, rgba(189, 147, 249, 0.2), rgba(80, 250, 123, 0.14));
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .column-head h2 {
   margin: 0;
-  font: 700 1rem/1.05 "Courier New", monospace;
-  color: var(--cyan);
-  text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .column-head p {
   margin: 0.3rem 0 0;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.84rem;
 }
 
 .big-updates-list,
 .entries-list {
-  padding: 0.66rem;
   display: grid;
   gap: 0.5rem;
 }
 
 .empty-state {
-  border: 2px dashed var(--line-strong);
-  padding: 0.72rem;
+  border: 1px dashed var(--line);
+  padding: 0.7rem;
   color: var(--muted);
-  background: #242632;
-  font: 700 0.78rem/1.3 "Courier New", monospace;
+  font-size: 0.86rem;
 }
 
 .big-update-card,
 .entry-card {
-  border: 2px solid var(--line);
-  background: #2a2c39;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
   padding: 0.6rem;
-  box-shadow:
-    inset 1px 1px 0 rgba(248, 248, 242, 0.07),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.34);
 }
 
 .big-update-card h3,
 .entry-card h3 {
   margin: 0;
-  line-height: 1.14;
-}
-
-.big-update-card h3 {
-  font-size: clamp(1rem, 2.25vw, 1.28rem);
-  color: var(--pink);
-}
-
-.entry-card h3 {
-  font-size: 1rem;
-  color: var(--purple);
+  font-size: 0.96rem;
 }
 
 .meta-row {
   margin-top: 0.25rem;
-  font: 700 0.7rem/1 "Courier New", monospace;
   color: var(--muted);
+  font-size: 0.76rem;
 }
 
 .big-detail,
 .entry-body {
-  margin: 0.44rem 0 0;
+  margin: 0.5rem 0 0;
   white-space: pre-wrap;
-  font-size: 0.86rem;
-  color: var(--ink);
+  font-size: 0.9rem;
 }
 
 .spotify-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.54rem;
-  min-height: 31px;
-  padding: 0.35rem 0.56rem;
-  border: 2px solid #2b8f4f;
-  background: linear-gradient(180deg, rgba(80, 250, 123, 0.28), rgba(80, 250, 123, 0.16));
-  color: #d9ffe6;
+  display: inline-block;
+  margin-top: 0.5rem;
+  border: 1px solid var(--line);
+  padding: 0.3rem 0.5rem;
+  color: var(--accent);
   text-decoration: none;
-  font: 700 0.7rem/1 "Courier New", monospace;
+  font-size: 0.76rem;
   text-transform: uppercase;
-}
-
-.spotify-link:hover,
-.spotify-link:focus-visible {
-  filter: brightness(1.05);
-  outline: none;
 }
 
 .admin-item-actions {
   margin-top: 0.5rem;
   display: flex;
-  gap: 0.34rem;
   flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .small-btn {
   min-height: 30px;
-  border: 2px solid var(--line);
-  background: #232532;
-  color: var(--ink);
-  padding: 0.3rem 0.52rem;
-  font: 700 0.68rem/1 "Courier New", monospace;
+  padding: 0.3rem 0.48rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-.small-btn:hover,
-.small-btn:focus-visible {
-  filter: brightness(1.06);
-  outline: none;
-}
-
 .small-btn-danger {
-  background: #3a2630;
-  border-color: #8e4d68;
-  color: #ffd4e4;
+  color: #ffb5b5;
+  border-color: #7b4444;
 }
 
 .editor-panel {
-  margin-top: 0.82rem;
-  padding: 0.7rem;
+  margin-top: 0.7rem;
 }
 
 .editor-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .editor-head h2 {
   margin: 0;
-  font: 700 1rem/1 "Courier New", monospace;
-  color: var(--yellow);
-  text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .editor-head button {
   min-height: 34px;
-  border: 2px solid var(--line);
-  background: #232532;
-  color: var(--ink);
-  padding: 0.4rem 0.58rem;
-  font: 700 0.68rem/1 "Courier New", monospace;
+  padding: 0.4rem 0.56rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
   cursor: pointer;
 }
 
 .editor-grid {
-  margin-top: 0.56rem;
+  margin-top: 0.55rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.55rem;
 }
 
 .editor-card {
-  border: 2px solid var(--line);
-  background: #272937;
-  padding: 0.66rem;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  padding: 0.6rem;
   display: grid;
-  gap: 0.34rem;
+  gap: 0.35rem;
 }
 
 .editor-card h3 {
   margin: 0 0 0.1rem;
-  font: 700 0.9rem/1 "Courier New", monospace;
-  color: var(--cyan);
-  text-transform: uppercase;
+  font-size: 0.92rem;
 }
 
 .editor-card label {
-  font: 700 0.68rem/1 "Courier New", monospace;
-  text-transform: uppercase;
+  font-size: 0.74rem;
   color: var(--muted);
-}
-
-.editor-card input,
-.editor-card textarea {
-  width: 100%;
-  border: 2px solid var(--line);
-  background: #1f212a;
-  color: var(--ink);
-  padding: 0.46rem 0.5rem;
-  font: 700 0.74rem/1.25 "Courier New", monospace;
 }
 
 .editor-card textarea {
@@ -465,55 +297,34 @@ body {
 }
 
 .editor-actions {
-  margin-top: 0.18rem;
+  margin-top: 0.15rem;
   display: flex;
-  gap: 0.34rem;
   flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .editor-actions button {
   min-height: 34px;
-  border: 2px solid var(--line);
-  background: linear-gradient(180deg, rgba(255, 121, 198, 0.4), rgba(189, 147, 249, 0.35));
-  color: #fff;
   padding: 0.4rem 0.56rem;
-  font: 700 0.68rem/1 "Courier New", monospace;
+  font-size: 0.74rem;
   text-transform: uppercase;
   cursor: pointer;
 }
 
 .editor-actions .ghost-btn {
-  background: #232532;
-  color: var(--ink);
+  color: var(--muted);
 }
 
-@media (max-width: 920px) {
-  .retro-photo-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
+@media (max-width: 860px) {
   .blog-main,
   .editor-grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 560px) {
   .blog-shell {
-    width: calc(100% - 0.4rem);
-    padding: 0.45rem 0.12rem 1rem;
-  }
-
-  .blog-header,
-  .auth-panel,
-  .blog-column,
-  .editor-panel {
-    padding-left: 0.52rem;
-    padding-right: 0.52rem;
-  }
-
-  .blog-header h1 {
-    font-size: clamp(1.35rem, 7.1vw, 1.92rem);
+    padding: 0.5rem;
   }
 
   .password-form {
@@ -522,16 +333,5 @@ body {
 
   .password-form button {
     width: 100%;
-  }
-
-  .retro-photo-card figcaption {
-    font-size: 0.62rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .header-btn,
-  .spotify-link {
-    transition: none;
   }
 }
