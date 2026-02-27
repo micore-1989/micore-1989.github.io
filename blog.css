@@ -1,7 +1,6 @@
 :root {
   --bg: #282a36;
   --panel: #21222c;
-  --panel-2: #1f2029;
   --text: #f8f8f2;
   --muted: #aeb7c9;
   --line: #44475a;
@@ -24,218 +23,78 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: "Consolas", "Menlo", "Monaco", "Courier New", monospace;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .blog-shell {
-  width: min(1024px, 100%);
+  max-width: 900px;
   margin: 0;
-  padding: 0.75rem;
+  padding: 12px;
 }
 
-.blog-header,
-.auth-panel,
-.blog-column,
-.editor-panel {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  padding: 0.75rem;
-}
-
-.blog-header {
-  margin-bottom: 0.6rem;
-}
-
-.blog-kicker {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-}
-
-.blog-header h1 {
-  margin: 0.25rem 0 0;
-  font-size: 1.4rem;
+h1,
+h2,
+h3 {
+  margin: 0 0 8px;
+  text-decoration: underline;
   font-weight: 700;
 }
 
-.blog-subtitle {
-  margin: 0.35rem 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
+p {
+  margin: 0 0 10px;
 }
 
-.blog-header-actions {
-  margin-top: 0.65rem;
+.blog-kicker,
+.blog-subtitle,
+.column-head p,
+.meta-row,
+.auth-message,
+.editor-card label {
+  color: var(--muted);
+}
+
+.blog-header-actions,
+.editor-actions,
+.admin-item-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 8px;
+  margin: 8px 0 12px;
 }
 
-.header-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--line);
-  background: var(--panel-2);
+.auth-panel,
+.blog-main,
+.editor-panel,
+.column-head,
+.big-updates-list,
+.entries-list,
+.editor-grid,
+.editor-card {
+  display: block;
+}
+
+.blog-column {
+  margin-bottom: 18px;
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+a,
+button {
   color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  font: inherit;
   text-decoration: none;
-  font: 700 0.78rem/1 "Consolas", "Menlo", "Monaco", monospace;
-  text-transform: uppercase;
   cursor: pointer;
 }
 
 .header-btn-accent {
+  color: var(--accent);
   border-color: var(--accent);
-  color: var(--accent);
-}
-
-.auth-panel {
-  margin-bottom: 0.6rem;
-}
-
-.password-form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.45rem;
-  align-items: end;
-}
-
-.password-form label {
-  grid-column: 1 / -1;
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-.password-form input,
-.password-form button,
-.editor-card input,
-.editor-card textarea,
-.editor-head button,
-.editor-actions button,
-.small-btn {
-  border: 1px solid var(--line);
-  background: var(--panel-2);
-  color: var(--text);
-  font-family: inherit;
-}
-
-.password-form input,
-.editor-card input,
-.editor-card textarea {
-  width: 100%;
-  padding: 0.45rem 0.5rem;
-  font-size: 0.88rem;
-}
-
-.password-form button {
-  min-height: 35px;
-  padding: 0.45rem 0.65rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.auth-message {
-  margin: 0.45rem 0 0;
-  min-height: 1.1rem;
-  font-size: 0.78rem;
-  color: var(--warn);
-}
-
-.auth-message.success {
-  color: var(--ok);
-}
-
-.blog-main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-}
-
-.column-head {
-  padding-bottom: 0.45rem;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.column-head h2 {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.column-head p {
-  margin: 0.3rem 0 0;
-  color: var(--muted);
-  font-size: 0.84rem;
-}
-
-.big-updates-list,
-.entries-list {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.empty-state {
-  border: 1px dashed var(--line);
-  padding: 0.7rem;
-  color: var(--muted);
-  font-size: 0.86rem;
-}
-
-.big-update-card,
-.entry-card {
-  border: 1px solid var(--line);
-  background: var(--panel-2);
-  padding: 0.6rem;
-}
-
-.big-update-card h3,
-.entry-card h3 {
-  margin: 0;
-  font-size: 0.96rem;
-}
-
-.meta-row {
-  margin-top: 0.25rem;
-  color: var(--muted);
-  font-size: 0.76rem;
-}
-
-.big-detail,
-.entry-body {
-  margin: 0.5rem 0 0;
-  white-space: pre-wrap;
-  font-size: 0.9rem;
-}
-
-.spotify-link {
-  display: inline-block;
-  margin-top: 0.5rem;
-  border: 1px solid var(--line);
-  padding: 0.3rem 0.5rem;
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 0.76rem;
-  text-transform: uppercase;
-}
-
-.admin-item-actions {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.small-btn {
-  min-height: 30px;
-  padding: 0.3rem 0.48rem;
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  cursor: pointer;
 }
 
 .small-btn-danger {
@@ -243,95 +102,54 @@ body {
   border-color: #7b4444;
 }
 
-.editor-panel {
-  margin-top: 0.7rem;
-}
-
-.editor-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.editor-head h2 {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.editor-head button {
-  min-height: 34px;
-  padding: 0.4rem 0.56rem;
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.editor-grid {
-  margin-top: 0.55rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.55rem;
-}
-
-.editor-card {
+input,
+textarea {
+  width: 100%;
+  color: var(--text);
+  background: var(--panel);
   border: 1px solid var(--line);
-  background: var(--panel-2);
-  padding: 0.6rem;
-  display: grid;
-  gap: 0.35rem;
+  padding: 6px 8px;
+  font: inherit;
+  margin: 0 0 8px;
 }
 
-.editor-card h3 {
-  margin: 0 0 0.1rem;
-  font-size: 0.92rem;
-}
-
-.editor-card label {
-  font-size: 0.74rem;
-  color: var(--muted);
-}
-
-.editor-card textarea {
+textarea {
   resize: vertical;
 }
 
-.editor-actions {
-  margin-top: 0.15rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
+.password-form {
+  margin: 10px 0;
 }
 
-.editor-actions button {
-  min-height: 34px;
-  padding: 0.4rem 0.56rem;
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  cursor: pointer;
+.password-form button {
+  width: auto;
 }
 
-.editor-actions .ghost-btn {
-  color: var(--muted);
+.auth-message {
+  min-height: 18px;
 }
 
-@media (max-width: 860px) {
-  .blog-main,
-  .editor-grid {
-    grid-template-columns: 1fr;
-  }
+.auth-message.success {
+  color: var(--ok);
 }
 
-@media (max-width: 560px) {
+.auth-message:not(.success) {
+  color: var(--warn);
+}
+
+.big-update-card,
+.entry-card {
+  margin: 0 0 14px;
+}
+
+.spotify-link {
+  display: inline-block;
+  color: var(--accent);
+  margin-top: 6px;
+}
+
+@media (max-width: 700px) {
   .blog-shell {
-    padding: 0.5rem;
-  }
-
-  .password-form {
-    grid-template-columns: 1fr;
-  }
-
-  .password-form button {
-    width: 100%;
+    padding: 10px;
   }
 }
