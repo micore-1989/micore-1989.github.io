@@ -24,6 +24,7 @@
   var entryTitle = document.getElementById("entry-title");
   var entryBody = document.getElementById("entry-body");
   var entrySpotify = document.getElementById("entry-spotify");
+  var entryMedia = document.getElementById("entry-media");
   var entryCancelEdit = document.getElementById("entry-cancel-edit");
 
   if (!bigUpdatesList || !entriesList || !editorPanel) return;
@@ -47,6 +48,7 @@
           title: "First post",
           body: "This is where I'll post updates for anyone checking in.",
           spotify: "",
+          media: "",
           createdAt: new Date().toISOString(),
         },
       ],
@@ -140,6 +142,47 @@
     entryTitle.value = "";
     entryBody.value = "";
     entrySpotify.value = "";
+    if (entryMedia) entryMedia.value = "";
+  }
+
+  function getMediaType(url) {
+    var value = String(url || "").trim().toLowerCase();
+    if (!value) return "";
+    if (/\.(jpg|jpeg|png|gif|webp|avif)(\?|#|$)/.test(value)) return "image";
+    if (/\.(mp4|webm|ogg|mov)(\?|#|$)/.test(value)) return "video";
+    return "link";
+  }
+
+  function renderMedia(url) {
+    var mediaUrl = normalizeUrl(url);
+    if (!mediaUrl) return "";
+    var safeUrl = escapeHtml(mediaUrl);
+    var type = getMediaType(mediaUrl);
+
+    if (type === "image") {
+      return (
+        '<img class="entry-media" src="' +
+        safeUrl +
+        '" alt="Blog entry image" loading="lazy" />'
+      );
+    }
+
+    if (type === "video") {
+      return (
+        '<video class="entry-media" controls preload="metadata">' +
+        '<source src="' +
+        safeUrl +
+        '" />' +
+        "Your browser does not support the video tag." +
+        "</video>"
+      );
+    }
+
+    return (
+      '<a class="entry-media-link" href="' +
+      safeUrl +
+      '" target="_blank" rel="noopener noreferrer">Open media</a>'
+    );
   }
 
   function render() {
@@ -209,6 +252,7 @@
             escapeHtml(spotifyUrl) +
             '" target="_blank" rel="noopener noreferrer">Open Spotify Link</a>'
           : "";
+        var mediaHtml = renderMedia(item.media);
 
         return (
           '<article class="entry-card" data-id="' +
@@ -224,6 +268,7 @@
           escapeHtml(item.body) +
           "</p>" +
           spotifyHtml +
+          mediaHtml +
           (isEditor
             ? '<div class="admin-item-actions">' +
               '<button class="small-btn" data-action="edit-entry" data-id="' +
@@ -291,6 +336,7 @@
       entryTitle.value = item.title || "";
       entryBody.value = item.body || "";
       entrySpotify.value = item.spotify || "";
+      if (entryMedia) entryMedia.value = item.media || "";
       entryTitle.focus();
     }
   }
@@ -383,6 +429,7 @@
       var title = (entryTitle.value || "").trim();
       var body = (entryBody.value || "").trim();
       var spotify = (entrySpotify.value || "").trim();
+      var media = (entryMedia && entryMedia.value ? entryMedia.value : "").trim();
       var editId = (entryEditId.value || "").trim();
       if (!title || !body) return;
 
@@ -394,6 +441,7 @@
           existing.title = title;
           existing.body = body;
           existing.spotify = spotify;
+          existing.media = media;
           existing.createdAt = new Date().toISOString();
         }
       } else {
@@ -402,6 +450,7 @@
           title: title,
           body: body,
           spotify: spotify,
+          media: media,
           createdAt: new Date().toISOString(),
         });
       }

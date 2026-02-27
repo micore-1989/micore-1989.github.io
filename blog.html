@@ -19,18 +19,11 @@
 
         <div class="blog-header-actions">
           <a class="header-btn" href="birthday.html">Back To Birthday Site</a>
-          <button
-            class="header-btn header-btn-accent"
-            id="unlock-editor"
-            type="button"
-          >
-            Unlock Edit Mode
-          </button>
         </div>
       </header>
 
       <section class="auth-panel" id="auth-panel" aria-label="Editor access">
-        <form id="password-form" class="password-form" autocomplete="off" hidden>
+        <form id="password-form" class="password-form" autocomplete="off">
           <label for="edit-password">Editor Password</label>
           <input
             id="edit-password"
@@ -122,6 +115,13 @@
               name="spotify"
               type="url"
               placeholder="https://open.spotify.com/..."
+            />
+            <label for="entry-media">Image/Video Link (optional)</label>
+            <input
+              id="entry-media"
+              name="media"
+              type="url"
+              placeholder="https://example.com/photo.jpg or video.mp4"
             />
             <div class="editor-actions">
               <button type="submit">Save Entry</button>
