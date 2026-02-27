@@ -5,81 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Cheesy cursor-photo eye click challenge before the birthday website."
+      content="Misha's personal blog with updates and headlines."
     />
-    <title>Totally Secure Birthday Gate</title>
-    <link rel="stylesheet" href="landing.css" />
+    <title>mishas website</title>
+    <link rel="stylesheet" href="blog.css" />
   </head>
   <body>
-    <div class="cheese-bg" aria-hidden="true"></div>
+    <div class="blog-shell">
+      <header class="blog-header">
+        <p class="blog-kicker">Misha Updates</p>
+        <h1>mishas website</h1>
+        <p class="blog-subtitle">basic updates page</p>
+      </header>
 
-    <div class="chaos-layer" aria-hidden="true">
-      <div class="chaos-sticker s1">DVD</div>
-      <div class="chaos-sticker s2">Y2K</div>
-      <div class="chaos-sticker s3">LOL</div>
-      <div class="chaos-sticker s4">WINAMP</div>
-      <div class="chaos-sticker s5">BONK</div>
-      <div class="chaos-sticker s6">BEEP</div>
-      <div class="chaos-star star1">✦</div>
-      <div class="chaos-star star2">✶</div>
-      <div class="chaos-star star3">✷</div>
-      <div class="chaos-star star4">✹</div>
-    </div>
+      <section class="auth-panel" id="auth-panel" aria-label="Editor access">
+        <form id="password-form" class="password-form" autocomplete="off">
+          <label for="edit-password">Editor Password</label>
+          <input
+            id="edit-password"
+            name="password"
+            type="password"
+            placeholder="Enter password"
+            required
+          />
+          <button type="submit">Unlock</button>
+        </form>
+        <p id="auth-message" class="auth-message" aria-live="polite"></p>
+      </section>
 
-    <div class="birthday-banner" aria-hidden="true">
-      <span>✦ HAPPY BIRTHDAY ELLI! ✦</span>
-    </div>
+      <main class="blog-main">
+        <section class="blog-column">
+          <div class="column-head">
+            <h2>Big Updates</h2>
+            <p>headlines</p>
+          </div>
+          <div
+            id="big-updates-list"
+            class="big-updates-list"
+            aria-live="polite"
+          ></div>
+        </section>
 
-    <main class="landing-shell">
-      <section class="cheese-panel" aria-label="Eye challenge gate">
-        <h1 class="blink-title">ULTRA SECURE BIRTHDAY FIREWALL</h1>
-        <p class="instructions">
-          click each eye from left to right
-        </p>
-        <p class="sub-instructions">
-          normal captcha systems are too weak for this level of eye contact.
-        </p>
+        <section class="blog-column">
+          <div class="column-head">
+            <h2>Entries</h2>
+            <p>posts</p>
+          </div>
+          <div id="entries-list" class="entries-list" aria-live="polite"></div>
+        </section>
+      </main>
 
-        <div class="status-line" id="status-line" aria-live="polite">
-          Step 1 of 2: click the left eye
+      <section id="editor-panel" class="editor-panel" hidden>
+        <div class="editor-head">
+          <h2>Editor Mode</h2>
+          <button id="lock-editor" type="button">Lock</button>
         </div>
 
-        <div class="image-frame">
-          <div class="challenge-image-wrap" id="challenge-wrap">
-            <img src="cursor.png" alt="Funny rainbow face challenge image" />
-
-            <button
-              type="button"
-              class="hotspot hotspot-left"
-              data-order="0"
-                  aria-label="Left eye hotspot"
-                  title="left eye"
-            ></button>
-
-            <button
-              type="button"
-              class="hotspot hotspot-right"
-              data-order="1"
-                  aria-label="Right eye hotspot"
-                  title="right eye"
-            ></button>
-
-            <div class="success-flash" id="success-flash" aria-hidden="true">
-              ACCESSING BIRTHDAY WEBSITE...
+        <div class="editor-grid">
+          <form id="big-update-form" class="editor-card">
+            <h3>Write Big Update</h3>
+            <input type="hidden" id="big-edit-id" />
+            <label for="big-headline">Headline</label>
+            <input
+              id="big-headline"
+              name="headline"
+              maxlength="120"
+              required
+              placeholder="Big headline update"
+            />
+            <label for="big-detail">Detail (optional)</label>
+            <textarea
+              id="big-detail"
+              name="detail"
+              rows="4"
+              placeholder="Extra context for this headline"
+            ></textarea>
+            <div class="editor-actions">
+              <button type="submit">Save Big Update</button>
+              <button type="button" class="ghost-btn" id="big-cancel-edit">
+                Cancel Edit
+              </button>
             </div>
-          </div>
+          </form>
+
+          <form id="entry-form" class="editor-card">
+            <h3>Write Entry</h3>
+            <input type="hidden" id="entry-edit-id" />
+            <label for="entry-title">Title</label>
+            <input
+              id="entry-title"
+              name="title"
+              maxlength="140"
+              required
+              placeholder="Entry title"
+            />
+            <label for="entry-body">Entry Text</label>
+            <textarea
+              id="entry-body"
+              name="body"
+              rows="6"
+              required
+              placeholder="Write your update here..."
+            ></textarea>
+            <label for="entry-spotify">Spotify Link (optional)</label>
+            <input
+              id="entry-spotify"
+              name="spotify"
+              type="url"
+              placeholder="https://open.spotify.com/..."
+            />
+            <label for="entry-media">Image/Video Link (optional)</label>
+            <input
+              id="entry-media"
+              name="media"
+              type="url"
+              placeholder="https://example.com/photo.jpg or video.mp4"
+            />
+            <div class="editor-actions">
+              <button type="submit">Save Entry</button>
+              <button type="button" class="ghost-btn" id="entry-cancel-edit">
+                Cancel Edit
+              </button>
+            </div>
+          </form>
         </div>
       </section>
-    </main>
+    </div>
 
-    <noscript>
-      <div class="noscript-fallback">
-        <p>This weird gate needs JavaScript.</p>
-        <p><a href="birthday.html">Open birthday page</a></p>
-      </div>
-    </noscript>
-
-    <script src="landing.js" defer></script>
-    <script src="cursor-stamps.js" defer></script>
+    <script src="blog.js" defer></script>
   </body>
 </html>
