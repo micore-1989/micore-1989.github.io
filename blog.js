@@ -1,13 +1,16 @@
 (function () {
   var PASSWORD = "mishaswebsite";
-  var BLOG_KEY = "misha_blog_data_v1";
   var AUTH_KEY = "misha_blog_editor_auth_v1";
+  var DATA_PATH = "blog-data.json";
+  var REPO_OWNER = "micore-1989";
+  var REPO_NAME = "micore-1989.github.io";
+  var REPO_BRANCH = "main";
 
-  var unlockEditorBtn = document.getElementById("unlock-editor");
   var lockEditorBtn = document.getElementById("lock-editor");
   var passwordForm = document.getElementById("password-form");
   var passwordInput = document.getElementById("edit-password");
   var authMessage = document.getElementById("auth-message");
+  var tokenInput = document.getElementById("github-token");
 
   var bigUpdatesList = document.getElementById("big-updates-list");
   var entriesList = document.getElementById("entries-list");
@@ -29,65 +32,109 @@
 
   if (!bigUpdatesList || !entriesList || !editorPanel) return;
 
-  var state = loadState();
+  var state = defaultState();
   var isEditor = readAuth();
 
-  function loadState() {
-    var fallback = {
+  init();
+
+  async function init() {
+    state = await loadState();
+    render();
+
+    if (isEditor) {
+      setAuthMessage(
+        "Editor unlocked. Enter a GitHub token to publish changes for all visitors."
+      );
+    }
+  }
+
+  function defaultState() {
+    return {
       bigUpdates: [
         {
-          id: makeId(),
+          id: "welcome-update",
           headline: "Welcome to the update page.",
           detail: "This page is now live. More updates soon.",
-          createdAt: new Date().toISOString(),
+          createdAt: "2026-02-28T00:00:00.000Z",
         },
       ],
       entries: [
         {
-          id: makeId(),
+          id: "first-post",
           title: "First post",
           body: "This is where I'll post updates for anyone checking in.",
           spotify: "",
           media: "",
-          createdAt: new Date().toISOString(),
+          createdAt: "2026-02-28T00:00:00.000Z",
         },
       ],
     };
+  }
+
+  async function loadState() {
+    var fallback = defaultState();
+
+    if (!window.fetch) return fallback;
 
     try {
-      var raw = window.localStorage.getItem(BLOG_KEY);
-      if (!raw) return fallback;
-      var parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed !== "object") return fallback;
-      if (!Array.isArray(parsed.bigUpdates) || !Array.isArray(parsed.entries)) return fallback;
-      return parsed;
-    } catch (e) {
+      var response = await window.fetch(DATA_PATH + "?v=" + Date.now(), {
+        cache: "no-store",
+      });
+
+      if (!response.ok) return fallback;
+
+      var parsed = await response.json();
+      return sanitizeState(parsed, fallback);
+    } catch (error) {
       return fallback;
     }
   }
 
-  function saveState() {
-    try {
-      window.localStorage.setItem(BLOG_KEY, JSON.stringify(state));
-    } catch (e) {
-      setAuthMessage("Could not save. Local storage is unavailable.", "error");
+  function sanitizeState(parsed, fallback) {
+    if (!parsed || typeof parsed !== "object") return fallback;
+    if (!Array.isArray(parsed.bigUpdates) || !Array.isArray(parsed.entries)) {
+      return fallback;
     }
+
+    return {
+      bigUpdates: parsed.bigUpdates.map(function (item) {
+        return {
+          id: String(item.id || makeId()),
+          headline: String(item.headline || ""),
+          detail: String(item.detail || ""),
+          createdAt: String(item.createdAt || new Date().toISOString()),
+        };
+      }),
+      entries: parsed.entries.map(function (item) {
+        return {
+          id: String(item.id || makeId()),
+          title: String(item.title || ""),
+          body: String(item.body || ""),
+          spotify: String(item.spotify || ""),
+          media: String(item.media || ""),
+          createdAt: String(item.createdAt || new Date().toISOString()),
+        };
+      }),
+    };
   }
 
   function readAuth() {
     try {
       return window.sessionStorage.getItem(AUTH_KEY) === "ok";
-    } catch (e) {
+    } catch (error) {
       return false;
     }
   }
 
   function writeAuth(value) {
     try {
-      if (value) window.sessionStorage.setItem(AUTH_KEY, "ok");
-      else window.sessionStorage.removeItem(AUTH_KEY);
-    } catch (e) {
-      // Ignore storage failures and keep in-memory auth.
+      if (value) {
+        window.sessionStorage.setItem(AUTH_KEY, "ok");
+      } else {
+        window.sessionStorage.removeItem(AUTH_KEY);
+      }
+    } catch (error) {
+      // Ignore storage failure.
     }
   }
 
@@ -129,6 +176,14 @@
     return "https://" + value;
   }
 
+  function encodeBase64Utf8(value) {
+    return window.btoa(unescape(encodeURIComponent(value)));
+  }
+
+  function cloneState(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
   function resetBigForm() {
     if (!bigForm) return;
     bigEditId.value = "";
@@ -156,6 +211,7 @@
   function renderMedia(url) {
     var mediaUrl = normalizeUrl(url);
     if (!mediaUrl) return "";
+
     var safeUrl = escapeHtml(mediaUrl);
     var type = getMediaType(mediaUrl);
 
@@ -192,7 +248,6 @@
   }
 
   function renderEditorState() {
-    if (unlockEditorBtn) unlockEditorBtn.hidden = isEditor;
     if (passwordForm) passwordForm.hidden = isEditor;
     editorPanel.hidden = !isEditor;
   }
@@ -252,6 +307,7 @@
             escapeHtml(spotifyUrl) +
             '" target="_blank" rel="noopener noreferrer">Open Spotify Link</a>'
           : "";
+
         var mediaHtml = renderMedia(item.media);
 
         return (
@@ -287,20 +343,111 @@
     entriesList.innerHTML = html;
   }
 
+  function getApiUrl() {
+    return (
+      "https://api.github.com/repos/" +
+      REPO_OWNER +
+      "/" +
+      REPO_NAME +
+      "/contents/" +
+      DATA_PATH
+    );
+  }
+
+  function getHeaders(token) {
+    return {
+      Accept: "application/vnd.github+json",
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+  }
+
+  async function getCurrentRemoteSha(token) {
+    var response = await window.fetch(getApiUrl() + "?ref=" + REPO_BRANCH, {
+      method: "GET",
+      headers: getHeaders(token),
+    });
+
+    if (response.status === 404) return "";
+
+    if (!response.ok) {
+      throw new Error("Could not read the current published blog data.");
+    }
+
+    var payload = await response.json();
+    return payload && payload.sha ? payload.sha : "";
+  }
+
+  async function publishState(nextState, message) {
+    if (!isEditor) {
+      setAuthMessage("Enter the editor password first.");
+      return false;
+    }
+
+    if (!window.fetch) {
+      setAuthMessage("This browser does not support publishing.");
+      return false;
+    }
+
+    var token = tokenInput ? String(tokenInput.value || "").trim() : "";
+
+    if (!token) {
+      setAuthMessage("Enter a GitHub token to save changes for all visitors.");
+      return false;
+    }
+
+    setAuthMessage("Publishing changes...");
+
+    try {
+      var sha = await getCurrentRemoteSha(token);
+      var content = JSON.stringify(nextState, null, 2) + "\n";
+      var body = {
+        message: message,
+        content: encodeBase64Utf8(content),
+        branch: REPO_BRANCH,
+      };
+
+      if (sha) body.sha = sha;
+
+      var response = await window.fetch(getApiUrl(), {
+        method: "PUT",
+        headers: getHeaders(token),
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        throw new Error("GitHub rejected the publish request.");
+      }
+
+      state = cloneState(nextState);
+      render();
+      setAuthMessage(
+        "Published successfully. GitHub Pages may take about a minute to update.",
+        "success"
+      );
+      return true;
+    } catch (error) {
+      setAuthMessage(error.message || "Publishing failed.");
+      return false;
+    }
+  }
+
   function handleBigListAction(event) {
     var btn = event.target.closest("button[data-action]");
     if (!btn || !isEditor) return;
+
     var action = btn.getAttribute("data-action");
     var id = btn.getAttribute("data-id");
     var idx = state.bigUpdates.findIndex(function (it) {
       return it.id === id;
     });
+
     if (idx < 0) return;
 
     if (action === "delete-big") {
-      state.bigUpdates.splice(idx, 1);
-      saveState();
-      render();
+      var nextState = cloneState(state);
+      nextState.bigUpdates.splice(idx, 1);
+      publishState(nextState, "Delete big update");
       return;
     }
 
@@ -316,17 +463,19 @@
   function handleEntriesAction(event) {
     var btn = event.target.closest("button[data-action]");
     if (!btn || !isEditor) return;
+
     var action = btn.getAttribute("data-action");
     var id = btn.getAttribute("data-id");
     var idx = state.entries.findIndex(function (it) {
       return it.id === id;
     });
+
     if (idx < 0) return;
 
     if (action === "delete-entry") {
-      state.entries.splice(idx, 1);
-      saveState();
-      render();
+      var nextState = cloneState(state);
+      nextState.entries.splice(idx, 1);
+      publishState(nextState, "Delete blog entry");
       return;
     }
 
@@ -341,30 +490,26 @@
     }
   }
 
-  if (unlockEditorBtn) {
-    unlockEditorBtn.addEventListener("click", function () {
-      if (passwordForm) {
-        passwordForm.hidden = false;
-        passwordInput.focus();
-      }
-      setAuthMessage("Enter password to enable editing.");
-    });
-  }
-
   if (passwordForm) {
     passwordForm.addEventListener("submit", function (event) {
       event.preventDefault();
+
       var value = (passwordInput.value || "").trim();
+
       if (value !== PASSWORD) {
         setAuthMessage("Incorrect password.");
         passwordInput.select();
         return;
       }
+
       isEditor = true;
       writeAuth(true);
       passwordInput.value = "";
-      setAuthMessage("Editor unlocked.", "success");
       render();
+      setAuthMessage(
+        "Editor unlocked. Enter a GitHub token to publish changes for all visitors.",
+        "success"
+      );
     });
   }
 
@@ -374,8 +519,9 @@
       writeAuth(false);
       resetBigForm();
       resetEntryForm();
-      setAuthMessage("Editor locked.");
+      if (tokenInput) tokenInput.value = "";
       render();
+      setAuthMessage("Editor locked.");
     });
   }
 
@@ -388,26 +534,30 @@
   }
 
   if (bigForm) {
-    bigForm.addEventListener("submit", function (event) {
+    bigForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       if (!isEditor) return;
 
       var headline = (bigHeadline.value || "").trim();
       var detail = (bigDetail.value || "").trim();
       var editId = (bigEditId.value || "").trim();
+
       if (!headline) return;
 
+      var nextState = cloneState(state);
+
       if (editId) {
-        var existing = state.bigUpdates.find(function (it) {
+        var existing = nextState.bigUpdates.find(function (it) {
           return it.id === editId;
         });
+
         if (existing) {
           existing.headline = headline;
           existing.detail = detail;
           existing.createdAt = new Date().toISOString();
         }
       } else {
-        state.bigUpdates.unshift({
+        nextState.bigUpdates.unshift({
           id: makeId(),
           headline: headline,
           detail: detail,
@@ -415,14 +565,14 @@
         });
       }
 
-      saveState();
-      resetBigForm();
-      render();
+      if (await publishState(nextState, "Update blog big updates")) {
+        resetBigForm();
+      }
     });
   }
 
   if (entryForm) {
-    entryForm.addEventListener("submit", function (event) {
+    entryForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       if (!isEditor) return;
 
@@ -431,12 +581,16 @@
       var spotify = (entrySpotify.value || "").trim();
       var media = (entryMedia && entryMedia.value ? entryMedia.value : "").trim();
       var editId = (entryEditId.value || "").trim();
+
       if (!title || !body) return;
 
+      var nextState = cloneState(state);
+
       if (editId) {
-        var existing = state.entries.find(function (it) {
+        var existing = nextState.entries.find(function (it) {
           return it.id === editId;
         });
+
         if (existing) {
           existing.title = title;
           existing.body = body;
@@ -445,7 +599,7 @@
           existing.createdAt = new Date().toISOString();
         }
       } else {
-        state.entries.unshift({
+        nextState.entries.unshift({
           id: makeId(),
           title: title,
           body: body,
@@ -455,14 +609,12 @@
         });
       }
 
-      saveState();
-      resetEntryForm();
-      render();
+      if (await publishState(nextState, "Update blog entries")) {
+        resetEntryForm();
+      }
     });
   }
 
   bigUpdatesList.addEventListener("click", handleBigListAction);
   entriesList.addEventListener("click", handleEntriesAction);
-
-  render();
 })();

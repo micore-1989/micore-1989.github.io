@@ -61,6 +61,21 @@
           <button id="lock-editor" type="button">Lock</button>
         </div>
 
+        <div class="editor-card">
+          <h3>Publish Settings</h3>
+          <label for="github-token">GitHub Token (required to save for everyone)</label>
+          <input
+            id="github-token"
+            name="github-token"
+            type="password"
+            placeholder="GitHub token with contents:write access"
+            autocomplete="off"
+          />
+          <p class="editor-note">
+            this token is only used in your browser to publish changes to this repo.
+          </p>
+        </div>
+
         <div class="editor-grid">
           <form id="big-update-form" class="editor-card">
             <h3>Write Big Update</h3>

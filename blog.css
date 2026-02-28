@@ -53,7 +53,8 @@ p {
 .column-head p,
 .meta-row,
 .auth-message,
-.editor-card label {
+.editor-card label,
+.editor-note {
   color: var(--muted);
 }
 
@@ -150,6 +151,10 @@ textarea {
   display: inline-block;
   color: var(--accent);
   margin-top: 6px;
+}
+
+.editor-note {
+  font-size: 0.85rem;
 }
 
 .entry-media {

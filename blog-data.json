@@ -1,0 +1,20 @@
+{
+  "bigUpdates": [
+    {
+      "id": "welcome-update",
+      "headline": "Welcome to the update page.",
+      "detail": "This page is now live. More updates soon.",
+      "createdAt": "2026-02-28T00:00:00.000Z"
+    }
+  ],
+  "entries": [
+    {
+      "id": "first-post",
+      "title": "First post",
+      "body": "This is where I'll post updates for anyone checking in.",
+      "spotify": "",
+      "media": "",
+      "createdAt": "2026-02-28T00:00:00.000Z"
+    }
+  ]
+}
