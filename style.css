@@ -1,9 +1,9 @@
 body {
   max-width: 600px;
-  margin: 60px auto;
+  margin: 60px auto 60px 80px;
   padding: 0 20px;
-  font-family: Georgia, serif;
-  font-size: 18px;
+  font-family: Menlo, Monaco, "SF Mono", "Courier New", monospace;
+  font-size: 15px;
   line-height: 1.6;
   color: #222;
   background: #fff;
