@@ -34,3 +34,27 @@ h2 {
   font-size: 0.85rem;
   margin: 0 0 12px 0;
 }
+
+details {
+  margin: 12px 0;
+}
+
+details summary {
+  cursor: pointer;
+  color: #888;
+  font-size: 0.85rem;
+  list-style: none;
+  user-select: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary::before {
+  content: "+ ";
+}
+
+details[open] summary::before {
+  content: "− ";
+}
