@@ -75,11 +75,15 @@
     slider.value = saved * 100;
     applyTheme(saved);
 
-    slider.addEventListener('input', () => {
+    function onSliderChange() {
       const t = slider.value / 100;
       applyTheme(t);
       localStorage.setItem('theme-value', t);
-    });
+    }
+
+    slider.addEventListener('input', onSliderChange);
+    slider.addEventListener('change', onSliderChange);
+    slider.addEventListener('touchmove', onSliderChange, { passive: true });
   </script>
 </body>
 </html>

@@ -77,27 +77,47 @@ nav a:hover {
   outline: none;
   cursor: pointer;
   flex-shrink: 0;
+  touch-action: none;
+  /* enlarge the invisible hit area vertically without affecting layout */
+  padding: 12px 0;
+  background-clip: content-box;
 }
 
 #theme-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--muted);
   cursor: pointer;
   border: none;
   transition: background 0.05s;
+  /* larger touch target via transparent box-shadow ring */
+  box-shadow: 0 0 0 8px transparent;
 }
 
 #theme-slider::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--muted);
   cursor: pointer;
   border: none;
+}
+
+@media (max-width: 700px) {
+  #theme-slider {
+    width: 80px;
+  }
+  #theme-slider::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  #theme-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* ── articles ────────────────────────────────────────────────── */
