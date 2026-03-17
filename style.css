@@ -66,8 +66,22 @@ nav a:hover {
 }
 
 /* ── theme slider ────────────────────────────────────────────── */
-#theme-slider {
+.slider-wrap {
   margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.slider-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  user-select: none;
+}
+
+#theme-slider {
   -webkit-appearance: none;
   appearance: none;
   width: 64px;
