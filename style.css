@@ -1,3 +1,25 @@
+/* ── theme variables ─────────────────────────────────────────── */
+:root {
+  --bg:           #ffffff;
+  --text:         #222222;
+  --muted:        #888888;
+  --border:       #222222;
+  --border-light: #eeeeee;
+  --link:         #222222;
+  --link-muted:   #888888;
+}
+
+body.dark {
+  --bg:           #282a36;
+  --text:         #f8f8f2;
+  --muted:        #6272a4;
+  --border:       #6272a4;
+  --border-light: #44475a;
+  --link:         #bd93f9;
+  --link-muted:   #6272a4;
+}
+
+/* ── base ────────────────────────────────────────────────────── */
 body {
   max-width: 600px;
   margin: 60px 0 60px 80px;
@@ -5,57 +27,67 @@ body {
   font-family: Menlo, Monaco, "SF Mono", "Courier New", monospace;
   font-size: 15px;
   line-height: 1.6;
-  color: #222;
-  background: #fff;
+  color: var(--text);
+  background: var(--bg);
+  transition: background 0.2s, color 0.2s;
 }
 
+/* ── mobile ──────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  body {
+    margin: 30px auto;
+    padding: 0 24px;
+  }
+}
+
+/* ── header ──────────────────────────────────────────────────── */
 header {
-  border-bottom: 2px solid #222;
+  border-bottom: 2px solid var(--border);
   margin-bottom: 40px;
   padding-bottom: 10px;
-}
-
-nav {
-  margin-top: 6px;
-  font-size: 0.85rem;
-}
-
-nav a {
-  color: #888;
-  text-decoration: none;
-  margin-right: 16px;
-}
-
-nav a:hover {
-  color: #222;
-}
-
-.music-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.music-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.music-entry {
-  color: #888;
-  font-size: 0.85rem;
-  margin-left: 16px;
-  white-space: nowrap;
 }
 
 h1 {
   font-size: 2rem;
   margin: 0;
+  color: var(--text);
 }
 
+/* ── nav ─────────────────────────────────────────────────────── */
+nav {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+/* ── theme toggle ────────────────────────────────────────────── */
+#theme-toggle {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+#theme-toggle:hover {
+  color: var(--text);
+}
+
+/* ── articles ────────────────────────────────────────────────── */
 article {
   margin-bottom: 50px;
 }
@@ -63,21 +95,36 @@ article {
 h2 {
   font-size: 1.3rem;
   margin-bottom: 4px;
+  color: var(--text);
 }
 
 .date {
-  color: #888;
+  color: var(--muted);
   font-size: 0.85rem;
   margin: 0 0 12px 0;
 }
 
+p {
+  color: var(--text);
+}
+
+/* ── links ───────────────────────────────────────────────────── */
+a {
+  color: var(--link);
+}
+
+a:hover {
+  color: var(--link-muted);
+}
+
+/* ── see more ────────────────────────────────────────────────── */
 details {
   margin: 12px 0;
 }
 
 details summary {
   cursor: pointer;
-  color: #888;
+  color: var(--muted);
   font-size: 0.85rem;
   list-style: none;
   user-select: none;
@@ -93,4 +140,26 @@ details summary::before {
 
 details[open] summary::before {
   content: "− ";
+}
+
+/* ── music page ──────────────────────────────────────────────── */
+.music-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.music-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.music-entry {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-left: 16px;
+  white-space: nowrap;
 }
