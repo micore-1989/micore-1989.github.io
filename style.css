@@ -7,6 +7,8 @@
   --border-light: #eeeeee;
   --link:         #222222;
   --link-muted:   #888888;
+  --footer-text:  #c0c0c0;
+  --footer-link:  #c0c0c0;
 }
 
 /* ── base ────────────────────────────────────────────────────── */
@@ -217,9 +219,13 @@ footer {
   padding-top: 16px;
   border-top: 1px solid var(--border-light);
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--footer-text);
 }
 
 footer a {
-  color: var(--muted);
+  color: var(--footer-link);
+}
+
+footer a:hover {
+  color: var(--footer-link);
 }
