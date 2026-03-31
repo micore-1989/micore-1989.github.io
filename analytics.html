@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>media — mishas blog</title>
+  <title>analytics — mishas blog</title>
   <link rel="stylesheet" href="style.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9P0264WE5"></script>
@@ -13,6 +13,28 @@
     gtag('js', new Date());
     gtag('config', 'G-V9P0264WE5');
   </script>
+  <style>
+    .analytics-wrap {
+      margin-top: 20px;
+      border: 1px solid var(--border-light);
+    }
+    .analytics-embed {
+      display: block;
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .analytics-note {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 4px 0 0 0;
+    }
+    @media (max-width: 700px) {
+      .analytics-embed {
+        height: 420px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -32,24 +54,17 @@
 
   <main>
 
-    <h2>media</h2>
+    <h2>analytics</h2>
+    <p class="analytics-note">live site stats — no personal data collected.</p>
 
-    <!-- ============================================================
-         MEDIA LIST — add new items here as you reference them in posts.
-         Format: title, type label, and the entry it came from.
-         Place PDF files in the papers/ folder and link accordingly.
-         ============================================================ -->
-
-    <ul class="music-list">
-      <li>
-        <a href="papers/the-political-machine.pdf" target="_blank">The Political Machine</a>
-        <span class="music-entry">essay · entry03</span>
-      </li>
-      <li>
-        <a href="papers/we-should-expect-democratic-failure.pdf" target="_blank">We Should Expect Democratic Failure</a>
-        <span class="music-entry">essay · entry03</span>
-      </li>
-    </ul>
+    <div class="analytics-wrap">
+      <iframe
+        class="analytics-embed"
+        src="https://lookerstudio.google.com/embed/reporting/e8e38d2e-ef01-48f3-9058-fae9f217b009/page/kIV1C"
+        allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+      </iframe>
+    </div>
 
   </main>
 
