@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>for elli</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <title>mishas blog</title>
+  <link rel="stylesheet" href="style.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9P0264WE5"></script>
   <script>
@@ -16,696 +13,174 @@
     gtag('js', new Date());
     gtag('config', 'G-V9P0264WE5');
   </script>
-
-  <style>
-    :root {
-      --cream:    #FFF7F0;
-      --blush:    #F4D2CD;
-      --rose:     #E8A5A5;
-      --rose-dk:  #C97C84;
-      --sage:     #C8D5C0;
-      --lavender: #D9CFE8;
-      --butter:   #F8E6C2;
-      --ink:      #3D2D2A;
-      --ink-soft: #6B5552;
-      --shadow:   rgba(61, 45, 42, 0.08);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      height: 100%;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: 'Fraunces', Georgia, serif;
-      color: var(--ink);
-      background: var(--cream);
-      background-image:
-        radial-gradient(circle at 20% 10%, rgba(232,165,165,0.18) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(217,207,232,0.22) 0%, transparent 45%),
-        radial-gradient(circle at 60% 30%, rgba(248,230,194,0.20) 0%, transparent 40%);
-      min-height: 100vh;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      position: relative;
-    }
-
-    /* floating hearts */
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .heart {
-      position: absolute;
-      bottom: -40px;
-      font-size: 18px;
-      opacity: 0;
-      animation: float 14s linear infinite;
-      color: var(--rose);
-      user-select: none;
-    }
-    @keyframes float {
-      0%   { transform: translateY(0) translateX(0) rotate(0deg);   opacity: 0; }
-      10%  { opacity: 0.55; }
-      50%  { transform: translateY(-50vh) translateX(20px) rotate(15deg); opacity: 0.45; }
-      90%  { opacity: 0.25; }
-      100% { transform: translateY(-110vh) translateX(-10px) rotate(-10deg); opacity: 0; }
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 64px 28px 120px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .page {
-      display: none;
-      animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
-    .page.active { display: block; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    h1.title {
-      font-family: 'Caveat', cursive;
-      font-weight: 600;
-      font-size: clamp(48px, 9vw, 84px);
-      line-height: 1.05;
-      color: var(--rose-dk);
-      margin-bottom: 18px;
-      letter-spacing: -0.5px;
-    }
-    h2.title {
-      font-family: 'Caveat', cursive;
-      font-weight: 600;
-      font-size: clamp(36px, 6vw, 56px);
-      line-height: 1.1;
-      color: var(--rose-dk);
-      margin-bottom: 8px;
-    }
-    p.lede {
-      font-family: 'Fraunces', serif;
-      font-weight: 300;
-      font-size: clamp(17px, 2.2vw, 21px);
-      color: var(--ink);
-      margin-bottom: 14px;
-      max-width: 520px;
-    }
-    p.subtle {
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      font-size: 14px;
-      color: var(--ink-soft);
-      margin-top: 18px;
-      font-style: italic;
-      max-width: 520px;
-    }
-
-    /* primary button */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Fraunces', serif;
-      font-size: 17px;
-      font-weight: 400;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 999px;
-      background: var(--rose);
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 4px 14px var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      margin-top: 26px;
-    }
-    .btn:hover, .btn:focus {
-      transform: translateY(-2px);
-      background: var(--rose-dk);
-      box-shadow: 0 8px 22px rgba(201, 124, 132, 0.3);
-      outline: none;
-    }
-    .btn:disabled {
-      background: var(--blush);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-      opacity: 0.7;
-    }
-    .btn .arrow { transition: transform 0.25s ease; }
-    .btn:hover .arrow { transform: translateX(4px); }
-
-    .btn-back {
-      background: transparent;
-      color: var(--ink-soft);
-      box-shadow: none;
-      padding: 10px 16px;
-      font-size: 14px;
-      font-style: italic;
-      margin-top: 26px;
-      margin-right: 10px;
-    }
-    .btn-back:hover {
-      background: transparent;
-      color: var(--ink);
-      transform: translateY(-1px);
-      box-shadow: none;
-    }
-
-    /* progress dots */
-    .progress {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 36px;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--blush);
-      transition: all 0.3s ease;
-    }
-    .dot.active {
-      background: var(--rose);
-      width: 26px;
-      border-radius: 4px;
-    }
-    .dot.done { background: var(--rose-dk); }
-
-    /* date grid */
-    .date-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
-      gap: 10px;
-      margin-top: 26px;
-    }
-    .date-tile {
-      background: #fff;
-      border: 1.5px solid transparent;
-      border-radius: 14px;
-      padding: 14px 8px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-      box-shadow: 0 2px 8px var(--shadow);
-      font-family: 'Fraunces', serif;
-    }
-    .date-tile:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 6px 16px rgba(232,165,165,0.28);
-      border-color: var(--blush);
-    }
-    .date-tile.selected {
-      background: var(--rose);
-      color: #fff;
-      border-color: var(--rose-dk);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(201, 124, 132, 0.35);
-    }
-    .date-tile .dow {
-      display: block;
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 4px;
-    }
-    .date-tile.selected .dow { color: rgba(255,255,255,0.9); }
-    .date-tile .num {
-      display: block;
-      font-size: 22px;
-      font-weight: 400;
-    }
-
-    /* time chips */
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 28px;
-    }
-    .chip {
-      background: #fff;
-      border: 1.5px solid transparent;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-family: 'Fraunces', serif;
-      font-size: 15px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px var(--shadow);
-      transition: all 0.18s ease;
-      color: var(--ink);
-    }
-    .chip:hover {
-      transform: translateY(-2px);
-      border-color: var(--blush);
-    }
-    .chip.selected {
-      background: var(--lavender);
-      border-color: #b3a3cc;
-      color: var(--ink);
-    }
-
-    .label {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      font-weight: 500;
-      margin-top: 36px;
-      margin-bottom: 4px;
-      display: block;
-    }
-
-    /* restaurant cards */
-    .cards {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 26px;
-    }
-    .card {
-      background: #fff;
-      border: 1.5px solid transparent;
-      border-radius: 18px;
-      padding: 22px 24px;
-      cursor: pointer;
-      box-shadow: 0 3px 12px var(--shadow);
-      transition: all 0.22s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 5px;
-      height: 100%;
-      background: var(--accent, var(--rose));
-      opacity: 0;
-      transition: opacity 0.22s ease;
-    }
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--blush);
-      box-shadow: 0 8px 22px rgba(232,165,165,0.22);
-    }
-    .card:hover::before, .card.selected::before { opacity: 1; }
-    .card.selected {
-      border-color: var(--accent, var(--rose));
-      background: linear-gradient(135deg, #fff 0%, var(--accent-bg, #FFF0EE) 100%);
-    }
-    .card[data-restaurant="lardoise"]    { --accent: var(--rose-dk);    --accent-bg: #F8E0DD; }
-    .card[data-restaurant="rh"]          { --accent: #8FA688;           --accent-bg: #E5EDE0; }
-    .card[data-restaurant="applebees"]   { --accent: #B89858;           --accent-bg: #F3E8CD; }
-
-    .card h3 {
-      font-family: 'Caveat', cursive;
-      font-weight: 600;
-      font-size: 28px;
-      margin-bottom: 2px;
-      color: var(--accent, var(--rose-dk));
-    }
-    .card .meta {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 10px;
-    }
-    .card .desc {
-      font-family: 'Fraunces', serif;
-      font-weight: 300;
-      font-size: 15.5px;
-      line-height: 1.55;
-      color: var(--ink);
-    }
-
-    /* final page */
-    .summary {
-      background: #fff;
-      border-radius: 18px;
-      padding: 24px 26px;
-      box-shadow: 0 4px 16px var(--shadow);
-      margin-top: 26px;
-    }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 10px 0;
-      border-bottom: 1px dashed var(--blush);
-      font-family: 'Fraunces', serif;
-    }
-    .summary-row:last-child { border-bottom: none; }
-    .summary-row .key {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-    }
-    .summary-row .val {
-      font-size: 17px;
-      color: var(--ink);
-      text-align: right;
-      max-width: 60%;
-    }
-    .summary-row .val.empty {
-      font-style: italic;
-      color: var(--ink-soft);
-    }
-
-    .contact {
-      margin-top: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .contact a {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 22px;
-      background: #fff;
-      border-radius: 14px;
-      color: var(--ink);
-      text-decoration: none;
-      font-family: 'Fraunces', serif;
-      font-size: 17px;
-      box-shadow: 0 3px 12px var(--shadow);
-      transition: all 0.2s ease;
-      border: 1.5px solid transparent;
-    }
-    .contact a:hover {
-      transform: translateY(-2px);
-      border-color: var(--blush);
-      box-shadow: 0 6px 18px rgba(232,165,165,0.22);
-    }
-    .contact a .icon {
-      font-size: 22px;
-    }
-    .contact a .lbl {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .signoff {
-      font-family: 'Caveat', cursive;
-      font-size: 26px;
-      color: var(--rose-dk);
-      margin-top: 36px;
-      text-align: right;
-    }
-
-    /* tiny floating decoration */
-    .deco {
-      display: inline-block;
-      animation: wiggle 2.6s ease-in-out infinite;
-      transform-origin: center;
-    }
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(-6deg); }
-      50%      { transform: rotate(6deg); }
-    }
-
-    .nav-row {
-      display: flex;
-      align-items: center;
-    }
-
-    @media (max-width: 540px) {
-      main { padding: 40px 20px 100px; }
-      .date-grid { grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap: 8px; }
-      .date-tile { padding: 12px 6px; }
-      .card { padding: 18px 20px; }
-      .summary-row { flex-direction: column; gap: 4px; }
-      .summary-row .val { text-align: left; max-width: 100%; }
-    }
-  </style>
 </head>
-
 <body>
-  <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <header>
+    <h1>mishas blog</h1>
+    <nav>
+      <a href="index.html">blog</a>
+      <a href="music.html">music</a>
+      <a href="media.html">media</a>
+      <a href="analytics.html">analytics</a>
+      <div class="slider-wrap">
+        <span class="slider-label">theme</span>
+        <input type="range" id="theme-slider" min="0" max="100" value="0" aria-label="theme">
+      </div>
+    </nav>
+  </header>
 
   <main>
-    <div class="progress" aria-hidden="true">
-      <div class="dot active" data-dot="1"></div>
-      <div class="dot" data-dot="2"></div>
-      <div class="dot" data-dot="3"></div>
-      <div class="dot" data-dot="4"></div>
-    </div>
+    <article>
+      <h2>entry03: working, mexico, music, and thoughts</h2>
+      <p class="date">2026-03-23</p>
 
-    <!-- ============== PAGE 1: INTRO ============== -->
-    <section class="page active" data-page="1">
-      <h1 class="title">hi, elli <span class="deco">♡</span></h1>
-      <p class="lede">i'd like to take you on a date.</p>
-      <p class="lede">i'll keep this short — i made you a tiny page so picking is easy. a few questions, then you're done.</p>
-      <p class="subtle">(p.s. you broke my phone. consider this a fun way to make it up to me.)</p>
-      <button class="btn" onclick="goTo(2)">okay, i'm in <span class="arrow">→</span></button>
-    </section>
+      <!-- First paragraph always visible -->
+      <p>I spent the entirety of last week in Sayulita, Mexico. In my last entry I explained how I spent my birthday on the phone with an expedia robot, who eventually transferred me to a nice-sounding Indian man who was able to refund the flight tickets I originally bought. The day after, I got on a red-eye flight and spent the 6-hours trying to carefully wedge my head in between the wall of the plane and the headrest on the back of my seat. I wasn’t able to sleep. The flight was easy though, and once I got through customs and the awkward 10-minute conversations with other vacationers, the actual vacation was fantastic. Everyone had wished me a happy birthday, and confidently used it (as did I) as an excuse to vigorously drink cheap tequila at the terrible night clubs in town. The floors were sticky and seemed to be stained in 5 different colors depending on which angle your head was facing. It was forest green and piss yellow after my first shot, and a dark blue after my second.</p>
 
-    <!-- ============== PAGE 2: WHEN ============== -->
-    <section class="page" data-page="2">
-      <h2 class="title">when works for you?</h2>
-      <p class="lede">i'm free any day between <em>may 15</em> and <em>may 31</em>. any time of day.</p>
+      <!-- Remaining paragraphs hidden until "see more" is clicked -->
+      <details>
+        <summary>see more</summary>
 
-      <span class="label">pick a day</span>
-      <div class="date-grid" id="dateGrid"></div>
+        <p>The Mexico trip isn’t terribly important to my life, although it was very fun, and it was a delight to spend my vacation with my good friends. The interesting parts of life all came after I had come home from vacation. The intense wave of responsibility hit me all at once. I was also super wobbly from the hangover and food poisoning. I spent the entire flight back home trying different pressure points that I thought would keep me from throwing up on the toddler sitting in front of me, or shitting myself. Although, everyone would have probably blamed the smell on the toddler. As my dad drove me, and I clutched my aching stomach, I kept thinking about how much homework I had and how I no longer had an internship lined-up for the summer. This agitated me and eventually made me sad. In my genius though, I decided not to worry about it and got some much needed sleep to recover from my bender. </p>
 
-      <span class="label">and a time-ish (optional)</span>
-      <div class="chips" id="timeChips">
-        <button class="chip" data-time="morning">morning</button>
-        <button class="chip" data-time="afternoon">afternoon</button>
-        <button class="chip" data-time="evening">evening</button>
-        <button class="chip" data-time="late">late night</button>
-      </div>
+        <p>I drove back to college with 2 of my friends, my roommate and a former rugby teammate. The ride was fun for the first half, until we all got exhausted and stopped talking to each other. Not feeling responsible to talk felt amazing. I was still recovering from my sickness and I thought any unexpected laughter would be enough to send a jet stream of diarrhea onto the backseat. I got back to college at about midnight, downed a handful of Nyquil, and slept like a brick. When I woke up, I still had diarrhea, and decided to not go to class. I usually hate skipping class, since I'll inevitably miss something important, but today was nice since it was the first day back from break. Instead, since I have no homework immediately due, I decided to spend the day writing internship applications. It's not at all glamorous. I spent the whole day talking to AI like it's my best friend, hoping that it'll find an internship that will somehow answer all the questions I have about what career I should have in the future. After the law internship fell through, I started to think about what I genuinely would want out of a law degree. I’m about as certain as I can be that I want to learn the law, but to be a litigator genuinely sounds like hell. Your ideas become so irrelevant and it's all about what inflammatory and convincing rhetoric you can use to convince some people who don't know the first thing about law that you're somehow right. My interest in law is in the understanding of the law. Something about being an expert in the law, and having all these legal ideas and precedent cases sitting in my head arouses me. It's like the pinnacle of being an intellectual American. Obviously physics or pure philosophy are sexier, then you can make anything sound smart, but law is so practical and imperfect, with infinite angles, almost like curves. Law is curvy and sexy in a way that philosophy and physics aren't. Some might not appreciate it, but I do. That's not to say that philosophy isn’t sexy either, it's just nobody gets real jobs studying philosophy. Unfortunately the math part of physics is exciting, but I just can't be asked to memorize a million formulas to figure out how fast a theoretical tampon is going to fly through the air when dropped off the Empire State Building. The AI robot confirmed my suspicions, and explained that its likely that my desired area of work is in policy, like working for a think tank or doing policy research. As I read over it now, I still have some reservations, but in my motivation-induced splurge of writing, I for some reason was incredibly confident that, in policy, I would discover my genius. I do know the things I am interested in: I like music composition, philosophy, computers, law, politics, and public health. All of this excites me, and yea I definitely love learning about physics, but only the theoretical stuff. The ideas excite me, but the steps necessary to get there are so tedious and boring that I can't sit through it. I love learning about relativity, but if you try to explain the math to me, I’d probably fall asleep. A physicist friend of mine recently explained how philosophy and physics are two sides of the same coin, as they both try to explain reality, but from different angles. One starts from the material world and works inward, while the other starts from the mental and works outward. Maybe he just said that to stroke my ego, as he's really bright, but he doesn’t really seem like the type to try to make me feel better for no reason. Regardless, I desperately want something to focus on. I’ve been looking for a clear path, a north star, that I can keep my sights on as I move through life. </p>
 
-      <div class="nav-row">
-        <button class="btn btn-back" onclick="goTo(1)">← back</button>
-        <button class="btn" id="btnNext2" onclick="goTo(3)" disabled>next <span class="arrow">→</span></button>
-      </div>
-    </section>
+        <p>Everyone seems to say that your twenties are the years in which everything is moving at mach speed, and if you choose to keep your head down and focus, it will pay dividends. I’ve always been skeptical of this idea, since similarly, every successful adult I know also says that the one regret they have about their twenties is that they “worried too much” and that “everything works out”. I don’t doubt it, but I have high hopes for myself. Not in any prestige-seeking sense, (I fall into that trap a lot, but I fight hard to stay out of it) but in realizing my potential. I really believe I can do something amazing if I set my mind to it. It just has to be the right thing, or at least close to the right thing. It wasn’t medicine, nor was it pure science, so now I’m hoping it's law. </p>
 
-    <!-- ============== PAGE 3: WHERE ============== -->
-    <section class="page" data-page="3">
-      <h2 class="title">where would you like to eat?</h2>
-      <p class="lede">three options, increasingly unserious. pick whichever feels right — there's no wrong one.</p>
+        <p>I want to be a trusted consultant, not in the way that all the finance bros want to be “consultants”, but a genuine consultant. Someone who can look at things from all angles, lay out arguments for and against, and help come up with a really strong and refined idea. But to do that, you need to be an expert in something. Or at least, I really want to be an expert in something. I love philosophy for that reason. It teaches you how to think and how to know when you're going down the wrong path of thought. Your ideas all battle each other in your mind until you're left with gold, kind of rough around the edges, but still valuable. It's an incredible feeling. The only difficulty is that I don't want the product of my thoughts and ideas to just be books, so philosophy as a profession seems out of the question. Regardless, if I had to “do” philosophy for work, I’d probably hate it. So law and policy seems to be the next best bet. It combines my love for thinking with something more tied to reality. Its understanding everyone else's thinking, analyzing arguments from all sides, and making principled recommendations. I love writing political papers for this reason. Ill attach two here, and they’ll be in the “media” tab of the website: <a href=”papers/we-should-expect-democratic-failure.pdf” target=”_blank”>We Should Expect Democratic Failure</a>, and <a href=”papers/the-political-machine.pdf” target=”_blank”>The Political Machine</a>. They’re both pretty similar, since I’m pretty apathetic towards subscribing to traditional politics, and instead I try to offer a more cynical view with a splash of optimism thrown in to show how fucked we all are. I say that flippantly, obviously. (as I hope nobody takes this out of context in the future) But if you really care to see how I think about politics, please read the papers. I'm also very happy to accept criticism and talk about the imperfections in my arguments. </p>
 
-      <div class="cards">
-        <div class="card" data-restaurant="lardoise" onclick="selectRestaurant(this)">
-          <h3>L'Ardoise Bistro</h3>
-          <div class="meta">San Francisco · French · $$$</div>
-          <p class="desc">A tiny French bistro tucked into Duboce Triangle (just off the Castro). Burgundy walls, heavy curtains, candles, white tablecloths. Classic stuff — duck confit, prawn ravioles, mushroom risotto. The kind of place where you whisper across the table and split a glass of wine. Reservation needed; they only do dinner.</p>
-        </div>
+        <p>Nonetheless, Law seems to be the current focus. I formally study Politics, Philosophy, and Economics (PPE) and Data Science at college. I hate to say I love it. Admittedly, the economics stuff is a bit dense and contrived at times, and the politics is sometimes too simple and not intellectually stimulating at all, but nonetheless I love learning all the things that make the world work. I do well in the classes too. My data science classes require a lot of studying to get right, but its so rewarding and practical that I don’t care. The rest of my study is just what I love to think about anyway, it rarely feels like learning until I get assigned busy work or some reading that regurgitates the arguments from the Federalist or Anti-Federalist papers. Occasionally they’ll parody Plato and Aristotle. Rarely is something that we read really profound and eye-opening. We never read Chomsky or Faucault, but I get that this stuff is important to know nonetheless. I can’t expect Pomona College to jerk-off an MIT professor or spread anarcho-capitalist propaganda. </p>
 
-        <div class="card" data-restaurant="rh" onclick="selectRestaurant(this)">
-          <h3>RH Rooftop Marin</h3>
-          <div class="meta">Corte Madera · Casual Elegant American · $$$</div>
-          <p class="desc">A glass greenhouse on the roof of the Restoration Hardware design gallery in Marin. Climbing wisteria, chandeliers, 180° views of Mt. Tam. Casual elegant American — seafood, lobster rolls. Genuinely the prettiest interior in Marin. Lunch or dinner; we'd drive over the bridge.</p>
-        </div>
+        <p>Given my spread of interests, and my fascination with the law, as established, I’m left with trying to find a “niche”, something I can really be an expert in. Public Health was originally the niche I wanted to sink my teeth into, in parallel to law. Maybe think of ways for insurance companies to make more/less money, or how we can curb childhood obesity through tax reform, but as I read more about it, it's also too broad. Not that it doesn’t interest me, I might change my mind, but my interests right now seem to be more closely aligned with technology policy. Specifically IP, Security, and AI. IP law keeps us from the knowledge that might actually lead to change, data-brokers are looking for any possible way to collect our data, and AI is the tool that could give regular people incredible power, or let those same data-brokers manipulate us even better. It's a very exciting time for technology. I’d love to know a lot about it. Security excites me the most, and being a good-faith policy advisor for a think tank that protects freedom, like the ACLU, sounds like a dream. However, I want to be so good that I could be a bad-faith analyst too. I think to be great you need to be both. It’s just hard to find guidance in this area. I sent about 6 applications out to internships today, and I have no doubt that if I land one, I'll learn more about what I want to do than any amount of classes at a liberal arts school could. In the meantime though, I’d still want to be exploring at college. I want to find some research to do. Something at this intersection. Harvey Mudd is working on something, and there's a couple of professors who research this, but they all seem to be on sabbatical. In the meantime, I’ll keep applying and learning. Hopefully it will make more sense soon.</p>
 
-        <div class="card" data-restaurant="applebees" onclick="selectRestaurant(this)">
-          <h3>Applebee's</h3>
-          <div class="meta">Anywhere · American Casual · $</div>
-          <p class="desc">Booths. Neon. Half-price apps after 9pm. No pretense — just mozzarella sticks, riblets, and the audacity of choosing this on purpose. Honestly might be the funniest first date of all time, and i'd be down.</p>
-        </div>
-      </div>
+        <p>In summary, since I’ve been writing for a while, I’m pretty sure I want to study law, paired with some sort of specialty in IT, Public Health, or IP. It's hard to say exactly what, but I guess that's the point. Assuming I go to law school, it's still another 5 years till I get to actually do any work. I’m sure my priorities will change by then, or the world will, likely both. I hope one of these internships stick, and I hope it's not the ACLU in Michigan, it's too hot out there. </p>
 
-      <div class="nav-row">
-        <button class="btn btn-back" onclick="goTo(2)">← back</button>
-        <button class="btn" id="btnNext3" onclick="goTo(4)" disabled>next <span class="arrow">→</span></button>
-      </div>
-    </section>
+      </details>
 
-    <!-- ============== PAGE 4: CONTACT ============== -->
-    <section class="page" data-page="4">
-      <h2 class="title">that's everything <span class="deco">♡</span></h2>
-      <p class="lede">here's what you picked. text me what you want and i'll make it happen.</p>
+      <p>🎵 <a href="https://open.spotify.com/track/3XH4pcQC7q3Sx4DAQci3FN" target="_blank">Cody Was A Tank - DATSKO, Itani</a></p>
+    </article>
 
-      <div class="summary" id="summary">
-        <div class="summary-row">
-          <span class="key">when</span>
-          <span class="val empty" id="sumWhen">— pick a day —</span>
-        </div>
-        <div class="summary-row">
-          <span class="key">time</span>
-          <span class="val empty" id="sumTime">— flexible —</span>
-        </div>
-        <div class="summary-row">
-          <span class="key">where</span>
-          <span class="val empty" id="sumWhere">— pick a place —</span>
-        </div>
-      </div>
+    <!-- ============================================================
+         BLOG ENTRIES — add new entries below, newest at the top.
+         Copy the <article> block and fill in your date and content.
+         ============================================================ -->
 
-      <div class="contact">
-        <a href="sms:+15104580362">
-          <span class="icon">✉</span>
-          <span>
-            <span class="lbl">text (preferred)</span>
-            (510) 458-0362
-          </span>
-        </a>
-        <a href="mailto:mishao2006@gmail.com?subject=our%20date&body=hi%20misha%2C%20i%20pick...">
-          <span class="icon">@</span>
-          <span>
-            <span class="lbl">or email — if texting feels weird (re: the phone)</span>
-            mishao2006@gmail.com
-          </span>
-        </a>
-      </div>
+    <article>
+      <h2>entry02: twentieth.</h2>
+      <p class="date">2026-03-16</p>
 
-      <p class="subtle">no pressure either way. and if none of these dates or places work, just tell me what does — i'm flexible.</p>
-      <p class="signoff">— misha</p>
+      <!-- First paragraph always visible -->
+      <p>Today is my birthday, and today I turned 20. I don't usually expect bad things to happen on any particular day, except two. Those two are my birthday and Christmas. I don't usually share this with anyone, since it comes off pretty sad when you think about it. It's strange to be sad on the two days which are supposed to be the happiest days of the year. However, almost every year the happiest days, for me, are never these two. This isn't to say that today was particularly a bad day. In fact, It was a day that I have been hoping to have for a while. Today I got up early and was really able to relax.</p>
 
-      <div class="nav-row">
-        <button class="btn btn-back" onclick="goTo(3)">← back</button>
-      </div>
-    </section>
+      <!-- Remaining paragraphs hidden until "see more" is clicked -->
+      <details>
+        <summary>see more</summary>
+
+        <p>Admittedly, I was supposed to go to Mexico today, as part of my spring break plans. I paid about $500 and was supposed to be on a plane at 8:00am this morning to leave for Puerto Vallarta. I got to the airport and tried checking in, but the Southwest worker told me that I didn't appear in the database of customers that were supposed to fly that day. I was then told that the only way I could get on the flight was to pay another $500 to secure a seat on the plane I was originally supposed to be on. I wasn't ready to pay that much, so instead I sat on hold with the travel agency which had officiated the purchase of my original flights. The process of getting a refund took about six hours. By the end of it, I was exhausted and slightly annoyed that my birthday had started off so poorly. This is exactly why I usually hate my birthday. I set high expectations for a great day, and generally it doesn't ever go perfectly. Something similar to this usually happens. Last year I was stuck in a big fight with my ex-girlfriend, and the year before I remember getting really sick. Nevertheless, I'm never really able to see all of the people who are important to me on that day, nor would I really want to. I usually want to rest. If it is a day that's supposed to be "all about me", usually the only things that I want to do are to sleep, eat, and enjoy doing the things I love. I imagine those things to be reading or writing.</p>
+
+        <p>Today, even though my plans fell through, I was able to spend the day resting in exactly the way I wanted to. I caught up on lost sleep, I read a book I've been meaning to read, and I was able to get started on writing a paper I've been meaning to write for school. These are all things that I seriously enjoyed. Yes, I didn't get to see my friends, or spend time with my family, but I got to do what I love. Those being the simple things that rapidly changing life doesn't usually let me enjoy.</p>
+
+        <p>I did get some other bad news today. I had been planning on interning at a law firm in Washington D.C. over the summer, and they had basically promised me a position once they had finalized the program. Today, they too, told me that they would be unable to give a secure position at the firm. This news came to me at the exact same time that I was pleading to get let on my flight. Admittedly, I was very tired in the morning, since I had to be up at 5 to pack and get ready to leave, so this collection of bad news just made me sad. I sat outside the Oakland airport, on a bench that smelled so fiercely of urine that it made my nostrils sting, and smoked a cigarette. The cigarette didn't really solve any of my problems, but it certainly did put them into perspective. Sure, I wouldn't be able to leave for Mexico that day, and I likely wouldn't be going to DC over the summer, but I still felt okay. I understood that I would be able to spend the day at home, which is one of the few places that I really love to be. Why would I stay sad about it? I've been busy with school, work, and friends, but today, I would really get to relax and enjoy my break at home. Regardless of the status of my internship, I knew I would keep looking. Similarly, I would keep looking for flights.</p>
+
+        <p>Thanks to my friends, I was able to find a round trip to Mexico that leaves tomorrow, for the same price that I had paid before. I was also able to get back to some messages on Facebook marketplace that I had been putting off, and now it's looking likely that I'll sell my truck. Things, in a sense, are looking up. This is usually how it goes, and this type of clarity really only comes on the days that you expect to be great. They give you hope for the next year. I keep hope for the whole year that Christmas or my birthday will be amazing, and although they never really live up to the expectations I set, they offer something completely different. They offer me a sense of hope, that as long as I don't let the unfortunate parts of life keep me down, then perhaps I'll get to feel what it's like to have a great birthday.</p>
+
+        <p>I'm excited for the next year of my life. Things change so rapidly now that I never really know what to expect. Yes, that brings with it uncertainty, which is certainly uncomfortable (haha), but it is in this uncertainty that I hope to learn new things about myself, as I always do. It's a gift to live, and although sometimes I live in fear, I still know the former to be true. I hope that my twentieth year will be a great one, in the truest sense of the word, great in good or in bad, both offering something new and exciting that I haven't felt before. Hopefully my twenty-first will be as great as my twentieth.</p>
+
+        <p><em>P.S. — I got lots of amazing birthday wishes today. It always made me feel better when I could read them. I'll write them all now, so that I can hopefully remember them in the future. Thank you to: Isaac, Eliot, Jonah, Jo, Asher, James, Anne, Trey, Gio, Stavos, Nik, Rylan, Baker, Tobey, Becca, Austin, Kaleb, Kyle, Maggie, Amir, Gabe, Leila, Sia, Nico, Teddy, Ben and Sadie. Thanks to everyone who sang happy birthday to me on the phone. Special thanks to Analize, a dear friend of mine who likely forgot my birthday, but I know she would have said something had she known (I'm usually very private about my birthday). A similarly special thanks to Kai, Jonah, Noah, and Soren who all wished me a happy birthday this past weekend when I was with them. But the most thanks is to my family: Tosha, Mom, and Dad. Thank you all for being a part of my life, and words can't really describe how much it means to me that you all give any part of yourself to be in my life. Eternally grateful for all of you. It would take 10 more pages to write gratitudes worth any of your character in this letter, but ultimately just: Thank you.</em></p>
+
+      </details>
+
+      <p>🎵 <a href="https://open.spotify.com/track/2nzfebt7eoKpUNNsDVWJ1Y" target="_blank">I'm God — Southbound</a></p>
+    </article>
+
+    <article>
+      <h2>entry01: Carpe Diem!</h2>
+      <p class="date">2026-03-09</p>
+
+      <!-- First paragraph always visible -->
+      <p>Since coming to college, life has felt particularly heavy to me. I'll be speaking candidly, hoping not to recount the events of my past, as beautiful and as painful as some of them have been, but instead trying to recount some of the lessons I have learned and how I hope to approach life in the future.</p>
+
+      <!-- Remaining paragraphs hidden until "see more" is clicked -->
+      <details>
+        <summary>see more</summary>
+
+        <p>Lately I've felt an intensity of emotions surrounding shame. I'll lay in bed often, recounting the mistakes that I've made and the people that I have hurt. However, most of this shame comes from a selfish place, as it slices apart my ego and makes my heart bleed. The perceptions of myself that I used to carry have slowly evaporated over the past couple of years and have left me feeling hollow. I used to pride myself on my unwavering generosity and understanding for others, and although I still hold these things to be true about myself, I have also noticed that my personal feelings of hopelessness and loneliness now cloud my judgement in social interactions to a degree that leads to me act cruelly or at least without courtesy for others. This is selfish in the sense that I mourn more the loss of these favorable traits than I do the hurt which I have catalyzed. For this I forgive myself. This, for me, is particularly difficult. However, it's important to understand for any person, but especially myself, that forgiving your imperfect past is the first step in making meaningful amends to a world which you may have stained. Nobody can totally understand the depth of colors which tint the glasses which God has placed upon my eyes, and for the inverse: I can hear people's words, but I can never judge their hearts.</p>
+
+        <p>Throughout the struggle of moving through a world in which I occasionally feel misplaced, I have also found a clarity which I only see rarely. In this clarity, it's undoubtable that the first place in which my mind and my heart should go – is love. However, it's difficult to love an imperfect world when it seems to shame you for your own imperfections. The contradiction in this though, is that the only true source of shame is the self. Yes, you may hear murmurs of others speaking badly about you, or criticizing your behavior, but this is just noise. Unless it comes to you from a place of love and understanding, as it would from a dear friend, these words hold no weight. It's impossible to predict why someone may have said something cruel about you without trying to first understand your struggle, but to judge them for this behavior would be no different than to embody the trait that I seem to disdain. Adjacently, this is a trait that I can confidently say that I hate, however it is not the people who embody it who I hate, as I too have given into the temptations of judgement. The struggle through the game of life is something that all people can understand and empathize with, even if they can't perfectly understand the depth of emotions which might flow through your mind at any given moment, in this I must have faith.</p>
+
+        <p>Speaking less about others, and more about myself now, I'll recount how life has felt lately. I look in the mirror and see a bright sun of limitless potential, in a way that seems irrational, but I also notice the things which I tell myself to hate. I see a judgemental, unhealthy, anxious, and pathetic person with lost potential. This has framed my thinking for the greater part of this semester. I worry that I have no real friends, or that those around me despise me and say cruelties behind my back. I see the consequences of my actions, and although to some they are humorous, they also hurt others. This I have had to wear with a feign confidence which comes from a carelessness about my own life or perception, akin to giving into the absurd and simply living in whichever way I desire at any moment. This though, creates the hollowness that I am left with – when alone. Since living with this debate in my head, of whether I am simply discovering myself, or acting foolishly, I have discovered that it is uniquely both. Yes, I have acted like a fool, dumber than I know myself to be, prioritizing any amount of social validation which I could possibly earn, instead of being true to myself. However, this mistake has led me to realize that it was a necessary step to discover more about who I truly am, and it brings me closer to revealing what ideas should be firmly etched into my soul. I compare it to Michelangelo carving David (although I am certainly not as talented of an artist as Michaelangelo), as I consider myself the sculptor of my soul. Michaelangelo claimed that he first saw David in the marble, and slowly revealed him through careful strikes of his chisel. I see a version of myself that loves myself, and similarly loves the world. But on this path, I must make strikes which may chip away at more than is necessary, or leave behind parts that should not remain. But eventually, I will be left with the vision which I see. It's undoubtable that we all make mistakes in our lives, some bigger and more consequential than others, but if we never forgive others how can we expect to ever forgive ourselves? If we hold this to be true, then it must also be true that the thing which we should hold closest to our hearts is love. Love for others, their imperfections, their scorn, their triumphs, their competition and most importantly, for their comradery. For if we do not love all the parts of life which carefully challenge us, then we will never be able to love ourselves. Your closest friend is also your most dangerous enemy, able to break your heart in ways which you cannot even imagine, but this does not mean to avoid closeness, but instead it is the beautiful gamble of life.</p>
+
+        <p>The way to win the game is to realize that there is no game at all. Life is not a series of events neatly ordered to give meaning to your existence, as you tirelessly work to reach the next level of "success", whether it be getting into your dream college, landing your dream job, or being the most loved on your college campus (all things I have certainly desired). The way to "win", so to speak, is to recognize that life is no different at any individual stage of life as it was in the past. It has always just been, and that being said, what can possibly be more eternal and deep than approaching your own life from a position of purity and candor. Be honest about your mistakes, apologize, but don't expect any recognition. Not that it would matter, as the sweetest forgiveness comes only from the self and becoming who you wish you always were. Life changes when you decide it is time, not when all of the pieces finally fall neatly into place.</p>
+
+        <p>To return to the name of the entry, it is important that you carry these facts of life in your darkest moments. In my case, when it feels that I have to rebuild my life after having no real friends, struggle with my own sense of identity after committing myself in my entirety to something fleeting, or when you have changed so much that you must humble yourself enough to realize that being hurt and making mistakes is necessary to accomplish the self-actualization which you desire. Sometimes these thoughts will fill me with hope and love, and other times it will take everything in my power to not give in to the evil which stains my heart. At times like these, it is important to speak kindly to yourself and take care of yourself, remembering "What punishments of God are not gifts?". Your potential is limitless, defined by none other than yourself, and allows you to live the way in which you desire. Continuing, the solutions to the natural questions which arise, following these affirmations, of , "How do I want to live?" and "What do I desire?" are uniquely to be at peace and to love endlessly. Accept others as they are, and accept yourself as you are. Keep your heart in the right place and may you never feel shame again. Seize the day! It's a gift to be molded by the pressures of life.</p>
+
+        <p><em>P.S. If you are not me, and you happen to be reading this, thank you. I am writing this as a memoir to myself, and as a public record of my thoughts, as to hopefully never betray these thoughts.</em></p>
+
+      </details>
+
+      <p>🎵 <a href="https://open.spotify.com/track/0g9DHUWhX2j3D9pGjBPFa5" target="_blank">Mr. Chow. — fakemink</a></p>
+    </article>
+
+    <!-- ============================================================
+         PASTE YOUR NEXT ENTRY ABOVE THIS LINE
+         ============================================================ -->
+
   </main>
 
+  <footer>
+    <p>&#169; 2026 misha. Original written content and essays on this site are licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>. Linked music belongs to its respective artists.</p>
+  </footer>
+
   <script>
-    // ---------- state ----------
-    const state = {
-      date: null,        // { dow: 'Fri', num: 22, label: 'Friday, May 22' }
-      time: null,        // 'morning' | 'afternoon' | 'evening' | 'late'
-      restaurant: null,  // { key, name }
+    const LIGHT = {
+      '--bg':           [255, 255, 255],
+      '--text':         [ 34,  34,  34],
+      '--muted':        [136, 136, 136],
+      '--border':       [ 34,  34,  34],
+      '--border-light': [238, 238, 238],
+      '--link':         [ 34,  34,  34],
+      '--link-muted':   [136, 136, 136],
+      '--footer-text':  [192, 192, 192],
+      '--footer-link':  [192, 192, 192],
+    };
+    const DARK = {
+      '--bg':           [ 40,  42,  54],
+      '--text':         [248, 248, 242],
+      '--muted':        [ 98, 114, 164],
+      '--border':       [ 98, 114, 164],
+      '--border-light': [ 68,  71,  90],
+      '--link':         [189, 147, 249],
+      '--link-muted':   [ 98, 114, 164],
+      '--footer-text':  [ 68,  63,  90],
+      '--footer-link':  [110,  60,  90],
     };
 
-    const RESTAURANTS = {
-      lardoise:  { name: "L'Ardoise Bistro (SF)" },
-      rh:        { name: 'RH Rooftop Marin' },
-      applebees: { name: "Applebee's" },
-    };
-
-    // ---------- date grid (May 15–31, 2026) ----------
-    // May 1, 2026 is a Friday → May 15 = Friday.
-    const DOW_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const DOW_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const MAY_15_DOW_INDEX = 5; // Friday
-
-    (function buildDateGrid() {
-      const grid = document.getElementById('dateGrid');
-      for (let i = 0; i <= 16; i++) {
-        const num = 15 + i;
-        const dowIdx = (MAY_15_DOW_INDEX + i) % 7;
-        const tile = document.createElement('button');
-        tile.className = 'date-tile';
-        tile.type = 'button';
-        tile.innerHTML = `<span class="dow">${DOW_SHORT[dowIdx]}</span><span class="num">${num}</span>`;
-        tile.addEventListener('click', () => {
-          document.querySelectorAll('.date-tile.selected').forEach(t => t.classList.remove('selected'));
-          tile.classList.add('selected');
-          state.date = {
-            dow: DOW_SHORT[dowIdx],
-            num,
-            label: `${DOW_FULL[dowIdx]}, May ${num}`,
-          };
-          updateNextBtn(2);
-        });
-        grid.appendChild(tile);
-      }
-    })();
-
-    // ---------- time chips ----------
-    document.querySelectorAll('#timeChips .chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const wasSelected = chip.classList.contains('selected');
-        document.querySelectorAll('#timeChips .chip').forEach(c => c.classList.remove('selected'));
-        if (!wasSelected) {
-          chip.classList.add('selected');
-          state.time = chip.dataset.time;
-        } else {
-          state.time = null;
-        }
-      });
-    });
-
-    // ---------- restaurant ----------
-    function selectRestaurant(el) {
-      document.querySelectorAll('.card.selected').forEach(c => c.classList.remove('selected'));
-      el.classList.add('selected');
-      const key = el.dataset.restaurant;
-      state.restaurant = { key, name: RESTAURANTS[key].name };
-      updateNextBtn(3);
-    }
-
-    // ---------- navigation ----------
-    function updateNextBtn(pageNum) {
-      if (pageNum === 2) {
-        document.getElementById('btnNext2').disabled = !state.date;
-      } else if (pageNum === 3) {
-        document.getElementById('btnNext3').disabled = !state.restaurant;
+    function applyTheme(t) {
+      const root = document.documentElement.style;
+      for (const key in LIGHT) {
+        const l = LIGHT[key], d = DARK[key];
+        const r = Math.round(l[0] + (d[0] - l[0]) * t);
+        const g = Math.round(l[1] + (d[1] - l[1]) * t);
+        const b = Math.round(l[2] + (d[2] - l[2]) * t);
+        root.setProperty(key, `rgb(${r},${g},${b})`);
       }
     }
 
-    function goTo(n) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      const next = document.querySelector(`.page[data-page="${n}"]`);
-      next.classList.add('active');
+    const slider = document.getElementById('theme-slider');
+    const saved = parseFloat(localStorage.getItem('theme-value') || '0');
+    slider.value = saved * 100;
+    applyTheme(saved);
 
-      // progress dots
-      document.querySelectorAll('.dot').forEach((d, i) => {
-        d.classList.remove('active', 'done');
-        const idx = i + 1;
-        if (idx < n) d.classList.add('done');
-        else if (idx === n) d.classList.add('active');
-      });
-
-      if (n === 4) populateSummary();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    function onSliderChange() {
+      const t = slider.value / 100;
+      applyTheme(t);
+      localStorage.setItem('theme-value', t);
     }
 
-    function populateSummary() {
-      const w = document.getElementById('sumWhen');
-      const t = document.getElementById('sumTime');
-      const r = document.getElementById('sumWhere');
-
-      if (state.date) { w.textContent = state.date.label; w.classList.remove('empty'); }
-      if (state.time) { t.textContent = state.time;       t.classList.remove('empty'); }
-      if (state.restaurant) { r.textContent = state.restaurant.name; r.classList.remove('empty'); }
-    }
-
-    // ---------- floating hearts ----------
-    (function spawnHearts() {
-      const container = document.getElementById('hearts');
-      const symbols = ['♡', '♥', '✿', '❀'];
-      const colors  = ['#E8A5A5', '#D9CFE8', '#F8D89D', '#C8D5C0'];
-      const N = 14;
-      for (let i = 0; i < N; i++) {
-        const h = document.createElement('span');
-        h.className = 'heart';
-        h.textContent = symbols[i % symbols.length];
-        h.style.left = (Math.random() * 100) + 'vw';
-        h.style.color = colors[i % colors.length];
-        h.style.fontSize = (14 + Math.random() * 14) + 'px';
-        h.style.animationDuration = (10 + Math.random() * 10) + 's';
-        h.style.animationDelay = (Math.random() * 12) + 's';
-        container.appendChild(h);
-      }
-    })();
+    slider.addEventListener('input', onSliderChange);
+    slider.addEventListener('change', onSliderChange);
+    slider.addEventListener('touchmove', onSliderChange, { passive: true });
   </script>
 </body>
 </html>
